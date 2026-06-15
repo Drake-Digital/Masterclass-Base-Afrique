@@ -39,7 +39,7 @@
         body {
             background-color: #0f172a;
             color: #e2e8f0;
-            overflow: hidden;
+            overflow: hidden; /* Empêche le scroll global, seul le slide scrollera */
             margin: 0;
             padding: 0;
             height: 100vh;
@@ -65,9 +65,18 @@
             transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
             display: flex;
             flex-direction: column;
-            padding: 4rem 8%;
+            padding: 2rem 5%; /* Padding réduit sur mobile */
             box-sizing: border-box;
             background: radial-gradient(circle at top right, #1e293b 0%, #0f172a 60%);
+            overflow-y: auto; /* PERMET LE SCROLL VERTICAL SUR MOBILE */
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; /* Scroll fluide sur iOS */
+        }
+
+        @media (min-width: 768px) {
+            .slide {
+                padding: 4rem 8%;
+            }
         }
 
         .slide.active {
@@ -79,11 +88,12 @@
         .slide-content {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            height: 100%;
+            margin: auto; /* Centre verticalement si l'écran est grand, cale en haut si contenu plus grand */
             width: 100%;
             max-width: 1300px;
-            margin: 0 auto;
+            padding-top: 2rem;
+            padding-bottom: 6rem; /* Espace pour ne pas être caché par les boutons de navigation */
+            min-height: min-content;
         }
 
         /* Animations d'entrée standards */
@@ -113,7 +123,6 @@
 
         /* --- Animations Diagramme Banque vs Blockchain --- */
         
-        /* 1. Attaque IA sur Banque (Perturbée - Orange) */
         @keyframes ai-attack {
             0% { transform: translateY(-50px) scale(0.5); opacity: 0; }
             50% { opacity: 1; }
@@ -121,7 +130,7 @@
         }
         .ai-particle {
             position: absolute;
-            color: #f97316; /* Orange */
+            color: #f97316;
             font-size: 1.5rem;
             animation: ai-attack 2s infinite linear;
         }
@@ -131,7 +140,7 @@
 
         @keyframes shield-block {
             0% { transform: scale(1); border-color: #3b82f6; box-shadow: 0 0 10px rgba(59,130,246,0.5); }
-            50% { transform: scale(1.05); border-color: #f97316; box-shadow: 0 0 30px rgba(249,115,22,0.8); } /* Perturbé = Orange */
+            50% { transform: scale(1.05); border-color: #f97316; box-shadow: 0 0 30px rgba(249,115,22,0.8); }
             100% { transform: scale(1); border-color: #3b82f6; box-shadow: 0 0 10px rgba(59,130,246,0.5); }
         }
         .slide.active .shield-anim {
@@ -183,25 +192,38 @@
 
         #controls {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
+            bottom: 1.5rem;
+            right: 1.5rem;
             z-index: 100;
             display: flex;
-            gap: 1rem;
-            background: rgba(15, 23, 42, 0.8);
+            gap: 0.5rem;
+            background: rgba(15, 23, 42, 0.9);
             padding: 0.5rem 1rem;
             border-radius: 2rem;
             border: 1px solid rgba(255,255,255,0.1);
             backdrop-filter: blur(5px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        @media (min-width: 768px) {
+            #controls {
+                bottom: 2rem;
+                right: 2rem;
+                gap: 1rem;
+            }
         }
 
         .nav-btn {
             background: none;
             border: none;
             color: #94a3b8;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             cursor: pointer;
             transition: color 0.2s, transform 0.2s;
+            padding: 0.25rem 0.5rem;
+        }
+        @media (min-width: 768px) {
+            .nav-btn { font-size: 1.5rem; }
         }
         .nav-btn:hover { color: #fff; transform: scale(1.1); }
         .nav-btn:disabled { color: #334155; cursor: not-allowed; transform: none; }
@@ -231,6 +253,10 @@
             .desktop-arrow-right {
                 display: none !important;
             }
+            /* Masquer l'image de la signature sur petit mobile pour gagner de la place */
+            .mobile-hide-img {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -240,7 +266,7 @@
 
     <div id="controls">
         <button id="prevBtn" class="nav-btn" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
-        <span id="slide-counter" class="text-slate-400 font-medium flex items-center px-2">1 / 23</span>
+        <span id="slide-counter" class="text-slate-400 text-sm md:text-base font-medium flex items-center px-2">1 / 23</span>
         <button id="nextBtn" class="nav-btn" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
     </div>
 
@@ -249,22 +275,22 @@
         <!-- SLIDE 1 : TITRE -->
         <div class="slide active" id="slide-1">
             <div class="slide-content items-center text-center">
-                <div class="mb-8 anim-element anim-scale delay-100">
-                    <img src="image_ba6426.png" alt="Drake Digital Logo" class="h-28 mx-auto object-contain" onerror="this.src='https://placehold.co/400x150/0f172a/3b82f6?text=DRAKE+DIGITAL'">
+                <div class="mb-6 md:mb-8 anim-element anim-scale delay-100">
+                    <img src="image_ba6426.png" alt="Drake Digital Logo" class="h-20 md:h-28 mx-auto object-contain" onerror="this.src='https://placehold.co/400x150/0f172a/3b82f6?text=DRAKE+DIGITAL'">
                 </div>
-                <div class="inline-block px-4 py-1 rounded-full bg-blue-900/30 border border-blue-500/30 text-blue-400 mb-6 anim-element delay-200 text-sm font-bold tracking-widest uppercase">
+                <div class="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full bg-blue-900/30 border border-blue-500/30 text-blue-400 mb-4 md:mb-6 anim-element delay-200 text-xs md:text-sm font-bold tracking-widest uppercase">
                     Masterclass • Suisse & Europe
                 </div>
-                <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6 anim-element delay-300">
+                <h1 class="text-4xl md:text-7xl font-bold leading-tight mb-4 md:mb-6 anim-element delay-300">
                     Confidentialité <span class="gradient-text">Opérationnelle</span><br>& Liberté de Paiement
                 </h1>
-                <p class="text-xl md:text-2xl text-slate-400 max-w-3xl anim-element delay-400">
+                <p class="text-lg md:text-2xl text-slate-400 max-w-3xl anim-element delay-400 px-4">
                     L'éveil des consciences financières : Comment transformer vos fonds en capacité de paiement internationale.
                 </p>
-                <div class="mt-12 flex space-x-4 anim-element delay-500">
-                    <div class="glass-card px-6 py-3 flex items-center space-x-3 border border-slate-700">
-                        <i class="fa-brands fa-cc-mastercard text-orange-500 text-2xl"></i>
-                        <span class="font-medium text-slate-300">Carte World Debit</span>
+                <div class="mt-8 md:mt-12 flex space-x-4 anim-element delay-500">
+                    <div class="glass-card px-4 py-2 md:px-6 md:py-3 flex items-center space-x-3 border border-slate-700">
+                        <i class="fa-brands fa-cc-mastercard text-orange-500 text-xl md:text-2xl"></i>
+                        <span class="font-medium text-slate-300 text-sm md:text-base">Carte World Debit</span>
                     </div>
                 </div>
             </div>
@@ -273,34 +299,34 @@
         <!-- SLIDE 2 : OBJECTIFS -->
         <div class="slide" id="slide-2">
             <div class="slide-content">
-                <div class="mb-10 text-center">
-                    <h2 class="text-4xl font-bold anim-element delay-100">Les objectifs de cette rencontre</h2>
-                    <p class="text-slate-400 mt-3 text-xl anim-element delay-200">Éveil des consciences et structuration d'une communauté globale.</p>
+                <div class="mb-8 md:mb-10 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">Les objectifs de cette rencontre</h2>
+                    <p class="text-slate-400 mt-2 md:mt-3 text-lg md:text-xl anim-element delay-200">Éveil des consciences et structuration d'une communauté globale.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-4">
-                    <div class="glass-card p-8 anim-element delay-300 hover:bg-slate-800 transition duration-300 transform hover:-translate-y-2 border-t-4 border-t-blue-500">
-                        <div class="w-14 h-14 rounded-full bg-blue-900/50 text-blue-400 flex items-center justify-center text-2xl mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full mt-2 md:mt-4">
+                    <div class="glass-card p-6 md:p-8 anim-element delay-300 hover:bg-slate-800 transition duration-300 transform hover:-translate-y-2 border-t-4 border-t-blue-500">
+                        <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-blue-900/50 text-blue-400 flex items-center justify-center text-xl md:text-2xl mb-4 md:mb-6">
                             <i class="fas fa-eye"></i>
                         </div>
-                        <h3 class="font-bold text-2xl mb-4 text-white">Éveil des Consciences</h3>
-                        <p class="text-slate-400 leading-relaxed">Comprendre les enjeux profonds de notre époque et identifier les signes des changements monétaires majeurs (IA, Régulation, Rails).</p>
+                        <h3 class="font-bold text-xl md:text-2xl mb-2 md:mb-4 text-white">Éveil des Consciences</h3>
+                        <p class="text-slate-400 text-sm md:text-base leading-relaxed">Comprendre les enjeux profonds de notre époque et identifier les signes des changements monétaires majeurs (IA, Régulation, Rails).</p>
                     </div>
                     
-                    <div class="glass-card p-8 anim-element delay-400 hover:bg-slate-800 transition duration-300 transform hover:-translate-y-2 border-t-4 border-t-emerald-500">
-                        <div class="w-14 h-14 rounded-full bg-emerald-900/50 text-emerald-400 flex items-center justify-center text-2xl mb-6">
+                    <div class="glass-card p-6 md:p-8 anim-element delay-400 hover:bg-slate-800 transition duration-300 transform hover:-translate-y-2 border-t-4 border-t-emerald-500">
+                        <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-emerald-900/50 text-emerald-400 flex items-center justify-center text-xl md:text-2xl mb-4 md:mb-6">
                             <i class="fas fa-globe-americas"></i>
                         </div>
-                        <h3 class="font-bold text-2xl mb-4 text-white">Portée Mondiale</h3>
-                        <p class="text-slate-400 leading-relaxed">Découvrir un mécanisme opérationnel avec une intégration AML fonctionnelle et "No-Risk" sur <strong class="text-emerald-400">plus de 170 pays</strong>.</p>
+                        <h3 class="font-bold text-xl md:text-2xl mb-2 md:mb-4 text-white">Portée Mondiale</h3>
+                        <p class="text-slate-400 text-sm md:text-base leading-relaxed">Découvrir un mécanisme opérationnel avec une intégration AML fonctionnelle et "No-Risk" sur <strong class="text-emerald-400">plus de 170 pays</strong>.</p>
                     </div>
 
-                    <div class="glass-card p-8 anim-element delay-500 hover:bg-slate-800 transition duration-300 transform hover:-translate-y-2 border-t-4 border-t-purple-500">
-                        <div class="w-14 h-14 rounded-full bg-purple-900/50 text-purple-400 flex items-center justify-center text-2xl mb-6">
+                    <div class="glass-card p-6 md:p-8 anim-element delay-500 hover:bg-slate-800 transition duration-300 transform hover:-translate-y-2 border-t-4 border-t-purple-500">
+                        <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-purple-900/50 text-purple-400 flex items-center justify-center text-xl md:text-2xl mb-4 md:mb-6">
                             <i class="fas fa-users"></i>
                         </div>
-                        <h3 class="font-bold text-2xl mb-4 text-white">Communauté Forte</h3>
-                        <p class="text-slate-400 leading-relaxed">Consolider un réseau mondial d'acteurs avertis, capables de sécuriser leurs opérations et d'accompagner leurs pairs via la cooptation.</p>
+                        <h3 class="font-bold text-xl md:text-2xl mb-2 md:mb-4 text-white">Communauté Forte</h3>
+                        <p class="text-slate-400 text-sm md:text-base leading-relaxed">Consolider un réseau mondial d'acteurs avertis, capables de sécuriser leurs opérations et d'accompagner leurs pairs via la cooptation.</p>
                     </div>
                 </div>
             </div>
@@ -309,36 +335,36 @@
         <!-- SLIDE 3 : STEEVE YENOT -->
         <div class="slide" id="slide-3">
             <div class="slide-content">
-                <div class="mb-10">
-                    <h2 class="text-4xl font-bold anim-element delay-100">Qui suis-je ? <span class="gradient-text">Steeve Yenot</span></h2>
-                    <p class="text-slate-400 mt-2 text-xl anim-element delay-200">Comprendre les processus pour anticiper les changements.</p>
+                <div class="mb-6 md:mb-10 text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">Qui suis-je ? <span class="gradient-text">Steeve Yenot</span></h2>
+                    <p class="text-slate-400 mt-2 text-lg md:text-xl anim-element delay-200">Comprendre les processus pour anticiper les changements.</p>
                 </div>
                 
-                <div class="flex flex-col md:flex-row gap-10 items-center">
-                    <div class="w-full md:w-1/3 anim-element anim-left delay-300">
+                <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-center">
+                    <div class="w-2/3 md:w-1/3 mx-auto anim-element anim-left delay-300">
                         <div class="relative rounded-2xl overflow-hidden border-2 border-slate-700 shadow-[0_0_30px_rgba(59,130,246,0.2)] aspect-[3/4]">
                             <img src="Steeve Yenot photot CV.jpg" alt="Steeve Yenot" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x533/1e293b/3b82f6?text=Steeve+Yenot'">
-                            <div class="absolute bottom-0 w-full bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent p-6 pt-12">
-                                <h3 class="text-2xl font-bold text-white">Steeve Yenot</h3>
-                                <p class="text-blue-400 font-medium">Co-founder & Head of Digital Transformation</p>
+                            <div class="absolute bottom-0 w-full bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent p-4 md:p-6 pt-10 md:pt-12">
+                                <h3 class="text-xl md:text-2xl font-bold text-white">Steeve Yenot</h3>
+                                <p class="text-blue-400 font-medium text-xs md:text-sm">Co-founder & Head of Digital Transformation</p>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="w-full md:w-2/3 space-y-6">
-                        <div class="glass-card p-6 border-l-4 border-blue-500 anim-element anim-right delay-400">
-                            <h3 class="font-bold text-white mb-3 text-xl flex items-center"><i class="fas fa-industry text-blue-400 w-8"></i> 20 ans d'expertise Industrie 4.0</h3>
-                            <p class="text-slate-300 leading-relaxed">Leader en transformation industrielle et automatisation. Mon métier a toujours été de concevoir et d'optimiser des processus complexes en partant d'une compréhension globale de l'exécution et des flux (ex: Chef de Systèmes de Production chez Liebherr).</p>
+                    <div class="w-full md:w-2/3 space-y-4 md:space-y-6">
+                        <div class="glass-card p-4 md:p-6 border-l-4 border-blue-500 anim-element anim-right delay-400">
+                            <h3 class="font-bold text-white mb-2 md:mb-3 text-lg md:text-xl flex items-center"><i class="fas fa-industry text-blue-400 w-6 md:w-8"></i> 20 ans d'expertise Industrie 4.0</h3>
+                            <p class="text-slate-300 text-sm md:text-base leading-relaxed">Leader en transformation industrielle et automatisation. Mon métier a toujours été de concevoir et d'optimiser des processus complexes en partant d'une compréhension globale de l'exécution et des flux (ex: Chef de Systèmes de Production chez Liebherr).</p>
                         </div>
                         
-                        <div class="glass-card p-6 border-l-4 border-purple-500 anim-element anim-right delay-500">
-                            <h3 class="font-bold text-white mb-3 text-xl flex items-center"><i class="fas fa-eye text-purple-400 w-8"></i> L'éveil face aux enjeux actuels</h3>
-                            <p class="text-slate-300 leading-relaxed">Inquiet, comme beaucoup, des bouleversements macro-économiques majeurs de notre époque, j'ai cherché à comprendre les changements monétaires en cours (dette, IA, régulations).</p>
+                        <div class="glass-card p-4 md:p-6 border-l-4 border-purple-500 anim-element anim-right delay-500">
+                            <h3 class="font-bold text-white mb-2 md:mb-3 text-lg md:text-xl flex items-center"><i class="fas fa-eye text-purple-400 w-6 md:w-8"></i> L'éveil face aux enjeux actuels</h3>
+                            <p class="text-slate-300 text-sm md:text-base leading-relaxed">Inquiet, comme beaucoup, des bouleversements macro-économiques majeurs de notre époque, j'ai cherché à comprendre les changements monétaires en cours (dette, IA, régulations).</p>
                         </div>
 
-                        <div class="glass-card p-6 border-l-4 border-emerald-500 anim-element anim-right delay-600">
-                            <h3 class="font-bold text-white mb-3 text-xl flex items-center"><i class="fas fa-search text-emerald-400 w-8"></i> Identifier les solutions</h3>
-                            <p class="text-slate-300 leading-relaxed">Grâce à mon bagage analytique, j'ai audité les infrastructures existantes pour identifier les acteurs capables de sécuriser notre liberté d'action financière pour le futur.</p>
+                        <div class="glass-card p-4 md:p-6 border-l-4 border-emerald-500 anim-element anim-right delay-600">
+                            <h3 class="font-bold text-white mb-2 md:mb-3 text-lg md:text-xl flex items-center"><i class="fas fa-search text-emerald-400 w-6 md:w-8"></i> Identifier les solutions</h3>
+                            <p class="text-slate-300 text-sm md:text-base leading-relaxed">Grâce à mon bagage analytique, j'ai audité les infrastructures existantes pour identifier les acteurs capables de sécuriser notre liberté d'action financière pour le futur.</p>
                         </div>
                     </div>
                 </div>
@@ -348,34 +374,34 @@
         <!-- SLIDE 4 : LE PARTENAIRE (OSCAR FLORES) -->
         <div class="slide" id="slide-4">
             <div class="slide-content">
-                <div class="mb-10 text-center">
-                    <h2 class="text-4xl font-bold anim-element delay-100">Le Partenaire & <span class="gradient-text">L'Infrastructure</span></h2>
-                    <p class="text-slate-400 mt-2 text-xl anim-element delay-200">La fusion de la rigueur suisse et de l'agilité numérique mondiale.</p>
+                <div class="mb-6 md:mb-10 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">Le Partenaire & <span class="gradient-text">L'Infrastructure</span></h2>
+                    <p class="text-slate-400 mt-2 text-lg md:text-xl anim-element delay-200">La fusion de la rigueur suisse et de l'agilité numérique mondiale.</p>
                 </div>
                 
-                <div class="flex flex-col-reverse md:flex-row gap-10 items-center mt-6">
+                <div class="flex flex-col-reverse md:flex-row gap-6 md:gap-10 items-center mt-2 md:mt-6">
                     <div class="w-full md:w-3/5 space-y-6">
-                        <div class="glass-card p-8 border-t-4 border-brand-accent anim-element anim-left delay-300 relative overflow-hidden">
-                            <i class="fas fa-quote-right absolute top-6 right-6 text-6xl text-slate-700/30"></i>
-                            <h3 class="text-4xl font-bold text-white mb-2">Oscar Flores</h3>
-                            <p class="text-brand-accent font-medium mb-8 text-xl tracking-wide uppercase">Fondateur & CEO d'Unblock</p>
+                        <div class="glass-card p-6 md:p-8 border-t-4 border-brand-accent anim-element anim-left delay-300 relative overflow-hidden">
+                            <i class="fas fa-quote-right absolute top-4 right-4 md:top-6 md:right-6 text-4xl md:text-6xl text-slate-700/30"></i>
+                            <h3 class="text-2xl md:text-4xl font-bold text-white mb-1 md:mb-2">Oscar Flores</h3>
+                            <p class="text-brand-accent font-medium mb-4 md:mb-8 text-sm md:text-xl tracking-wide uppercase">Fondateur & CEO d'Unblock</p>
                             
-                            <ul class="space-y-5">
+                            <ul class="space-y-3 md:space-y-5">
                                 <li class="flex items-start">
-                                    <i class="fas fa-award text-yellow-500 mt-1 mr-4 text-xl"></i>
-                                    <p class="text-slate-300 text-lg leading-relaxed">
+                                    <i class="fas fa-award text-yellow-500 mt-1 mr-3 md:mr-4 text-lg md:text-xl"></i>
+                                    <p class="text-slate-300 text-sm md:text-lg leading-relaxed">
                                         À la tête de cette infrastructure technologique globale, Oscar Flores figure parmi les <strong>300 personnalités les plus riches de Suisse</strong> (Classement officiel du magazine <em>Bilan</em>).
                                     </p>
                                 </li>
                                 <li class="flex items-start">
-                                    <i class="fas fa-shield-alt text-blue-400 mt-1 mr-4 text-xl"></i>
-                                    <p class="text-slate-300 text-lg leading-relaxed">
+                                    <i class="fas fa-shield-alt text-blue-400 mt-1 mr-3 md:mr-4 text-lg md:text-xl"></i>
+                                    <p class="text-slate-300 text-sm md:text-lg leading-relaxed">
                                         Son expertise, ses licences internationales et sa vision ont permis de développer une plateforme produit extrêmement robuste.
                                     </p>
                                 </li>
                                 <li class="flex items-start">
-                                    <i class="fas fa-check-circle text-emerald-400 mt-1 mr-4 text-xl"></i>
-                                    <p class="text-slate-300 text-lg leading-relaxed">
+                                    <i class="fas fa-check-circle text-emerald-400 mt-1 mr-3 md:mr-4 text-lg md:text-xl"></i>
+                                    <p class="text-slate-300 text-sm md:text-lg leading-relaxed">
                                         <strong>L'objectif :</strong> Offrir une fiabilité institutionnelle sans faille tout en garantissant la fluidité pour vos opérations internationales quotidiennes sur plus de 170 pays.
                                     </p>
                                 </li>
@@ -383,10 +409,10 @@
                         </div>
                     </div>
                     
-                    <div class="w-full md:w-2/5 anim-element anim-right delay-400">
+                    <div class="w-2/3 md:w-2/5 anim-element anim-right delay-400 mobile-hide-img">
                         <div class="rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(255,255,255,0.1)] border border-slate-700 p-2 bg-slate-800">
                             <img src="Oscar Steeve Signature.jpeg" alt="Oscar Flores et Steeve Yenot" class="w-full h-auto rounded-xl object-cover" onerror="this.src='https://placehold.co/600x450/1e293b/3b82f6?text=Oscar+Flores+&+Steeve+Yenot'">
-                            <p class="text-center text-sm text-slate-400 mt-3 mb-1 italic">Partenariat stratégique : Validation des infrastructures.</p>
+                            <p class="text-center text-xs md:text-sm text-slate-400 mt-2 md:mt-3 mb-1 italic">Partenariat stratégique : Validation des infrastructures.</p>
                         </div>
                     </div>
                 </div>
@@ -397,52 +423,52 @@
         <div class="slide" id="slide-5">
             <div class="slide-content text-center">
                 <div class="mb-4">
-                    <div class="inline-block px-4 py-1 rounded-full bg-orange-900/30 border border-orange-500/30 text-orange-400 mb-4 anim-element delay-100 font-bold uppercase tracking-widest text-sm">
+                    <div class="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full bg-orange-900/30 border border-orange-500/30 text-orange-400 mb-2 md:mb-4 anim-element delay-100 font-bold uppercase tracking-widest text-xs md:text-sm">
                         Le Défi Sécuritaire
                     </div>
-                    <h2 class="text-4xl md:text-5xl font-bold anim-element delay-200">Le Guichet Central face à l'IA</h2>
-                    <p class="text-slate-400 mt-4 text-xl max-w-3xl mx-auto anim-element delay-300">
+                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-200">Le Guichet Central face à l'IA</h2>
+                    <p class="text-slate-400 mt-2 md:mt-4 text-sm md:text-xl max-w-3xl mx-auto anim-element delay-300">
                         Le système traditionnel oblige la banque à filtrer <strong class="text-white">chaque opération individuellement</strong>. Face aux fraudes générées par l'IA, le système s'alourdit.
                     </p>
                 </div>
 
-                <div class="flex flex-col md:flex-row items-center justify-center gap-10 mt-8 anim-element anim-scale delay-400">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mt-4 md:mt-8 anim-element anim-scale delay-400">
                     <!-- Client -->
                     <div class="flex flex-col items-center">
-                        <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center text-slate-300 text-2xl border border-slate-600 mb-3 z-10"><i class="fas fa-user"></i></div>
-                        <span class="text-slate-400 font-medium">Vous (Paiement)</span>
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-slate-800 rounded-full flex items-center justify-center text-slate-300 text-xl md:text-2xl border border-slate-600 mb-2 md:mb-3 z-10"><i class="fas fa-user"></i></div>
+                        <span class="text-slate-400 font-medium text-sm md:text-base">Vous (Paiement)</span>
                     </div>
 
                     <!-- Animation Blocage Banque -->
-                    <div class="relative w-64 h-64 mx-8 flex items-center justify-center">
+                    <div class="relative w-48 h-48 md:w-64 md:h-64 mx-auto md:mx-8 flex items-center justify-center">
                         <!-- Attaques IA -->
                         <div class="ai-particle ai-p1"><i class="fas fa-robot"></i></div>
                         <div class="ai-particle ai-p2"><i class="fas fa-bug"></i></div>
                         <div class="ai-particle ai-p3"><i class="fas fa-robot"></i></div>
                         
                         <!-- Banque centrale (Bouclier) -->
-                        <div class="w-32 h-32 bg-slate-900 rounded-full border-4 border-blue-500 shield-anim flex items-center justify-center relative z-10">
+                        <div class="w-24 h-24 md:w-32 md:h-32 bg-slate-900 rounded-full border-4 border-blue-500 shield-anim flex items-center justify-center relative z-10">
                             <div class="text-center">
-                                <i class="fas fa-building-columns text-3xl text-blue-400 mb-1"></i>
-                                <div class="text-xs text-white font-bold"><i class="fas fa-exclamation-triangle text-orange-500 mr-1"></i>Perturbé</div>
+                                <i class="fas fa-building-columns text-2xl md:text-3xl text-blue-400 mb-1"></i>
+                                <div class="text-[10px] md:text-xs text-white font-bold"><i class="fas fa-exclamation-triangle text-orange-500 mr-1"></i>Perturbé</div>
                             </div>
                         </div>
 
                         <!-- Flèche ralentie -->
                         <div class="absolute left-0 w-1/2 h-1 bg-gradient-to-r from-slate-500 to-orange-500 -z-0"></div>
-                        <i class="fas fa-exclamation-triangle absolute left-1/2 transform -translate-x-1/2 text-3xl text-orange-500 z-20"></i>
+                        <i class="fas fa-exclamation-triangle absolute left-1/2 transform -translate-x-1/2 text-2xl md:text-3xl text-orange-500 z-20"></i>
                     </div>
 
                     <!-- Destination -->
                     <div class="flex flex-col items-center opacity-50">
-                        <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center text-slate-500 text-2xl border border-slate-700 mb-3"><i class="fas fa-globe"></i></div>
-                        <span class="text-slate-500 font-medium">Destination</span>
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-slate-800 rounded-full flex items-center justify-center text-slate-500 text-xl md:text-2xl border border-slate-700 mb-2 md:mb-3"><i class="fas fa-globe"></i></div>
+                        <span class="text-slate-500 font-medium text-sm md:text-base">Destination</span>
                     </div>
                 </div>
 
-                <div class="mt-8 glass-card p-6 max-w-3xl mx-auto border-l-4 border-l-orange-500 anim-element delay-500 text-left">
-                    <h3 class="font-bold text-white text-xl mb-2 flex items-center"><i class="fas fa-hourglass-half text-orange-400 mr-3"></i> La Conséquence</h3>
-                    <p class="text-slate-300">Pour se protéger des attaques cyber massives automatisées (IA), la banque n'a d'autre choix que d'ajouter des contrôles manuels, d'exiger des justificatifs constants et de ralentir les flux. <strong class="text-orange-400">La friction devient permanente.</strong></p>
+                <div class="mt-6 md:mt-8 glass-card p-4 md:p-6 max-w-3xl mx-auto border-l-4 border-l-orange-500 anim-element delay-500 text-left">
+                    <h3 class="font-bold text-white text-lg md:text-xl mb-1 md:mb-2 flex items-center"><i class="fas fa-hourglass-half text-orange-400 mr-3"></i> La Conséquence</h3>
+                    <p class="text-slate-300 text-sm md:text-base">Pour se protéger des attaques cyber massives automatisées (IA), la banque n'a d'autre choix que d'ajouter des contrôles manuels, d'exiger des justificatifs constants et de ralentir les flux. <strong class="text-orange-400">La friction devient permanente.</strong></p>
                 </div>
             </div>
         </div>
@@ -451,17 +477,17 @@
         <div class="slide" id="slide-6">
             <div class="slide-content text-center">
                 <div class="mb-4">
-                    <div class="inline-block px-4 py-1 rounded-full bg-emerald-900/30 border border-emerald-500/30 text-emerald-400 mb-4 anim-element delay-100 font-bold uppercase tracking-widest text-sm">
+                    <div class="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full bg-emerald-900/30 border border-emerald-500/30 text-emerald-400 mb-2 md:mb-4 anim-element delay-100 font-bold uppercase tracking-widest text-xs md:text-sm">
                         Le Changement de Paradigme
                     </div>
-                    <h2 class="text-4xl md:text-5xl font-bold anim-element delay-200">La Validation Communautaire (Blockchain)</h2>
-                    <p class="text-slate-400 mt-4 text-xl max-w-3xl mx-auto anim-element delay-300">
+                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-200">La Validation Communautaire (Blockchain)</h2>
+                    <p class="text-slate-400 mt-2 md:mt-4 text-sm md:text-xl max-w-3xl mx-auto anim-element delay-300">
                         Au lieu de confier la sécurité à un seul guichet vulnérable, le registre vérifie l'opération instantanément via un consensus mathématique <strong class="text-white">décentralisé</strong>.
                     </p>
                 </div>
 
                 <!-- Animation Réseau -->
-                <div class="relative w-full max-w-2xl mx-auto h-64 mt-6 anim-element anim-scale delay-400">
+                <div class="relative w-full max-w-lg md:max-w-2xl mx-auto h-48 md:h-64 mt-4 md:mt-6 anim-element anim-scale delay-400">
                     <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
                         <line x1="20%" y1="50%" x2="50%" y2="20%" class="svg-line" />
                         <line x1="20%" y1="50%" x2="50%" y2="80%" class="svg-line" />
@@ -471,27 +497,27 @@
                     </svg>
                     
                     <!-- Nœuds -->
-                    <div class="absolute top-1/2 left-[20%] transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-slate-800 rounded-full border-4 node node-1 flex items-center justify-center text-white"><i class="fas fa-user-check"></i></div>
+                    <div class="absolute top-1/2 left-[20%] transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 bg-slate-800 rounded-full border-4 node node-1 flex items-center justify-center text-white"><i class="fas fa-user-check"></i></div>
                     
-                    <div class="absolute top-[20%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-slate-800 rounded-full border-4 node node-2 flex items-center justify-center text-slate-300"><i class="fas fa-server"></i></div>
+                    <div class="absolute top-[20%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-slate-800 rounded-full border-4 node node-2 flex items-center justify-center text-slate-300 text-sm md:text-base"><i class="fas fa-server"></i></div>
                     
-                    <div class="absolute top-[80%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-slate-800 rounded-full border-4 node node-3 flex items-center justify-center text-slate-300"><i class="fas fa-server"></i></div>
+                    <div class="absolute top-[80%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-slate-800 rounded-full border-4 node node-3 flex items-center justify-center text-slate-300 text-sm md:text-base"><i class="fas fa-server"></i></div>
                     
-                    <div class="absolute top-1/2 left-[80%] transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-emerald-900 rounded-full border-4 border-emerald-400 node node-4 flex items-center justify-center text-white"><i class="fas fa-check-double"></i></div>
+                    <div class="absolute top-1/2 left-[80%] transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 bg-emerald-900 rounded-full border-4 border-emerald-400 node node-4 flex items-center justify-center text-white"><i class="fas fa-check-double"></i></div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 max-w-4xl mx-auto">
-                    <div class="glass-card p-6 anim-element delay-500 border-t-2 border-emerald-500">
-                        <h4 class="font-bold text-white mb-2"><i class="fas fa-bolt text-emerald-400 mr-2"></i> Instantanéité</h4>
-                        <p class="text-slate-400 text-sm">Le réseau vérifie l'état des fonds et valide mathématiquement en quelques secondes, 24/7.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mt-4 md:mt-6 max-w-4xl mx-auto">
+                    <div class="glass-card p-4 md:p-6 anim-element delay-500 border-t-2 border-emerald-500">
+                        <h4 class="font-bold text-white mb-1 md:mb-2 text-sm md:text-base"><i class="fas fa-bolt text-emerald-400 mr-2"></i> Instantanéité</h4>
+                        <p class="text-slate-400 text-xs md:text-sm">Le réseau vérifie l'état des fonds et valide mathématiquement en quelques secondes, 24/7.</p>
                     </div>
-                    <div class="glass-card p-6 anim-element delay-600 border-t-2 border-emerald-500">
-                        <h4 class="font-bold text-white mb-2"><i class="fas fa-link text-emerald-400 mr-2"></i> Inviolabilité</h4>
-                        <p class="text-slate-400 text-sm">Impossible pour une IA de pirater un registre qui est copié et vérifié sur des milliers d'ordinateurs simultanément.</p>
+                    <div class="glass-card p-4 md:p-6 anim-element delay-600 border-t-2 border-emerald-500">
+                        <h4 class="font-bold text-white mb-1 md:mb-2 text-sm md:text-base"><i class="fas fa-link text-emerald-400 mr-2"></i> Inviolabilité</h4>
+                        <p class="text-slate-400 text-xs md:text-sm">Impossible pour une IA de pirater un registre qui est copié et vérifié sur des milliers d'ordinateurs simultanément.</p>
                     </div>
-                    <div class="glass-card p-6 anim-element delay-700 border-t-2 border-emerald-500 bg-emerald-900/10">
-                        <h4 class="font-bold text-white mb-2"><i class="fas fa-truck-fast text-emerald-400 mr-2"></i> Fluidité (Token)</h4>
-                        <p class="text-emerald-300 text-sm">L'opération devient un enregistrement immuable (Token). La valeur peut circuler librement sans friction locale.</p>
+                    <div class="glass-card p-4 md:p-6 anim-element delay-700 border-t-2 border-emerald-500 bg-emerald-900/10">
+                        <h4 class="font-bold text-white mb-1 md:mb-2 text-sm md:text-base"><i class="fas fa-truck-fast text-emerald-400 mr-2"></i> Fluidité (Token)</h4>
+                        <p class="text-emerald-300 text-xs md:text-sm">L'opération devient un enregistrement immuable (Token). La valeur peut circuler librement sans friction locale.</p>
                     </div>
                 </div>
             </div>
@@ -500,46 +526,46 @@
         <!-- SLIDE 7 : LE SYSTÈME ACTUEL (Tension) -->
         <div class="slide" id="slide-7">
             <div class="slide-content text-center">
-                <div class="mb-8">
-                    <h2 class="text-4xl md:text-5xl font-bold anim-element delay-100">Le Système Financier <span class="gradient-text">Macro</span></h2>
-                    <p class="text-slate-400 mt-4 text-xl max-w-4xl mx-auto anim-element delay-200">
+                <div class="mb-6 md:mb-8">
+                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-100">Le Système Financier <span class="gradient-text">Macro</span></h2>
+                    <p class="text-slate-400 mt-2 md:mt-4 text-sm md:text-xl max-w-4xl mx-auto anim-element delay-200">
                         Deux réalités qui cohabitent aujourd'hui avec des vitesses et des contraintes opposées.
                     </p>
                 </div>
 
-                <div class="flex flex-col md:flex-row items-stretch justify-center gap-6 mt-6">
+                <div class="flex flex-col md:flex-row items-stretch justify-center gap-4 md:gap-6 mt-4 md:mt-6">
                     <!-- Le système bancaire (Le Paquebot) -->
-                    <div class="flex-1 glass-card p-8 border-t-4 border-rose-500 anim-element anim-left delay-300 relative bg-slate-900/80">
-                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-rose-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg whitespace-nowrap">
+                    <div class="flex-1 glass-card p-6 md:p-8 border-t-4 border-rose-500 anim-element anim-left delay-300 relative bg-slate-900/80">
+                        <div class="absolute -top-3 md:-top-4 left-1/2 transform -translate-x-1/2 bg-rose-600 text-white px-3 md:px-4 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-lg whitespace-nowrap">
                             Le Paquebot Bancaire
                         </div>
-                        <i class="fas fa-ship text-6xl text-slate-600 mb-6 mt-4"></i>
-                        <h3 class="text-2xl font-bold text-white mb-4">Stockage Centralisé</h3>
-                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">L'infrastructure traditionnelle, conçue pour conserver, peine à suivre le rythme.</p>
-                        <ul class="text-left space-y-3 text-slate-300">
+                        <i class="fas fa-ship text-4xl md:text-6xl text-slate-600 mb-4 md:mb-6 mt-4"></i>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4">Stockage Centralisé</h3>
+                        <p class="text-slate-400 text-xs md:text-sm mb-4 leading-relaxed">L'infrastructure traditionnelle, conçue pour conserver, peine à suivre le rythme.</p>
+                        <ul class="text-left space-y-2 md:space-y-3 text-slate-300 text-sm md:text-base">
                             <li class="flex items-start"><i class="fas fa-anchor text-rose-400 mt-1 mr-3 w-4"></i> <strong>Ralenti</strong> par la sur-réglementation constante.</li>
                             <li class="flex items-start"><i class="fas fa-shield-virus text-rose-400 mt-1 mr-3 w-4"></i> <strong>Asphyxié</strong> par les défenses anti-IA et les contrôles manuels.</li>
                         </ul>
                     </div>
 
                     <!-- VS / Tension -->
-                    <div class="flex flex-col justify-center items-center px-4 anim-element anim-scale delay-400 py-4 md:py-0">
-                        <div class="w-12 h-12 rounded-full border-2 border-slate-600 flex items-center justify-center text-slate-500 font-bold mb-2 bg-[#0f172a]">VS</div>
-                        <span class="text-sm font-bold text-slate-500 uppercase">Tension</span>
+                    <div class="flex flex-col justify-center items-center px-4 anim-element anim-scale delay-400 py-2 md:py-0">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-slate-600 flex items-center justify-center text-slate-500 font-bold mb-1 md:mb-2 bg-[#0f172a] text-sm md:text-base">VS</div>
+                        <span class="text-xs md:text-sm font-bold text-slate-500 uppercase">Tension</span>
                     </div>
 
                     <!-- Le Cash / Mastercard -->
-                    <div class="flex-1 glass-card p-8 border-t-4 border-blue-500 anim-element anim-right delay-500 relative bg-slate-900/80">
-                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg whitespace-nowrap">
+                    <div class="flex-1 glass-card p-6 md:p-8 border-t-4 border-blue-500 anim-element anim-right delay-500 relative bg-slate-900/80">
+                        <div class="absolute -top-3 md:-top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-3 md:px-4 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-lg whitespace-nowrap">
                             Les Rails de Paiement
                         </div>
-                        <div class="flex justify-center space-x-6 mb-6 mt-4">
-                            <i class="fas fa-money-bill-wave text-5xl text-emerald-500"></i>
-                            <i class="fa-brands fa-cc-mastercard text-5xl text-orange-500"></i>
+                        <div class="flex justify-center space-x-4 md:space-x-6 mb-4 md:mb-6 mt-4">
+                            <i class="fas fa-money-bill-wave text-4xl md:text-5xl text-emerald-500"></i>
+                            <i class="fa-brands fa-cc-mastercard text-4xl md:text-5xl text-orange-500"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-4">Liquidité & Paiement</h3>
-                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">Le réseau d'exécution quotidien (Visa, Mastercard, Cash).</p>
-                        <ul class="text-left space-y-3 text-slate-300">
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4">Liquidité & Paiement</h3>
+                        <p class="text-slate-400 text-xs md:text-sm mb-4 leading-relaxed">Le réseau d'exécution quotidien (Visa, Mastercard, Cash).</p>
+                        <ul class="text-left space-y-2 md:space-y-3 text-slate-300 text-sm md:text-base">
                             <li class="flex items-start"><i class="fas fa-bolt text-blue-400 mt-1 mr-3 w-4"></i> <strong>Fluide :</strong> Conçu pour la vitesse et le volume.</li>
                             <li class="flex items-start"><i class="fas fa-globe text-blue-400 mt-1 mr-3 w-4"></i> <strong>Mondial :</strong> Accepté partout, sans friction 24/7.</li>
                         </ul>
@@ -551,45 +577,45 @@
         <!-- SLIDE 8 : LE FUTUR INSTITUTIONNEL (Désolidarisation) -->
         <div class="slide" id="slide-8">
             <div class="slide-content text-center">
-                <div class="mb-8">
-                    <h2 class="text-4xl md:text-5xl font-bold anim-element delay-100">La Désolidarisation <span class="gradient-text">Stratégique</span></h2>
-                    <p class="text-slate-400 mt-4 text-xl max-w-4xl mx-auto anim-element delay-200">
+                <div class="mb-6 md:mb-8">
+                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-100">La Désolidarisation <span class="gradient-text">Stratégique</span></h2>
+                    <p class="text-slate-400 mt-2 md:mt-4 text-sm md:text-xl max-w-4xl mx-auto anim-element delay-200">
                         Afin de ne pas voir tous les passagers "couler avec le paquebot", le système <strong>désolidarise la fluidité du paiement et les lourdeurs du stockage bancaire</strong>.
                     </p>
                 </div>
 
-                <div class="flex flex-col md:flex-row items-stretch justify-center gap-6 mt-6">
+                <div class="flex flex-col md:flex-row items-stretch justify-center gap-4 md:gap-6 mt-4 md:mt-6">
                     <!-- Stockage Décentralisé -->
-                    <div class="flex-1 glass-card p-8 border-t-4 border-emerald-500 anim-element anim-left delay-300 relative bg-slate-900/80 shadow-[0_0_40px_rgba(16,185,129,0.15)]">
-                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-emerald-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg whitespace-nowrap">
+                    <div class="flex-1 glass-card p-6 md:p-8 border-t-4 border-emerald-500 anim-element anim-left delay-300 relative bg-slate-900/80 shadow-[0_0_40px_rgba(16,185,129,0.15)]">
+                        <div class="absolute -top-3 md:-top-4 left-1/2 transform -translate-x-1/2 bg-emerald-600 text-white px-3 md:px-4 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-lg whitespace-nowrap">
                             Stockage Décentralisé
                         </div>
-                        <i class="fas fa-cubes text-6xl text-emerald-400 mb-6 mt-4"></i>
-                        <h3 class="text-2xl font-bold text-white mb-2">Sauver le Dollar</h3>
-                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">Remplacer le stockage physique par un système décentralisé basé sur le <strong>dollar numérisé</strong>.</p>
+                        <i class="fas fa-cubes text-4xl md:text-6xl text-emerald-400 mb-4 md:mb-6 mt-4"></i>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Sauver le Dollar</h3>
+                        <p class="text-slate-400 text-xs md:text-sm mb-4 leading-relaxed">Remplacer le stockage physique par un système décentralisé basé sur le <strong>dollar numérisé</strong>.</p>
                         <div class="bg-emerald-900/30 border border-emerald-500/30 p-3 rounded-lg text-left">
-                            <p class="text-emerald-300 text-sm font-medium"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i> En faisant le choix de cette technologie, vous mettez un pied dans le futur institutionnel.</p>
+                            <p class="text-emerald-300 text-xs md:text-sm font-medium"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i> En faisant le choix de cette technologie, vous mettez un pied dans le futur institutionnel.</p>
                         </div>
                     </div>
 
                     <!-- Flèches Désolidarisation -->
-                    <div class="flex flex-col justify-center items-center px-4 anim-element anim-scale delay-400 py-4 md:py-0">
-                        <i class="fas fa-link text-4xl text-brand-accent mb-2"></i>
-                        <span class="text-sm font-bold text-blue-400 uppercase tracking-widest text-center">Connexion<br>Directe</span>
+                    <div class="flex flex-col justify-center items-center px-4 anim-element anim-scale delay-400 py-2 md:py-0">
+                        <i class="fas fa-link text-3xl md:text-4xl text-brand-accent mb-1 md:mb-2 transform rotate-90 md:rotate-0"></i>
+                        <span class="text-[10px] md:text-sm font-bold text-blue-400 uppercase tracking-widest text-center hidden md:block">Connexion<br>Directe</span>
                     </div>
 
                     <!-- Le Cash / Mastercard (Conservé et fluide) -->
-                    <div class="flex-1 glass-card p-8 border-t-4 border-blue-500 anim-element anim-right delay-500 relative bg-slate-900/80">
-                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg whitespace-nowrap">
+                    <div class="flex-1 glass-card p-6 md:p-8 border-t-4 border-blue-500 anim-element anim-right delay-500 relative bg-slate-900/80">
+                        <div class="absolute -top-3 md:-top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-3 md:px-4 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-lg whitespace-nowrap">
                             Dépense Distribuée
                         </div>
-                        <div class="flex justify-center space-x-6 mb-6 mt-4">
-                            <i class="fas fa-money-bill-wave text-5xl text-emerald-500"></i>
-                            <i class="fa-brands fa-cc-mastercard text-5xl text-orange-500"></i>
+                        <div class="flex justify-center space-x-4 md:space-x-6 mb-4 md:mb-6 mt-4">
+                            <i class="fas fa-money-bill-wave text-4xl md:text-5xl text-emerald-500"></i>
+                            <i class="fa-brands fa-cc-mastercard text-4xl md:text-5xl text-orange-500"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-4">Liquidité & Paiement</h3>
-                        <p class="text-slate-400 text-sm mb-4 leading-relaxed">Les rails mondiaux conservent toute leur puissance, mais sont alimentés par la blockchain.</p>
-                        <ul class="text-left space-y-3 text-slate-300">
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4">Liquidité & Paiement</h3>
+                        <p class="text-slate-400 text-xs md:text-sm mb-4 leading-relaxed">Les rails mondiaux conservent toute leur puissance, mais sont alimentés par la blockchain.</p>
+                        <ul class="text-left space-y-2 md:space-y-3 text-slate-300 text-sm md:text-base">
                             <li class="flex items-start"><i class="fas fa-bolt text-blue-400 mt-1 mr-3 w-4"></i> <strong>Fluidité absolue</strong> via carte.</li>
                             <li class="flex items-start"><i class="fas fa-globe text-blue-400 mt-1 mr-3 w-4"></i> <strong>Liberté d'action</strong> mondiale 24/7.</li>
                         </ul>
@@ -602,86 +628,89 @@
         <div class="slide" id="slide-9">
             <div class="slide-content text-center">
                 <div class="mb-4">
-                    <h2 class="text-4xl md:text-5xl font-bold anim-element delay-100">Validation <span class="gradient-text">Institutionnelle</span></h2>
-                    <p class="text-slate-400 mt-2 text-xl max-w-4xl mx-auto anim-element delay-200">
+                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-100">Validation <span class="gradient-text">Institutionnelle</span></h2>
+                    <p class="text-slate-400 mt-2 text-sm md:text-xl max-w-4xl mx-auto anim-element delay-200">
                         Cette transition n'est plus une hypothèse, c'est une certitude adoptée par Wall Street et validée par le gouvernement américain.
                     </p>
                 </div>
 
-                <!-- Timeline CSS Grid Corrigée (Aucun chevauchement) -->
-                <div class="glass-card w-full max-w-5xl mx-auto px-4 py-8 mb-8 anim-element anim-scale delay-300 border border-slate-700 bg-slate-900/60 mt-4">
-                    
-                    <!-- Ligne 1 : Texte du Haut -->
-                    <div class="grid grid-cols-4 gap-4 mb-2">
-                        <div></div> <!-- Vide -->
-                        <div class="text-center px-1 flex flex-col justify-end">
-                            <h4 class="text-sky-500 font-bold text-sm md:text-lg mb-1">Wall Street</h4>
-                            <p class="text-slate-400 text-xs leading-tight">Adoption de l'infrastructure par les géants comme BlackRock et Fidelity.</p>
+                <!-- Timeline Horizontale (Corrigée pour mobile et anti-chevauchement) -->
+                <div class="glass-card w-full max-w-5xl mx-auto px-4 py-4 md:py-6 mb-6 md:mb-8 anim-element anim-scale delay-300 border border-slate-700 bg-slate-900/60 mt-4 overflow-x-auto">
+                    <div class="min-w-[600px] relative flex flex-col justify-between items-center h-40">
+                        
+                        <!-- Ligne 1 : Textes du Haut -->
+                        <div class="w-full flex justify-between px-2 h-1/3 items-end pb-2">
+                            <div class="w-1/4"></div> <!-- Vide -->
+                            <div class="w-1/4 text-center px-1">
+                                <h4 class="text-sky-500 font-bold text-sm md:text-lg mb-1 leading-tight">Wall Street</h4>
+                                <p class="text-slate-400 text-[10px] md:text-xs leading-tight">Adoption de l'infrastructure par les géants comme BlackRock et Fidelity.</p>
+                            </div>
+                            <div class="w-1/4"></div> <!-- Vide -->
+                            <div class="w-1/4 text-center px-1">
+                                <h4 class="text-teal-400 font-bold text-sm md:text-lg mb-1 leading-tight">Aujourd'hui</h4>
+                                <p class="text-slate-400 text-[10px] md:text-xs leading-tight">Intégration massive par les fonds de pension institutionnels mondiaux.</p>
+                            </div>
                         </div>
-                        <div></div> <!-- Vide -->
-                        <div class="text-center px-1 flex flex-col justify-end">
-                            <h4 class="text-teal-400 font-bold text-sm md:text-lg mb-1">Aujourd'hui</h4>
-                            <p class="text-slate-400 text-xs leading-tight">Intégration massive par les fonds de pension institutionnels mondiaux.</p>
+
+                        <!-- Ligne 2 : Frise et Points -->
+                        <div class="w-full relative h-1/3 flex items-center">
+                            <!-- Ligne centrale continue -->
+                            <div class="absolute left-[10%] right-[10%] h-0.5 bg-slate-600 top-1/2 transform -translate-y-1/2 z-0"></div>
+                            
+                            <div class="w-full flex justify-between relative z-10 px-2">
+                                <div class="w-1/4 flex justify-center"><div class="w-4 h-4 md:w-6 md:h-6 rounded-full bg-slate-900 border-2 md:border-4 border-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.8)]"></div></div>
+                                <div class="w-1/4 flex justify-center"><div class="w-4 h-4 md:w-6 md:h-6 rounded-full bg-slate-900 border-2 md:border-4 border-sky-500 shadow-[0_0_15px_rgba(14,165,233,0.8)]"></div></div>
+                                <div class="w-1/4 flex justify-center"><div class="w-4 h-4 md:w-6 md:h-6 rounded-full bg-slate-900 border-2 md:border-4 border-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.8)]"></div></div>
+                                <div class="w-1/4 flex justify-center"><div class="w-4 h-4 md:w-6 md:h-6 rounded-full bg-slate-900 border-2 md:border-4 border-teal-400 shadow-[0_0_15px_rgba(45,212,191,0.8)]"></div></div>
+                            </div>
+                        </div>
+
+                        <!-- Ligne 3 : Textes du Bas -->
+                        <div class="w-full flex justify-between px-2 h-1/3 items-start pt-2">
+                            <div class="w-1/4 text-center px-1">
+                                <h4 class="text-blue-500 font-bold text-sm md:text-lg mb-1 leading-tight">Année 2024</h4>
+                                <p class="text-slate-400 text-[10px] md:text-xs leading-tight">Approbation historique des ETF Bitcoin et Ethereum par la SEC.</p>
+                            </div>
+                            <div class="w-1/4"></div> <!-- Vide -->
+                            <div class="w-1/4 text-center px-1">
+                                <h4 class="text-cyan-400 font-bold text-sm md:text-lg mb-1 leading-tight">Début 2026</h4>
+                                <p class="text-slate-400 text-[10px] md:text-xs leading-tight">Plus de 134 Milliards $ d'actifs gérés dans les ETF US.</p>
+                            </div>
+                            <div class="w-1/4"></div> <!-- Vide -->
                         </div>
                     </div>
-
-                    <!-- Ligne 2 : Frise et Points -->
-                    <div class="relative h-8 flex items-center justify-center w-full">
-                        <div class="absolute left-[10%] right-[10%] h-0.5 bg-slate-600 z-0"></div>
-                        <div class="grid grid-cols-4 gap-4 w-full relative z-10">
-                            <div class="flex justify-center"><div class="w-5 h-5 md:w-6 md:h-6 rounded-full bg-slate-900 border-4 border-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.8)]"></div></div>
-                            <div class="flex justify-center"><div class="w-5 h-5 md:w-6 md:h-6 rounded-full bg-slate-900 border-4 border-sky-500 shadow-[0_0_15px_rgba(14,165,233,0.8)]"></div></div>
-                            <div class="flex justify-center"><div class="w-5 h-5 md:w-6 md:h-6 rounded-full bg-slate-900 border-4 border-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.8)]"></div></div>
-                            <div class="flex justify-center"><div class="w-5 h-5 md:w-6 md:h-6 rounded-full bg-slate-900 border-4 border-teal-400 shadow-[0_0_15px_rgba(45,212,191,0.8)]"></div></div>
-                        </div>
-                    </div>
-
-                    <!-- Ligne 3 : Texte du Bas -->
-                    <div class="grid grid-cols-4 gap-4 mt-2">
-                        <div class="text-center px-1">
-                            <h4 class="text-blue-500 font-bold text-sm md:text-lg mb-1">Année 2024</h4>
-                            <p class="text-slate-400 text-xs leading-tight">Approbation historique des ETF Bitcoin et Ethereum par la SEC américaine.</p>
-                        </div>
-                        <div></div> <!-- Vide -->
-                        <div class="text-center px-1">
-                            <h4 class="text-cyan-400 font-bold text-sm md:text-lg mb-1">Début 2026</h4>
-                            <p class="text-slate-400 text-xs leading-tight">Plus de 134 Milliards $ d'actifs gérés dans les ETF US.</p>
-                        </div>
-                        <div></div> <!-- Vide -->
-                    </div>
-
                 </div>
 
                 <!-- GENIUS ACT & Bull Run -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-                    <div class="glass-card p-6 text-left anim-element anim-left delay-400 border-l-4 border-l-blue-500">
-                        <div class="flex items-center justify-between mb-3">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-5xl mx-auto">
+                    <div class="glass-card p-4 md:p-6 text-left anim-element anim-left delay-400 border-l-4 border-l-blue-500">
+                        <div class="flex items-center justify-between mb-2 md:mb-3">
                             <div class="flex items-center">
-                                <i class="fas fa-landmark-flag text-2xl text-blue-400 mr-3"></i>
-                                <h3 class="text-xl font-bold text-white">Le GENIUS Act (Loi Trump)</h3>
+                                <i class="fas fa-landmark-flag text-xl md:text-2xl text-blue-400 mr-2 md:mr-3"></i>
+                                <h3 class="text-lg md:text-xl font-bold text-white">Le GENIUS Act (Loi Trump)</h3>
                             </div>
-                            <span class="text-xs font-bold bg-blue-900/50 border border-blue-500/30 text-blue-300 px-3 py-1 rounded-full whitespace-nowrap ml-2">18 Juil. 2025</span>
+                            <span class="text-[10px] md:text-xs font-bold bg-blue-900/50 border border-blue-500/30 text-blue-300 px-2 py-1 md:px-3 md:py-1 rounded-full whitespace-nowrap ml-2">18 Juil. 2025</span>
                         </div>
-                        <p class="text-slate-300 text-sm leading-relaxed mb-2">
+                        <p class="text-slate-300 text-xs md:text-sm leading-relaxed mb-1 md:mb-2">
                             En complément de l'adoption par Wall Street, l'administration US s'apprête à autoriser officiellement chaque citoyen à détenir ses actifs sur wallet (<strong>"Be Your Own Bank"</strong>).
                         </p>
-                        <p class="text-blue-400 font-medium text-sm">
+                        <p class="text-blue-400 font-medium text-xs md:text-sm">
                             Le statut légal de la monnaie programmée sur blockchain est définitivement clarifié.
                         </p>
                     </div>
 
-                    <div class="glass-card p-6 text-left anim-element anim-right delay-500 border-l-4 border-l-teal-400 bg-teal-900/10">
-                        <div class="flex items-center justify-between mb-3">
+                    <div class="glass-card p-4 md:p-6 text-left anim-element anim-right delay-500 border-l-4 border-l-teal-400 bg-teal-900/10">
+                        <div class="flex items-center justify-between mb-2 md:mb-3">
                             <div class="flex items-center">
-                                <i class="fas fa-rocket text-2xl text-teal-400 mr-3"></i>
-                                <h3 class="text-xl font-bold text-white">Le Catalyseur Bull Run</h3>
+                                <i class="fas fa-rocket text-xl md:text-2xl text-teal-400 mr-2 md:mr-3"></i>
+                                <h3 class="text-lg md:text-xl font-bold text-white">Le Catalyseur Bull Run</h3>
                             </div>
-                            <span class="text-xs font-bold bg-teal-900/50 border border-teal-500/30 text-teal-300 px-3 py-1 rounded-full whitespace-nowrap ml-2">2025 - 2026</span>
+                            <span class="text-[10px] md:text-xs font-bold bg-teal-900/50 border border-teal-500/30 text-teal-300 px-2 py-1 md:px-3 md:py-1 rounded-full whitespace-nowrap ml-2">2025 - 2026</span>
                         </div>
-                        <p class="text-slate-300 text-sm leading-relaxed mb-2">
+                        <p class="text-slate-300 text-xs md:text-sm leading-relaxed mb-1 md:mb-2">
                             En offrant cette clarté institutionnelle à la première économie mondiale, le dernier frein psychologique saute.
                         </p>
-                        <p class="text-teal-400 font-medium text-sm">
+                        <p class="text-teal-400 font-medium text-xs md:text-sm">
                             Cette reconnaissance étatique valide massivement l'infrastructure numérique et alimente directement un marché haussier structurel.
                         </p>
                     </div>
@@ -692,22 +721,22 @@
         <!-- SLIDE 10 : LES DEUX MONDES DE LA CRYPTO -->
         <div class="slide" id="slide-10">
             <div class="slide-content text-center">
-                <div class="mb-10">
-                    <h2 class="text-4xl font-bold anim-element delay-100">Démystifier la "Crypto"</h2>
-                    <p class="text-slate-400 mt-4 text-xl max-w-3xl mx-auto anim-element delay-200">
+                <div class="mb-6 md:mb-10">
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">Démystifier la "Crypto"</h2>
+                    <p class="text-slate-400 mt-2 md:mt-4 text-sm md:text-xl max-w-3xl mx-auto anim-element delay-200">
                         Le terme "Crypto" fait peur aux novices car il mélange tout. Séparons les deux usages réels qui cohabitent sur la Blockchain.
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl mx-auto mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full max-w-5xl mx-auto mt-2 md:mt-4">
                     <!-- Monde 1 : Volatil -->
-                    <div class="glass-card p-10 anim-element anim-left delay-300 border-t-4 border-orange-500">
-                        <div class="w-20 h-20 mx-auto rounded-full bg-orange-900/30 flex items-center justify-center mb-6 text-orange-400 text-4xl">
+                    <div class="glass-card p-6 md:p-10 anim-element anim-left delay-300 border-t-4 border-orange-500">
+                        <div class="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-full bg-orange-900/30 flex items-center justify-center mb-4 md:mb-6 text-orange-400 text-3xl md:text-4xl">
                             <i class="fab fa-bitcoin"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">1. L'Actif Volatil</h3>
-                        <p class="text-orange-400 font-medium mb-6 uppercase tracking-wider text-sm">Réserve de Valeur / Spéculation</p>
-                        <ul class="text-left text-slate-300 space-y-4">
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-1 md:mb-2">1. L'Actif Volatil</h3>
+                        <p class="text-orange-400 font-medium mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm">Réserve de Valeur / Spéculation</p>
+                        <ul class="text-left text-slate-300 space-y-3 md:space-y-4 text-sm md:text-base">
                             <li><i class="fas fa-chart-area text-orange-500 mr-2"></i> <strong>Exemples :</strong> Bitcoin (BTC), Ethereum (ETH).</li>
                             <li><i class="fas fa-arrow-trend-up text-orange-500 mr-2"></i> <strong>Le But :</strong> L'investissement. Le prix monte ou descend selon l'offre et la demande.</li>
                             <li><i class="fas fa-times-circle text-orange-500 mr-2"></i> <strong>Problème :</strong> Difficile à utiliser pour payer un café si son prix change de 10% dans la journée.</li>
@@ -715,13 +744,13 @@
                     </div>
 
                     <!-- Monde 2 : Stable -->
-                    <div class="glass-card p-10 anim-element anim-right delay-400 border-t-4 border-emerald-500 bg-emerald-900/10">
-                        <div class="w-20 h-20 mx-auto rounded-full bg-emerald-900/50 flex items-center justify-center mb-6 text-emerald-400 text-4xl">
+                    <div class="glass-card p-6 md:p-10 anim-element anim-right delay-400 border-t-4 border-emerald-500 bg-emerald-900/10">
+                        <div class="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-full bg-emerald-900/50 flex items-center justify-center mb-4 md:mb-6 text-emerald-400 text-3xl md:text-4xl">
                             <i class="fas fa-dollar-sign"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">2. L'Actif Stable (Stablecoin)</h3>
-                        <p class="text-emerald-400 font-medium mb-6 uppercase tracking-wider text-sm">Transport & Paiement</p>
-                        <ul class="text-left text-slate-300 space-y-4">
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-1 md:mb-2">2. L'Actif Stable (Stablecoin)</h3>
+                        <p class="text-emerald-400 font-medium mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm">Transport & Paiement</p>
+                        <ul class="text-left text-slate-300 space-y-3 md:space-y-4 text-sm md:text-base">
                             <li><i class="fas fa-coins text-emerald-500 mr-2"></i> <strong>Exemples :</strong> Tether (USDT), Circle (USDC).</li>
                             <li><i class="fas fa-equals text-emerald-500 mr-2"></i> <strong>Le But :</strong> La stabilité. Un jeton vaut TOUJOURS exactement 1 Dollar.</li>
                             <li><i class="fas fa-check-circle text-emerald-500 mr-2"></i> <strong>Avantage :</strong> C'est la monnaie parfaite pour utiliser les rails ultra-rapides de la blockchain SANS risque de perdre de la valeur.</li>
@@ -734,53 +763,53 @@
         <!-- SLIDE 11 : STABLECOINS EN DÉTAIL (TETHER/USDC/SEC) -->
         <div class="slide" id="slide-11">
             <div class="slide-content">
-                <div class="mb-10 text-center">
-                    <h2 class="text-4xl font-bold anim-element delay-100">Zoom sur la technologie utile : <span class="gradient-text">Les Stablecoins</span></h2>
-                    <p class="text-slate-400 mt-2 text-xl max-w-4xl mx-auto anim-element delay-200">
+                <div class="mb-6 md:mb-10 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">Zoom sur la technologie utile : <span class="gradient-text">Les Stablecoins</span></h2>
+                    <p class="text-slate-400 mt-2 text-sm md:text-xl max-w-4xl mx-auto anim-element delay-200">
                         Pour que le jeton vaille toujours 1$, il faut une garantie réelle derrière. C'est ici qu'intervient la régulation financière.
                     </p>
                 </div>
 
-                <div class="flex flex-col md:flex-row items-center gap-10 mt-4">
-                    <div class="w-full md:w-1/3 flex flex-col items-center justify-center gap-6 anim-element anim-left delay-300">
-                        <div class="flex flex-col gap-6 w-full max-w-xs mx-auto">
+                <div class="flex flex-col md:flex-row items-center gap-6 md:gap-10 mt-2 md:mt-4">
+                    <div class="w-full md:w-1/3 flex flex-col items-center justify-center gap-4 md:gap-6 anim-element anim-left delay-300">
+                        <div class="flex flex-row md:flex-col gap-4 md:gap-6 w-full max-w-xs mx-auto justify-center">
                             <!-- USDT -->
-                            <div class="flex items-center space-x-4 bg-slate-800/50 p-4 rounded-xl border border-slate-700">
-                                <div class="w-16 h-16 rounded-full bg-[#009393] flex items-center justify-center border-2 border-slate-700 shadow-[0_0_15px_rgba(0,147,147,0.5)] shrink-0">
-                                    <span class="font-bold text-white text-2xl">₮</span>
+                            <div class="flex items-center space-x-3 md:space-x-4 bg-slate-800/50 p-3 md:p-4 rounded-xl border border-slate-700">
+                                <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#009393] flex items-center justify-center border-2 border-slate-700 shadow-[0_0_15px_rgba(0,147,147,0.5)] shrink-0">
+                                    <span class="font-bold text-white text-xl md:text-2xl">₮</span>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-white text-lg">Tether (USDT)</h4>
-                                    <p class="text-[#009393] text-xs font-medium">Capitalisation massive</p>
+                                    <h4 class="font-bold text-white text-sm md:text-lg">Tether (USDT)</h4>
+                                    <p class="text-[#009393] text-[10px] md:text-xs font-medium">Capitalisation massive</p>
                                 </div>
                             </div>
                             <!-- USDC -->
-                            <div class="flex items-center space-x-4 bg-slate-800/50 p-4 rounded-xl border border-slate-700">
-                                <div class="w-16 h-16 rounded-full bg-[#2775CA] flex items-center justify-center border-2 border-slate-700 shadow-[0_0_15px_rgba(39,117,202,0.5)] shrink-0">
-                                    <span class="font-bold text-white text-2xl">$</span>
+                            <div class="flex items-center space-x-3 md:space-x-4 bg-slate-800/50 p-3 md:p-4 rounded-xl border border-slate-700">
+                                <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#2775CA] flex items-center justify-center border-2 border-slate-700 shadow-[0_0_15px_rgba(39,117,202,0.5)] shrink-0">
+                                    <span class="font-bold text-white text-xl md:text-2xl">$</span>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-white text-lg">Circle (USDC)</h4>
-                                    <p class="text-[#2775CA] text-xs font-medium">Standard institutionnel</p>
+                                    <h4 class="font-bold text-white text-sm md:text-lg">Circle (USDC)</h4>
+                                    <p class="text-[#2775CA] text-[10px] md:text-xs font-medium">Standard institutionnel</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="w-full md:w-2/3 space-y-6">
-                        <div class="glass-card p-6 anim-element anim-right delay-400 border-l-4 border-l-emerald-500">
-                            <h3 class="font-bold text-xl md:text-2xl text-white mb-2 flex items-center"><i class="fas fa-vault text-emerald-400 w-8"></i> Sécurisation & Réserves</h3>
-                            <p class="text-slate-300 text-sm md:text-lg leading-relaxed">Pour chaque dollar numérique (USDT/USDC) en circulation, <strong>un équivalent en actifs réels</strong> (Cash ou Bons du Trésor US ultra-liquides et sûrs) est conservé dans des coffres institutionnels.</p>
+                    <div class="w-full md:w-2/3 space-y-4 md:space-y-6">
+                        <div class="glass-card p-4 md:p-6 anim-element anim-right delay-400 border-l-4 border-l-emerald-500">
+                            <h3 class="font-bold text-lg md:text-2xl text-white mb-1 md:mb-2 flex items-center"><i class="fas fa-vault text-emerald-400 w-6 md:w-8"></i> Sécurisation & Réserves</h3>
+                            <p class="text-slate-300 text-xs md:text-lg leading-relaxed">Pour chaque dollar numérique (USDT/USDC) en circulation, <strong>un équivalent en actifs réels</strong> (Cash ou Bons du Trésor US ultra-liquides et sûrs) est conservé dans des coffres institutionnels.</p>
                         </div>
 
-                        <div class="glass-card p-6 anim-element anim-right delay-500 border-l-4 border-l-blue-500">
-                            <h3 class="font-bold text-xl md:text-2xl text-white mb-2 flex items-center"><i class="fas fa-building-shield text-blue-400 w-8"></i> Le Rôle de la SEC</h3>
-                            <p class="text-slate-300 text-sm md:text-lg leading-relaxed"><strong>La SEC (Gendarme financier des États-Unis)</strong> impose des règles strictes et audite activement ces émetteurs pour s'assurer que ces réserves existent bel et bien et protègent les utilisateurs.</p>
+                        <div class="glass-card p-4 md:p-6 anim-element anim-right delay-500 border-l-4 border-l-blue-500">
+                            <h3 class="font-bold text-lg md:text-2xl text-white mb-1 md:mb-2 flex items-center"><i class="fas fa-building-shield text-blue-400 w-6 md:w-8"></i> Le Rôle de la SEC</h3>
+                            <p class="text-slate-300 text-xs md:text-lg leading-relaxed"><strong>La SEC (Gendarme financier des États-Unis)</strong> impose des règles strictes et audite activement ces émetteurs pour s'assurer que ces réserves existent bel et bien et protègent les utilisateurs.</p>
                         </div>
 
-                        <div class="glass-card p-6 anim-element anim-right delay-600 border-l-4 border-l-brand-accent">
-                            <h3 class="font-bold text-xl md:text-2xl text-white mb-2 flex items-center"><i class="fas fa-truck-fast text-brand-accent w-8"></i> Un Véhicule de Transport</h3>
-                            <p class="text-slate-300 text-sm md:text-lg leading-relaxed">Ce ne sont pas des placements. C'est simplement le <strong>véhicule parfait</strong> pour déplacer des fonds de votre épargne vers votre carte de paiement internationale, sans les lenteurs du réseau SWIFT.</p>
+                        <div class="glass-card p-4 md:p-6 anim-element anim-right delay-600 border-l-4 border-l-brand-accent">
+                            <h3 class="font-bold text-lg md:text-2xl text-white mb-1 md:mb-2 flex items-center"><i class="fas fa-truck-fast text-brand-accent w-6 md:w-8"></i> Un Véhicule de Transport</h3>
+                            <p class="text-slate-300 text-xs md:text-lg leading-relaxed">Ce ne sont pas des placements. C'est simplement le <strong>véhicule parfait</strong> pour déplacer des fonds de votre épargne vers votre carte de paiement internationale, sans les lenteurs du réseau SWIFT.</p>
                         </div>
                     </div>
                 </div>
@@ -790,62 +819,62 @@
         <!-- SLIDE 12 : L'ARCHITECTURE -->
         <div class="slide" id="slide-12">
             <div class="slide-content text-center">
-                <h2 class="text-4xl font-bold mb-4 anim-element delay-100">L'Architecture <span class="gradient-text">Simplifiée</span></h2>
-                <p class="text-slate-400 text-xl mb-12 anim-element delay-200">Comment nous transformons ces actifs en capacité de paiement quotidienne.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-2 md:mb-4 anim-element delay-100">L'Architecture <span class="gradient-text">Simplifiée</span></h2>
+                <p class="text-slate-400 text-sm md:text-xl mb-6 md:mb-12 anim-element delay-200">Comment nous transformons ces actifs en capacité de paiement quotidienne.</p>
 
-                <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 w-full relative px-2">
+                <div class="flex flex-col md:flex-row items-stretch justify-between gap-2 md:gap-4 w-full relative px-2">
                     <!-- Ligne connectrice fond -->
                     <div class="hidden md:block absolute top-1/2 left-10 right-10 h-1 bg-slate-700 -z-10 transform -translate-y-1/2"></div>
 
                     <!-- Step 1 -->
-                    <div class="glass-card p-6 w-full md:flex-1 anim-element delay-300 bg-slate-900 border-brand-accent border-2 flex flex-col justify-start">
-                        <div class="w-16 h-16 mx-auto bg-blue-900/50 rounded-full flex items-center justify-center mb-4 text-blue-400 text-2xl shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                    <div class="glass-card p-4 md:p-6 w-full md:flex-1 anim-element delay-300 bg-slate-900 border-brand-accent border-2 flex flex-col justify-start">
+                        <div class="w-12 h-12 md:w-16 md:h-16 mx-auto bg-blue-900/50 rounded-full flex items-center justify-center mb-2 md:mb-4 text-blue-400 text-xl md:text-2xl shadow-[0_0_20px_rgba(59,130,246,0.3)]">
                             <i class="fas fa-wallet"></i>
                         </div>
-                        <h3 class="font-bold text-xl text-white mb-2">1. Dépôt</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed">Alimentation par carte ou virement bancaire classique.</p>
+                        <h3 class="font-bold text-lg md:text-xl text-white mb-1 md:mb-2">1. Dépôt</h3>
+                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Alimentation par carte ou virement bancaire classique.</p>
                     </div>
 
-                    <div class="flex items-center justify-center anim-element delay-400">
-                        <i class="fas fa-chevron-right text-3xl text-slate-500 desktop-arrow-right z-10 bg-[#0f172a] px-2"></i>
-                        <i class="fas fa-chevron-down mobile-arrow-down"></i>
+                    <div class="flex items-center justify-center anim-element delay-400 py-1 md:py-0">
+                        <i class="fas fa-chevron-right text-2xl md:text-3xl text-slate-500 desktop-arrow-right z-10 bg-[#0f172a] px-2"></i>
+                        <i class="fas fa-chevron-down mobile-arrow-down text-slate-500"></i>
                     </div>
 
                     <!-- Step 2 : Tokenisation -->
-                    <div class="glass-card p-6 w-full md:flex-1 anim-element delay-500 bg-slate-900 border-sky-500 border-2 flex flex-col justify-start">
-                        <div class="w-16 h-16 mx-auto bg-sky-900/50 rounded-full flex items-center justify-center mb-4 text-sky-400 text-2xl shadow-[0_0_20px_rgba(14,165,233,0.3)]">
+                    <div class="glass-card p-4 md:p-6 w-full md:flex-1 anim-element delay-500 bg-slate-900 border-sky-500 border-2 flex flex-col justify-start">
+                        <div class="w-12 h-12 md:w-16 md:h-16 mx-auto bg-sky-900/50 rounded-full flex items-center justify-center mb-2 md:mb-4 text-sky-400 text-xl md:text-2xl shadow-[0_0_20px_rgba(14,165,233,0.3)]">
                             <i class="fas fa-coins"></i>
                         </div>
-                        <h3 class="font-bold text-xl text-white mb-2">2. Tokenisation</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed">Conversion instantanée de vos devises Fiat ($, €, £, CHF, FCFA...) en stablecoins (USDC/USDT).</p>
+                        <h3 class="font-bold text-lg md:text-xl text-white mb-1 md:mb-2">2. Tokenisation</h3>
+                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Conversion instantanée de vos devises Fiat ($, €, £, CHF, FCFA...) en stablecoins (USDC/USDT).</p>
                     </div>
 
-                    <div class="flex items-center justify-center anim-element delay-600">
-                        <i class="fas fa-chevron-right text-3xl text-slate-500 desktop-arrow-right z-10 bg-[#0f172a] px-2"></i>
-                        <i class="fas fa-chevron-down mobile-arrow-down"></i>
+                    <div class="flex items-center justify-center anim-element delay-600 py-1 md:py-0">
+                        <i class="fas fa-chevron-right text-2xl md:text-3xl text-slate-500 desktop-arrow-right z-10 bg-[#0f172a] px-2"></i>
+                        <i class="fas fa-chevron-down mobile-arrow-down text-slate-500"></i>
                     </div>
 
                     <!-- Step 3 -->
-                    <div class="glass-card p-6 w-full md:flex-1 anim-element delay-700 bg-slate-900 border-purple-500 border-2 flex flex-col justify-start">
-                        <div class="w-16 h-16 mx-auto bg-purple-900/50 rounded-full flex items-center justify-center mb-4 text-purple-400 text-2xl shadow-[0_0_20px_rgba(168,85,247,0.3)]">
+                    <div class="glass-card p-4 md:p-6 w-full md:flex-1 anim-element delay-700 bg-slate-900 border-purple-500 border-2 flex flex-col justify-start">
+                        <div class="w-12 h-12 md:w-16 md:h-16 mx-auto bg-purple-900/50 rounded-full flex items-center justify-center mb-2 md:mb-4 text-purple-400 text-xl md:text-2xl shadow-[0_0_20px_rgba(168,85,247,0.3)]">
                             <i class="fas fa-shield-halved"></i>
                         </div>
-                        <h3 class="font-bold text-xl text-white mb-2">3. Conversion</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed">Vos jetons sont reconvertis de manière sécurisée vers un compte opérationnel (CHF, USD).</p>
+                        <h3 class="font-bold text-lg md:text-xl text-white mb-1 md:mb-2">3. Conversion</h3>
+                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Vos jetons sont reconvertis de manière sécurisée vers un compte opérationnel (CHF, USD).</p>
                     </div>
 
-                    <div class="flex items-center justify-center anim-element delay-800">
-                        <i class="fas fa-chevron-right text-3xl text-slate-500 desktop-arrow-right z-10 bg-[#0f172a] px-2"></i>
-                        <i class="fas fa-chevron-down mobile-arrow-down"></i>
+                    <div class="flex items-center justify-center anim-element delay-800 py-1 md:py-0">
+                        <i class="fas fa-chevron-right text-2xl md:text-3xl text-slate-500 desktop-arrow-right z-10 bg-[#0f172a] px-2"></i>
+                        <i class="fas fa-chevron-down mobile-arrow-down text-slate-500"></i>
                     </div>
 
                     <!-- Step 4 -->
-                    <div class="glass-card p-6 w-full md:flex-1 anim-element bg-slate-900 border-emerald-500 border-2 shadow-[0_0_30px_rgba(16,185,129,0.3)] flex flex-col justify-start" style="transition-delay: 0.9s;">
-                        <div class="w-16 h-16 mx-auto bg-emerald-900/50 rounded-full flex items-center justify-center mb-4 text-emerald-400 text-2xl shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+                    <div class="glass-card p-4 md:p-6 w-full md:flex-1 anim-element bg-slate-900 border-emerald-500 border-2 shadow-[0_0_30px_rgba(16,185,129,0.3)] flex flex-col justify-start" style="transition-delay: 0.9s;">
+                        <div class="w-12 h-12 md:w-16 md:h-16 mx-auto bg-emerald-900/50 rounded-full flex items-center justify-center mb-2 md:mb-4 text-emerald-400 text-xl md:text-2xl shadow-[0_0_20px_rgba(16,185,129,0.3)]">
                             <i class="fa-brands fa-cc-mastercard"></i>
                         </div>
-                        <h3 class="font-bold text-xl text-white mb-2">4. Paiement Libre</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed">Dépensez ou retirez du cash partout dans le monde via votre carte.</p>
+                        <h3 class="font-bold text-lg md:text-xl text-white mb-1 md:mb-2">4. Paiement Libre</h3>
+                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Dépensez ou retirez du cash partout dans le monde via votre carte.</p>
                     </div>
                 </div>
             </div>
@@ -854,51 +883,51 @@
         <!-- SLIDE 13 : PLAFONDS WORLD DEBIT -->
         <div class="slide" id="slide-13">
             <div class="slide-content">
-                <div class="mb-10 text-center">
-                    <h2 class="text-4xl font-bold anim-element delay-100">Carte <span class="gradient-text">World Debit</span></h2>
-                    <p class="text-slate-400 mt-2 text-xl anim-element delay-200">Conçu pour d'importants besoins de liquidités internationales.</p>
+                <div class="mb-6 md:mb-10 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">Carte <span class="gradient-text">World Debit</span></h2>
+                    <p class="text-slate-400 mt-2 text-sm md:text-xl anim-element delay-200">Conçu pour d'importants besoins de liquidités internationales.</p>
                 </div>
 
                 <div class="glass-card overflow-hidden anim-element anim-scale delay-300 border border-slate-700 max-w-5xl mx-auto w-full">
-                    <div class="bg-gradient-to-r from-slate-900 to-slate-800 p-6 border-b border-slate-700 flex items-center justify-between">
-                        <h3 class="text-2xl font-bold text-white flex items-center"><i class="fas fa-gem text-blue-400 mr-3"></i> Limites de Transactions Officielles</h3>
-                        <i class="fa-brands fa-cc-mastercard text-4xl text-slate-500"></i>
+                    <div class="bg-gradient-to-r from-slate-900 to-slate-800 p-4 md:p-6 border-b border-slate-700 flex items-center justify-between">
+                        <h3 class="text-lg md:text-2xl font-bold text-white flex items-center"><i class="fas fa-gem text-blue-400 mr-3"></i> Limites de Transactions Officielles</h3>
+                        <i class="fa-brands fa-cc-mastercard text-3xl md:text-4xl text-slate-500"></i>
                     </div>
                     <div class="p-0 overflow-x-auto">
                         <table class="w-full text-left border-collapse min-w-[600px]">
                             <thead>
-                                <tr class="bg-slate-800/50 text-slate-300 text-sm uppercase tracking-wider">
-                                    <th class="p-5 border-b border-slate-700 font-medium">Type d'Opération</th>
-                                    <th class="p-5 border-b border-slate-700 font-medium text-right">Par Transaction</th>
-                                    <th class="p-5 border-b border-slate-700 font-medium text-right text-blue-400">Limite Journalière</th>
-                                    <th class="p-5 border-b border-slate-700 font-medium text-right">Limite Mensuelle</th>
+                                <tr class="bg-slate-800/50 text-slate-300 text-xs md:text-sm uppercase tracking-wider">
+                                    <th class="p-3 md:p-5 border-b border-slate-700 font-medium">Type d'Opération</th>
+                                    <th class="p-3 md:p-5 border-b border-slate-700 font-medium text-right">Par Transaction</th>
+                                    <th class="p-3 md:p-5 border-b border-slate-700 font-medium text-right text-blue-400">Limite Journalière</th>
+                                    <th class="p-3 md:p-5 border-b border-slate-700 font-medium text-right">Limite Mensuelle</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-white text-xl">
+                            <tbody class="text-white text-base md:text-xl">
                                 <tr class="hover:bg-slate-800/30 transition">
-                                    <td class="p-5 border-b border-slate-700"><i class="fas fa-shopping-bag text-slate-500 mr-3"></i> <strong class="text-base md:text-xl">Paiement Commerçant (POS)</strong></td>
-                                    <td class="p-5 border-b border-slate-700 text-right text-base md:text-xl">50 000 CHF</td>
-                                    <td class="p-5 border-b border-slate-700 text-right font-bold text-blue-400 text-base md:text-xl">100 000 CHF</td>
-                                    <td class="p-5 border-b border-slate-700 text-right text-base md:text-xl">200 000 CHF</td>
+                                    <td class="p-3 md:p-5 border-b border-slate-700"><i class="fas fa-shopping-bag text-slate-500 mr-3"></i> <strong>Paiement Commerçant (POS)</strong></td>
+                                    <td class="p-3 md:p-5 border-b border-slate-700 text-right">50 000 CHF</td>
+                                    <td class="p-3 md:p-5 border-b border-slate-700 text-right font-bold text-blue-400">100 000 CHF</td>
+                                    <td class="p-3 md:p-5 border-b border-slate-700 text-right">200 000 CHF</td>
                                 </tr>
                                 <tr class="hover:bg-slate-800/30 transition bg-slate-900/30">
-                                    <td class="p-5 border-b border-slate-700"><i class="fas fa-money-bill-wave text-emerald-500 mr-3"></i> <strong class="text-base md:text-xl">Retrait Espèces (ATM)</strong></td>
-                                    <td class="p-5 border-b border-slate-700 text-right text-base md:text-xl">5 000 CHF</td>
-                                    <td class="p-5 border-b border-slate-700 text-right font-bold text-emerald-400 text-base md:text-xl">25 000 CHF</td>
-                                    <td class="p-5 border-b border-slate-700 text-right text-slate-500">-</td>
+                                    <td class="p-3 md:p-5 border-b border-slate-700"><i class="fas fa-money-bill-wave text-emerald-500 mr-3"></i> <strong>Retrait Espèces (ATM)</strong></td>
+                                    <td class="p-3 md:p-5 border-b border-slate-700 text-right">5 000 CHF</td>
+                                    <td class="p-3 md:p-5 border-b border-slate-700 text-right font-bold text-emerald-400">25 000 CHF</td>
+                                    <td class="p-3 md:p-5 border-b border-slate-700 text-right text-slate-500">-</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     
-                    <div class="bg-slate-800/80 p-5 border-t border-slate-700 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-sm md:text-base">
-                        <div class="flex justify-between items-center p-3 rounded-lg bg-slate-900/50 border border-slate-700/50">
+                    <div class="bg-slate-800/80 p-4 md:p-5 border-t border-slate-700 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 text-xs md:text-base">
+                        <div class="flex justify-between items-center p-2 md:p-3 rounded-lg bg-slate-900/50 border border-slate-700/50">
                             <span class="text-slate-400">Frais d'émission (Paiement Unique)</span>
-                            <span class="font-bold text-white text-lg md:text-xl">320 CHF</span>
+                            <span class="font-bold text-white text-base md:text-xl">320 CHF</span>
                         </div>
-                        <div class="flex justify-between items-center p-3 rounded-lg bg-slate-900/50 border border-slate-700/50">
+                        <div class="flex justify-between items-center p-2 md:p-3 rounded-lg bg-slate-900/50 border border-slate-700/50">
                             <span class="text-slate-400">Frais de maintenance mensuelle / inactivité</span>
-                            <span class="font-bold text-emerald-400 text-lg md:text-xl">0 CHF</span>
+                            <span class="font-bold text-emerald-400 text-base md:text-xl">0 CHF</span>
                         </div>
                     </div>
                 </div>
@@ -908,80 +937,80 @@
         <!-- SLIDE 14 : LICENCES ET 170 PAYS -->
         <div class="slide" id="slide-14">
             <div class="slide-content">
-                <div class="mb-8 text-center">
-                    <div class="inline-block px-4 py-1 rounded-full bg-emerald-900/30 border border-emerald-500/30 text-emerald-400 mb-2 anim-element delay-100 text-sm font-bold uppercase tracking-wider">
+                <div class="mb-6 md:mb-8 text-center">
+                    <div class="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full bg-emerald-900/30 border border-emerald-500/30 text-emerald-400 mb-2 anim-element delay-100 text-[10px] md:text-sm font-bold uppercase tracking-wider">
                         KYC / AML Policy
                     </div>
-                    <h2 class="text-4xl font-bold anim-element delay-200">Couverture Mondiale & <span class="gradient-text">Conformité</span></h2>
-                    <p class="text-slate-400 mt-2 text-xl anim-element delay-300">Une infrastructure légalement armée pour on-boarder une communauté sur <strong class="text-white">plus de 170 pays</strong> (No-Risk).</p>
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-200">Couverture Mondiale & <span class="gradient-text">Conformité</span></h2>
+                    <p class="text-slate-400 mt-2 text-sm md:text-xl anim-element delay-300">Une infrastructure légalement armée pour on-boarder une communauté sur <strong class="text-white">plus de 170 pays</strong> (No-Risk).</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 w-full max-w-6xl mx-auto">
                     <!-- CH -->
-                    <div class="glass-card p-5 md:p-6 border-l-4 border-red-600 anim-element anim-left delay-400 flex items-start space-x-4">
-                        <div class="text-3xl md:text-4xl shrink-0 mt-1">🇨🇭</div>
+                    <div class="glass-card p-4 md:p-6 border-l-4 border-red-600 anim-element anim-left delay-400 flex items-start space-x-3 md:space-x-4">
+                        <div class="text-2xl md:text-4xl shrink-0 mt-1">🇨🇭</div>
                         <div>
-                            <h3 class="font-bold text-lg md:text-xl text-white mb-1">Suisse (Atomo Sàrl)</h3>
-                            <p class="text-slate-300 text-xs md:text-sm mb-2">Membre approuvé <strong class="text-brand-accent">VQF SRO</strong> (#100977).</p>
-                            <p class="text-slate-400 text-xs leading-relaxed hidden md:block">Entité officiellement reconnue, responsable de la lutte anti-blanchiment d'argent et du financement du terrorisme (AML/CFT).</p>
+                            <h3 class="font-bold text-base md:text-xl text-white mb-1">Suisse (Atomo Sàrl)</h3>
+                            <p class="text-slate-300 text-xs md:text-sm mb-1 md:mb-2">Membre approuvé <strong class="text-brand-accent">VQF SRO</strong> (#100977).</p>
+                            <p class="text-slate-400 text-[10px] md:text-xs leading-relaxed hidden md:block">Entité officiellement reconnue, responsable de la lutte anti-blanchiment d'argent et du financement du terrorisme (AML/CFT).</p>
                         </div>
                     </div>
 
                     <!-- US -->
-                    <div class="glass-card p-5 md:p-6 border-l-4 border-blue-600 anim-element anim-right delay-500 flex items-start space-x-4">
-                        <div class="text-3xl md:text-4xl shrink-0 mt-1">🇺🇸</div>
+                    <div class="glass-card p-4 md:p-6 border-l-4 border-blue-600 anim-element anim-right delay-500 flex items-start space-x-3 md:space-x-4">
+                        <div class="text-2xl md:text-4xl shrink-0 mt-1">🇺🇸</div>
                         <div>
-                            <h3 class="font-bold text-lg md:text-xl text-white mb-1">USA (Atomic Tech LLC)</h3>
-                            <p class="text-slate-300 text-xs md:text-sm mb-2">Enregistré <strong class="text-brand-accent">FinCEN</strong> & Licence MTL Floride.</p>
-                            <p class="text-slate-400 text-xs leading-relaxed hidden md:block">Approuvé comme Money Service Business par le réseau de répression des crimes financiers et l'OFR de Floride.</p>
+                            <h3 class="font-bold text-base md:text-xl text-white mb-1">USA (Atomic Tech LLC)</h3>
+                            <p class="text-slate-300 text-xs md:text-sm mb-1 md:mb-2">Enregistré <strong class="text-brand-accent">FinCEN</strong> & Licence MTL Floride.</p>
+                            <p class="text-slate-400 text-[10px] md:text-xs leading-relaxed hidden md:block">Approuvé comme Money Service Business par le réseau de répression des crimes financiers et l'OFR de Floride.</p>
                         </div>
                     </div>
 
                     <!-- CR -->
-                    <div class="glass-card p-5 md:p-6 border-l-4 border-blue-400 anim-element anim-left delay-600 flex items-start space-x-4">
-                        <div class="text-3xl md:text-4xl shrink-0 mt-1">🇨🇷</div>
+                    <div class="glass-card p-4 md:p-6 border-l-4 border-blue-400 anim-element anim-left delay-600 flex items-start space-x-3 md:space-x-4">
+                        <div class="text-2xl md:text-4xl shrink-0 mt-1">🇨🇷</div>
                         <div>
-                            <h3 class="font-bold text-lg md:text-xl text-white mb-1">Costa Rica</h3>
-                            <p class="text-slate-300 text-xs md:text-sm mb-2">Approuvé par la <strong class="text-brand-accent">SUGEF</strong>.</p>
-                            <p class="text-slate-400 text-xs leading-relaxed hidden md:block">Opérateur de change et de transfert d'argent formellement reconnu depuis Mai 2022.</p>
+                            <h3 class="font-bold text-base md:text-xl text-white mb-1">Costa Rica</h3>
+                            <p class="text-slate-300 text-xs md:text-sm mb-1 md:mb-2">Approuvé par la <strong class="text-brand-accent">SUGEF</strong>.</p>
+                            <p class="text-slate-400 text-[10px] md:text-xs leading-relaxed hidden md:block">Opérateur de change et de transfert d'argent formellement reconnu depuis Mai 2022.</p>
                         </div>
                     </div>
 
                     <!-- SV -->
-                    <div class="glass-card p-5 md:p-6 border-l-4 border-sky-400 anim-element anim-right delay-700 flex items-start space-x-4">
-                        <div class="text-3xl md:text-4xl shrink-0 mt-1">🇸🇻</div>
+                    <div class="glass-card p-4 md:p-6 border-l-4 border-sky-400 anim-element anim-right delay-700 flex items-start space-x-3 md:space-x-4">
+                        <div class="text-2xl md:text-4xl shrink-0 mt-1">🇸🇻</div>
                         <div>
-                            <h3 class="font-bold text-lg md:text-xl text-white mb-1">El Salvador</h3>
-                            <p class="text-slate-300 text-xs md:text-sm mb-2">Approuvé <strong class="text-brand-accent">SSF & Banco Central</strong>.</p>
-                            <p class="text-slate-400 text-xs leading-relaxed hidden md:block">Licence officielle en tant que processeur de paiements crypto reconnue par la Banque Centrale.</p>
+                            <h3 class="font-bold text-base md:text-xl text-white mb-1">El Salvador</h3>
+                            <p class="text-slate-300 text-xs md:text-sm mb-1 md:mb-2">Approuvé <strong class="text-brand-accent">SSF & Banco Central</strong>.</p>
+                            <p class="text-slate-400 text-[10px] md:text-xs leading-relaxed hidden md:block">Licence officielle en tant que processeur de paiements crypto reconnue par la Banque Centrale.</p>
                         </div>
                     </div>
                 </div>
-                <p class="text-center text-slate-500 text-xs md:text-sm mt-6 anim-element delay-800 px-4">*Les exceptions spécifiques (juridictions sous sanction ou High-Risk) sont traitées en session privée lors du processus d'onboarding.</p>
+                <p class="text-center text-slate-500 text-[10px] md:text-sm mt-4 md:mt-6 anim-element delay-800 px-2 md:px-4">*Les exceptions spécifiques (juridictions sous sanction ou High-Risk) sont traitées en session privée lors du processus d'onboarding.</p>
             </div>
         </div>
 
         <!-- SLIDE 15 : DISCRÉTION VS OPACITÉ -->
         <div class="slide" id="slide-15">
             <div class="slide-content text-center">
-                <h2 class="text-4xl font-bold mb-8 anim-element delay-100">Discrétion <span class="text-slate-500">≠</span> Opacité</h2>
-                <p class="text-slate-400 text-xl mb-12 anim-element delay-200">Clarifions ce que nous faisons, et ce que nous ne faisons pas.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 md:mb-8 anim-element delay-100">Discrétion <span class="text-slate-500">≠</span> Opacité</h2>
+                <p class="text-slate-400 text-sm md:text-xl mb-6 md:mb-12 anim-element delay-200">Clarifions ce que nous faisons, et ce que nous ne faisons pas.</p>
                 
-                <div class="flex flex-col md:flex-row justify-center gap-8 max-w-5xl mx-auto">
-                    <div class="flex-1 glass-card p-10 anim-element anim-left delay-300 border-t-4 border-slate-700">
-                        <div class="w-20 h-20 mx-auto bg-slate-800 rounded-full flex items-center justify-center mb-6 text-slate-400 text-3xl">
+                <div class="flex flex-col md:flex-row justify-center gap-6 md:gap-8 max-w-5xl mx-auto">
+                    <div class="flex-1 glass-card p-6 md:p-10 anim-element anim-left delay-300 border-t-4 border-slate-700">
+                        <div class="w-16 h-16 md:w-20 md:h-20 mx-auto bg-slate-800 rounded-full flex items-center justify-center mb-4 md:mb-6 text-slate-400 text-2xl md:text-3xl">
                             <i class="fas fa-mask"></i>
                         </div>
-                        <h3 class="font-bold text-2xl text-white mb-4">Ce que nous ne faisons PAS</h3>
-                        <p class="text-slate-400 leading-relaxed">Nous ne fournissons pas d'anonymat total, ni de moyens pour contourner les contrôles KYC/AML imposés par les lois internationales.</p>
+                        <h3 class="font-bold text-xl md:text-2xl text-white mb-2 md:mb-4">Ce que nous ne faisons PAS</h3>
+                        <p class="text-slate-400 text-sm md:text-base leading-relaxed">Nous ne fournissons pas d'anonymat total, ni de moyens pour contourner les contrôles KYC/AML imposés par les lois internationales.</p>
                     </div>
 
-                    <div class="flex-1 glass-card p-10 anim-element anim-right delay-500 border-t-4 border-brand-accent shadow-[0_0_30px_rgba(59,130,246,0.15)]">
-                        <div class="w-20 h-20 mx-auto bg-blue-900/50 rounded-full flex items-center justify-center mb-6 text-blue-400 text-3xl">
+                    <div class="flex-1 glass-card p-6 md:p-10 anim-element anim-right delay-500 border-t-4 border-brand-accent shadow-[0_0_30px_rgba(59,130,246,0.15)]">
+                        <div class="w-16 h-16 md:w-20 md:h-20 mx-auto bg-blue-900/50 rounded-full flex items-center justify-center mb-4 md:mb-6 text-blue-400 text-2xl md:text-3xl">
                             <i class="fas fa-user-shield"></i>
                         </div>
-                        <h3 class="font-bold text-2xl text-white mb-4">Confidentialité Opérationnelle</h3>
-                        <p class="text-slate-300 leading-relaxed"><strong>Nous cloisonnons vos flux.</strong> Votre banque principale (où réside votre épargne) n'est plus exposée aux détails de vos paiements internationaux ou de vos retraits cash.</p>
+                        <h3 class="font-bold text-xl md:text-2xl text-white mb-2 md:mb-4">Confidentialité Opérationnelle</h3>
+                        <p class="text-slate-300 text-sm md:text-base leading-relaxed"><strong>Nous cloisonnons vos flux.</strong> Votre banque principale (où réside votre épargne) n'est plus exposée aux détails de vos paiements internationaux ou de vos retraits cash.</p>
                     </div>
                 </div>
             </div>
@@ -990,49 +1019,49 @@
         <!-- SLIDE 16 : CAS D'USAGE (NOUVEAU) -->
         <div class="slide" id="slide-16">
             <div class="slide-content text-center">
-                <div class="inline-block px-4 py-1 rounded-full bg-blue-900/30 border border-blue-500/30 text-blue-400 mb-6 anim-element delay-100 text-sm font-bold tracking-widest uppercase">
+                <div class="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full bg-blue-900/30 border border-blue-500/30 text-blue-400 mb-4 md:mb-6 anim-element delay-100 text-[10px] md:text-sm font-bold tracking-widest uppercase">
                     Dans la vraie vie
                 </div>
-                <h2 class="text-4xl md:text-5xl font-bold mb-8 anim-element delay-200">De la théorie <span class="gradient-text">à la pratique</span></h2>
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 md:mb-8 anim-element delay-200">De la théorie <span class="gradient-text">à la pratique</span></h2>
                 
-                <div class="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto text-left w-full mt-4">
+                <div class="flex flex-col md:flex-row gap-6 md:gap-8 max-w-6xl mx-auto text-left w-full mt-2 md:mt-4">
                     <!-- Cas 1 -->
-                    <div class="glass-card p-8 flex-1 anim-element anim-left delay-300 border-t-4 border-purple-500 bg-slate-900/80">
-                        <div class="flex items-center mb-6">
-                            <div class="w-14 h-14 bg-purple-900/50 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-globe text-2xl text-purple-400"></i>
+                    <div class="glass-card p-6 md:p-8 flex-1 anim-element anim-left delay-300 border-t-4 border-purple-500 bg-slate-900/80">
+                        <div class="flex items-center mb-4 md:mb-6">
+                            <div class="w-10 h-10 md:w-14 md:h-14 bg-purple-900/50 rounded-full flex items-center justify-center mr-3 md:mr-4 shrink-0">
+                                <i class="fas fa-globe text-xl md:text-2xl text-purple-400"></i>
                             </div>
-                            <h3 class="text-2xl font-bold text-white">L'Entrepreneur</h3>
+                            <h3 class="text-xl md:text-2xl font-bold text-white">L'Entrepreneur</h3>
                         </div>
                         
-                        <div class="mb-6 p-4 rounded-lg border border-rose-500/30 bg-rose-900/10">
-                            <h4 class="text-rose-400 font-bold mb-2 flex items-center"><i class="fas fa-times-circle mr-2"></i> Système Bancaire</h4>
-                            <p class="text-slate-400 text-sm">Vous devez payer une facture de serveurs de 40 000 CHF à l'étranger un vendredi soir. Votre banque bloque le virement par sécurité IA et demande 3 justificatifs lundi matin.</p>
+                        <div class="mb-4 md:mb-6 p-3 md:p-4 rounded-lg border border-rose-500/30 bg-rose-900/10">
+                            <h4 class="text-rose-400 font-bold mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-times-circle mr-2"></i> Système Bancaire</h4>
+                            <p class="text-slate-400 text-xs md:text-sm">Vous devez payer une facture de serveurs de 40 000 CHF à l'étranger un vendredi soir. Votre banque bloque le virement par sécurité IA et demande 3 justificatifs lundi matin.</p>
                         </div>
                         
-                        <div class="p-4 rounded-lg border border-emerald-500/30 bg-emerald-900/10">
-                            <h4 class="text-emerald-400 font-bold mb-2 flex items-center"><i class="fas fa-check-circle mr-2"></i> World Debit</h4>
-                            <p class="text-slate-300 text-sm">Vous chargez 40k en USDC, ça passe sur la carte. C'est payé mondialement en 2 minutes, un vendredi soir à 22h.</p>
+                        <div class="p-3 md:p-4 rounded-lg border border-emerald-500/30 bg-emerald-900/10">
+                            <h4 class="text-emerald-400 font-bold mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-check-circle mr-2"></i> World Debit</h4>
+                            <p class="text-slate-300 text-xs md:text-sm">Vous chargez 40k en USDC, ça passe sur la carte. C'est payé mondialement en 2 minutes, un vendredi soir à 22h.</p>
                         </div>
                     </div>
 
                     <!-- Cas 2 -->
-                    <div class="glass-card p-8 flex-1 anim-element anim-right delay-400 border-t-4 border-emerald-500 bg-slate-900/80">
-                        <div class="flex items-center mb-6">
-                            <div class="w-14 h-14 bg-emerald-900/50 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-car text-2xl text-emerald-400"></i>
+                    <div class="glass-card p-6 md:p-8 flex-1 anim-element anim-right delay-400 border-t-4 border-emerald-500 bg-slate-900/80">
+                        <div class="flex items-center mb-4 md:mb-6">
+                            <div class="w-10 h-10 md:w-14 md:h-14 bg-emerald-900/50 rounded-full flex items-center justify-center mr-3 md:mr-4 shrink-0">
+                                <i class="fas fa-car text-xl md:text-2xl text-emerald-400"></i>
                             </div>
-                            <h3 class="text-2xl font-bold text-white">Le Résident</h3>
+                            <h3 class="text-xl md:text-2xl font-bold text-white">Le Résident</h3>
                         </div>
                         
-                        <div class="mb-6 p-4 rounded-lg border border-rose-500/30 bg-rose-900/10">
-                            <h4 class="text-rose-400 font-bold mb-2 flex items-center"><i class="fas fa-times-circle mr-2"></i> Système Bancaire</h4>
-                            <p class="text-slate-400 text-sm">Vous voulez acheter une voiture d'occasion à 20 000 CHF ce week-end. Les distributeurs ATM de votre banque locale vous limitent à 2 000 CHF par semaine.</p>
+                        <div class="mb-4 md:mb-6 p-3 md:p-4 rounded-lg border border-rose-500/30 bg-rose-900/10">
+                            <h4 class="text-rose-400 font-bold mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-times-circle mr-2"></i> Système Bancaire</h4>
+                            <p class="text-slate-400 text-xs md:text-sm">Vous voulez acheter une voiture d'occasion à 20 000 CHF ce week-end. Les distributeurs ATM de votre banque locale vous limitent à 2 000 CHF par semaine.</p>
                         </div>
                         
-                        <div class="p-4 rounded-lg border border-emerald-500/30 bg-emerald-900/10">
-                            <h4 class="text-emerald-400 font-bold mb-2 flex items-center"><i class="fas fa-check-circle mr-2"></i> World Debit</h4>
-                            <p class="text-slate-300 text-sm">La limite ATM Premium le permet : vous vous rendez au distributeur le samedi matin et retirez les 20 000 CHF en cash.</p>
+                        <div class="p-3 md:p-4 rounded-lg border border-emerald-500/30 bg-emerald-900/10">
+                            <h4 class="text-emerald-400 font-bold mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-check-circle mr-2"></i> World Debit</h4>
+                            <p class="text-slate-300 text-xs md:text-sm">La limite ATM Premium le permet : vous vous rendez au distributeur le samedi matin et retirez les 20 000 CHF en cash.</p>
                         </div>
                     </div>
                 </div>
@@ -1042,38 +1071,38 @@
         <!-- SLIDE 17 : A QUI CELA S'ADRESSE -->
         <div class="slide" id="slide-17">
             <div class="slide-content">
-                <div class="mb-10 text-center">
-                    <h2 class="text-4xl font-bold anim-element delay-100">À qui cela s'adresse ?</h2>
-                    <p class="text-slate-400 mt-2 text-xl anim-element delay-200">Des profils qui ont besoin d'un accès fluide, pas d'une contrainte supplémentaire.</p>
+                <div class="mb-6 md:mb-10 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">À qui cela s'adresse ?</h2>
+                    <p class="text-slate-400 mt-2 text-sm md:text-xl anim-element delay-200">Des profils qui ont besoin d'un accès fluide, pas d'une contrainte supplémentaire.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl mx-auto mt-4">
-                    <div class="glass-card p-6 md:p-8 flex space-x-4 md:space-x-6 items-center anim-element delay-300 border-l-4 border-orange-500">
-                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-slate-800 flex items-center justify-center text-2xl md:text-3xl text-orange-400 shrink-0"><i class="fab fa-bitcoin"></i></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full max-w-5xl mx-auto mt-2 md:mt-4">
+                    <div class="glass-card p-4 md:p-8 flex space-x-3 md:space-x-6 items-center anim-element delay-300 border-l-4 border-orange-500">
+                        <div class="w-10 h-10 md:w-16 md:h-16 rounded-full bg-slate-800 flex items-center justify-center text-xl md:text-3xl text-orange-400 shrink-0"><i class="fab fa-bitcoin"></i></div>
                         <div>
-                            <h3 class="font-bold text-lg md:text-xl text-white mb-1">L'Investisseur Crypto</h3>
-                            <p class="text-slate-400 text-sm md:text-base">Convertir une partie de ses actifs en liquidité réelle sans risquer de voir son compte bancaire local bloqué.</p>
+                            <h3 class="font-bold text-base md:text-xl text-white mb-1">L'Investisseur Crypto</h3>
+                            <p class="text-slate-400 text-xs md:text-base">Convertir une partie de ses actifs en liquidité réelle sans risquer de voir son compte bancaire local bloqué.</p>
                         </div>
                     </div>
-                    <div class="glass-card p-6 md:p-8 flex space-x-4 md:space-x-6 items-center anim-element delay-400 border-l-4 border-purple-500">
-                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-slate-800 flex items-center justify-center text-2xl md:text-3xl text-purple-400 shrink-0"><i class="fas fa-plane-departure"></i></div>
+                    <div class="glass-card p-4 md:p-8 flex space-x-3 md:space-x-6 items-center anim-element delay-400 border-l-4 border-purple-500">
+                        <div class="w-10 h-10 md:w-16 md:h-16 rounded-full bg-slate-800 flex items-center justify-center text-xl md:text-3xl text-purple-400 shrink-0"><i class="fas fa-plane-departure"></i></div>
                         <div>
-                            <h3 class="font-bold text-lg md:text-xl text-white mb-1">L'Entrepreneur International</h3>
-                            <p class="text-slate-400 text-sm md:text-base">Payer des voyages, des serveurs ou des fournisseurs B2B sans les blocages de l'IA bancaire.</p>
+                            <h3 class="font-bold text-base md:text-xl text-white mb-1">L'Entrepreneur International</h3>
+                            <p class="text-slate-400 text-xs md:text-base">Payer des voyages, des serveurs ou des fournisseurs B2B sans les blocages de l'IA bancaire.</p>
                         </div>
                     </div>
-                    <div class="glass-card p-6 md:p-8 flex space-x-4 md:space-x-6 items-center anim-element delay-500 border-l-4 border-emerald-500">
-                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-slate-800 flex items-center justify-center text-2xl md:text-3xl text-emerald-400 shrink-0"><i class="fas fa-money-bill-wave"></i></div>
+                    <div class="glass-card p-4 md:p-8 flex space-x-3 md:space-x-6 items-center anim-element delay-500 border-l-4 border-emerald-500">
+                        <div class="w-10 h-10 md:w-16 md:h-16 rounded-full bg-slate-800 flex items-center justify-center text-xl md:text-3xl text-emerald-400 shrink-0"><i class="fas fa-money-bill-wave"></i></div>
                         <div>
-                            <h3 class="font-bold text-lg md:text-xl text-white mb-1">Le Résident Européen/Suisse</h3>
-                            <p class="text-slate-400 text-sm md:text-base">Accéder à de fortes capacités de retraits cash (25 000 CHF/jour en ATM) face aux restrictions locales.</p>
+                            <h3 class="font-bold text-base md:text-xl text-white mb-1">Le Résident Européen/Suisse</h3>
+                            <p class="text-slate-400 text-xs md:text-base">Accéder à de fortes capacités de retraits cash (25 000 CHF/jour en ATM) face aux restrictions locales.</p>
                         </div>
                     </div>
-                    <div class="glass-card p-6 md:p-8 flex space-x-4 md:space-x-6 items-center anim-element delay-600 border-l-4 border-yellow-500">
-                        <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-slate-800 flex items-center justify-center text-2xl md:text-3xl text-yellow-400 shrink-0"><i class="fas fa-network-wired"></i></div>
+                    <div class="glass-card p-4 md:p-8 flex space-x-3 md:space-x-6 items-center anim-element delay-600 border-l-4 border-yellow-500">
+                        <div class="w-10 h-10 md:w-16 md:h-16 rounded-full bg-slate-800 flex items-center justify-center text-xl md:text-3xl text-yellow-400 shrink-0"><i class="fas fa-network-wired"></i></div>
                         <div>
-                            <h3 class="font-bold text-lg md:text-xl text-white mb-1">Le Bâtisseur de Réseau</h3>
-                            <p class="text-slate-400 text-sm md:text-base">Créer un réseau de recommandation mondial (sur les 170 pays) et générer du revenu via la cooptation.</p>
+                            <h3 class="font-bold text-base md:text-xl text-white mb-1">Le Bâtisseur de Réseau</h3>
+                            <p class="text-slate-400 text-xs md:text-base">Créer un réseau de recommandation mondial (sur les 170 pays) et générer du revenu via la cooptation.</p>
                         </div>
                     </div>
                 </div>
@@ -1083,32 +1112,32 @@
         <!-- SLIDE 18 : OFFRE MASTERCLASS -->
         <div class="slide" id="slide-18">
             <div class="slide-content text-center">
-                <div class="inline-block px-4 py-1 rounded-full bg-brand-accent/20 border border-brand-accent/50 text-blue-300 mb-6 anim-element delay-100 text-sm font-bold uppercase tracking-wider">
+                <div class="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full bg-brand-accent/20 border border-brand-accent/50 text-blue-300 mb-4 md:mb-6 anim-element delay-100 text-[10px] md:text-sm font-bold uppercase tracking-wider">
                     Passer à l'action
                 </div>
-                <h2 class="text-5xl font-bold mb-8 anim-element delay-200">L'Offre <span class="gradient-text">Masterclass</span></h2>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 md:mb-8 anim-element delay-200">L'Offre <span class="gradient-text">Masterclass</span></h2>
                 
-                <div class="glass-card max-w-4xl mx-auto p-12 border-2 border-brand-accent anim-element anim-scale delay-300 relative overflow-hidden shadow-[0_0_50px_rgba(59,130,246,0.3)]">
+                <div class="glass-card max-w-4xl mx-auto p-6 md:p-12 border-2 border-brand-accent anim-element anim-scale delay-300 relative overflow-hidden shadow-[0_0_50px_rgba(59,130,246,0.3)]">
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"></div>
                     <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
                     
-                    <h3 class="text-2xl font-bold text-white mb-4 relative z-10">Ouverture de compte AML + Carte World Debit</h3>
-                    <p class="text-slate-400 text-lg mb-8 relative z-10">Vous n'achetez pas seulement une carte, vous achetez un onboarding accompagné de A à Z par notre équipe.</p>
+                    <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4 relative z-10">Ouverture de compte AML + Carte World Debit</h3>
+                    <p class="text-slate-400 text-sm md:text-lg mb-6 md:mb-8 relative z-10">Vous n'achetez pas seulement une carte, vous achetez un onboarding accompagné de A à Z par notre équipe.</p>
                     
-                    <div class="flex items-end justify-center space-x-6 mb-8 relative z-10">
-                        <span class="text-7xl font-bold text-white drop-shadow-lg">300 CHF</span>
-                        <span class="text-3xl text-slate-500 line-through mb-2">320 CHF</span>
+                    <div class="flex items-end justify-center space-x-4 md:space-x-6 mb-6 md:mb-8 relative z-10">
+                        <span class="text-5xl md:text-7xl font-bold text-white drop-shadow-lg">300 CHF</span>
+                        <span class="text-xl md:text-3xl text-slate-500 line-through mb-1 md:mb-2">320 CHF</span>
                     </div>
                     
-                    <div class="w-full h-px bg-slate-700 my-8 relative z-10"></div>
+                    <div class="w-full h-px bg-slate-700 my-6 md:my-8 relative z-10"></div>
                     
-                    <div class="flex flex-col gap-4 justify-center items-center relative z-10">
-                        <p class="text-emerald-400 font-medium text-xl md:text-2xl flex items-center">
-                            <i class="fas fa-gift mr-4 text-2xl md:text-3xl"></i>
+                    <div class="flex flex-col gap-3 md:gap-4 justify-center items-center relative z-10">
+                        <p class="text-emerald-400 font-medium text-base md:text-2xl flex items-center">
+                            <i class="fas fa-gift mr-3 md:mr-4 text-xl md:text-3xl"></i>
                             Bonus Réseau : +10 CHF crédités par personne cooptée.
                         </p>
-                        <p class="text-purple-400 font-medium text-lg md:text-xl flex items-center mt-2 bg-purple-900/20 px-6 py-3 rounded-xl border border-purple-500/30">
-                            <i class="fas fa-graduation-cap mr-4 text-xl md:text-2xl"></i>
+                        <p class="text-purple-400 font-medium text-sm md:text-xl flex items-center mt-2 bg-purple-900/20 px-4 py-2 md:px-6 md:py-3 rounded-xl border border-purple-500/30 text-left md:text-center">
+                            <i class="fas fa-graduation-cap mr-3 md:mr-4 text-lg md:text-2xl shrink-0"></i>
                             Inclus : Accès exclusif à la Masterclass Niveau 2 (en construction).
                         </p>
                     </div>
@@ -1119,38 +1148,38 @@
         <!-- SLIDE 19 : PROCESSUS D'ONBOARDING -->
         <div class="slide" id="slide-19">
             <div class="slide-content text-center">
-                <h2 class="text-4xl font-bold mb-6 anim-element delay-100">Et maintenant ? Le Processus</h2>
-                <p class="text-xl text-slate-400 mb-12 anim-element delay-200">Ne prenez aucun risque seul. Nous vous accompagnons à chaque étape.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 md:mb-6 anim-element delay-100">Et maintenant ? Le Processus</h2>
+                <p class="text-sm md:text-xl text-slate-400 mb-8 md:mb-12 anim-element delay-200">Ne prenez aucun risque seul. Nous vous accompagnons à chaque étape.</p>
 
-                <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 max-w-5xl mx-auto mb-16 px-4">
-                    <div class="glass-card p-6 w-full md:w-1/4 anim-element delay-300">
-                        <div class="text-3xl text-blue-400 mb-3"><i class="fab fa-whatsapp"></i></div>
-                        <h4 class="font-bold text-lg text-white mb-1">1. Contact</h4>
-                        <p class="text-slate-400 text-sm">Réservez via le formulaire ou WhatsApp.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-6 max-w-5xl mx-auto md:mb-16 px-4">
+                    <div class="glass-card p-4 md:p-6 w-full md:w-1/4 anim-element delay-300">
+                        <div class="text-2xl md:text-3xl text-blue-400 mb-2 md:mb-3"><i class="fab fa-whatsapp"></i></div>
+                        <h4 class="font-bold text-base md:text-lg text-white mb-1">1. Contact</h4>
+                        <p class="text-slate-400 text-xs md:text-sm">Réservez via le formulaire ou WhatsApp.</p>
                     </div>
-                    <i class="fas fa-arrow-right text-2xl text-slate-600 desktop-arrow-right anim-element delay-400"></i>
-                    <i class="fas fa-arrow-down mobile-arrow-down anim-element delay-400"></i>
+                    <i class="fas fa-arrow-right text-2xl text-slate-600 desktop-arrow-right anim-element delay-400 hidden md:block"></i>
+                    <i class="fas fa-arrow-down mobile-arrow-down text-slate-500 anim-element delay-400"></i>
                     
-                    <div class="glass-card p-6 w-full md:w-1/4 anim-element delay-500 border-b-4 border-brand-accent bg-slate-800">
-                        <div class="text-3xl text-brand-accent mb-3"><i class="fas fa-handshake"></i></div>
-                        <h4 class="font-bold text-lg text-white mb-1">2. Session Privée</h4>
-                        <p class="text-slate-400 text-sm">Validation du besoin (Pays, source de fonds).</p>
+                    <div class="glass-card p-4 md:p-6 w-full md:w-1/4 anim-element delay-500 border-b-4 border-brand-accent bg-slate-800">
+                        <div class="text-2xl md:text-3xl text-brand-accent mb-2 md:mb-3"><i class="fas fa-handshake"></i></div>
+                        <h4 class="font-bold text-base md:text-lg text-white mb-1">2. Session Privée</h4>
+                        <p class="text-slate-400 text-xs md:text-sm">Validation du besoin (Pays, source de fonds).</p>
                     </div>
-                    <i class="fas fa-arrow-right text-2xl text-slate-600 desktop-arrow-right anim-element delay-600"></i>
-                    <i class="fas fa-arrow-down mobile-arrow-down anim-element delay-600"></i>
+                    <i class="fas fa-arrow-right text-2xl text-slate-600 desktop-arrow-right anim-element delay-600 hidden md:block"></i>
+                    <i class="fas fa-arrow-down mobile-arrow-down text-slate-500 anim-element delay-600"></i>
                     
-                    <div class="glass-card p-6 w-full md:w-1/4 anim-element delay-700">
-                        <div class="text-3xl text-purple-400 mb-3"><i class="fas fa-id-card"></i></div>
-                        <h4 class="font-bold text-lg text-white mb-1">3. KYC / AML</h4>
-                        <p class="text-slate-400 text-sm">Vérification de conformité de l'identité.</p>
+                    <div class="glass-card p-4 md:p-6 w-full md:w-1/4 anim-element delay-700">
+                        <div class="text-2xl md:text-3xl text-purple-400 mb-2 md:mb-3"><i class="fas fa-id-card"></i></div>
+                        <h4 class="font-bold text-base md:text-lg text-white mb-1">3. KYC / AML</h4>
+                        <p class="text-slate-400 text-xs md:text-sm">Vérification de conformité de l'identité.</p>
                     </div>
-                    <i class="fas fa-arrow-right text-2xl text-slate-600 desktop-arrow-right anim-element delay-800"></i>
-                    <i class="fas fa-arrow-down mobile-arrow-down anim-element delay-800"></i>
+                    <i class="fas fa-arrow-right text-2xl text-slate-600 desktop-arrow-right anim-element delay-800 hidden md:block"></i>
+                    <i class="fas fa-arrow-down mobile-arrow-down text-slate-500 anim-element delay-800"></i>
                     
-                    <div class="glass-card p-6 w-full md:w-1/4 anim-element delay-800">
-                        <div class="text-3xl text-emerald-400 mb-3"><i class="fas fa-check-circle"></i></div>
-                        <h4 class="font-bold text-lg text-white mb-1">4. Activation</h4>
-                        <p class="text-slate-400 text-sm">Carte World Debit et premier dépôt.</p>
+                    <div class="glass-card p-4 md:p-6 w-full md:w-1/4 anim-element delay-800">
+                        <div class="text-2xl md:text-3xl text-emerald-400 mb-2 md:mb-3"><i class="fas fa-check-circle"></i></div>
+                        <h4 class="font-bold text-base md:text-lg text-white mb-1">4. Activation</h4>
+                        <p class="text-slate-400 text-xs md:text-sm">Carte World Debit et premier dépôt.</p>
                     </div>
                 </div>
             </div>
@@ -1159,27 +1188,27 @@
         <!-- SLIDE 20 : Q&A (PUBLIC) -->
         <div class="slide" id="slide-20">
             <div class="slide-content text-center">
-                <div class="w-20 h-20 mx-auto bg-blue-900/50 rounded-full flex items-center justify-center mb-6 text-blue-400 text-4xl anim-element delay-100">
+                <div class="w-16 h-16 md:w-20 md:h-20 mx-auto bg-blue-900/50 rounded-full flex items-center justify-center mb-4 md:mb-6 text-blue-400 text-3xl md:text-4xl anim-element delay-100">
                     <i class="fas fa-comments"></i>
                 </div>
-                <h2 class="text-5xl font-bold mb-6 anim-element delay-200">Questions d'ordre général</h2>
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 md:mb-6 anim-element delay-200">Questions d'ordre général</h2>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto mt-4 md:mt-8 text-left px-4">
-                    <div class="glass-card p-5 md:p-6 anim-element anim-left delay-300">
-                        <h4 class="font-bold text-blue-400 mb-2 flex items-center"><i class="fas fa-question-circle mr-2"></i> Dois-je posséder de la crypto ?</h4>
-                        <p class="text-slate-300 text-sm md:text-base">Non. La recharge du compte peut se faire en stablecoins, mais aussi par simple virement bancaire ou carte de crédit.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 max-w-4xl mx-auto mt-2 md:mt-8 text-left px-2 md:px-4">
+                    <div class="glass-card p-4 md:p-6 anim-element anim-left delay-300">
+                        <h4 class="font-bold text-blue-400 mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-question-circle mr-2"></i> Dois-je posséder de la crypto ?</h4>
+                        <p class="text-slate-300 text-xs md:text-base">Non. La recharge du compte peut se faire en stablecoins, mais aussi par simple virement bancaire ou carte de crédit.</p>
                     </div>
-                    <div class="glass-card p-5 md:p-6 anim-element anim-right delay-400">
-                        <h4 class="font-bold text-blue-400 mb-2 flex items-center"><i class="fas fa-question-circle mr-2"></i> Le stablecoin est garanti par l'État ?</h4>
-                        <p class="text-slate-300 text-sm md:text-base">Non. Il est audité par la SEC et repose sur des réserves privées tangibles (Bons du Trésor). Ce n'est pas une monnaie d'État.</p>
+                    <div class="glass-card p-4 md:p-6 anim-element anim-right delay-400">
+                        <h4 class="font-bold text-blue-400 mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-question-circle mr-2"></i> Le stablecoin est garanti par l'État ?</h4>
+                        <p class="text-slate-300 text-xs md:text-base">Non. Il est audité par la SEC et repose sur des réserves privées tangibles (Bons du Trésor). Ce n'est pas une monnaie d'État.</p>
                     </div>
-                    <div class="glass-card p-5 md:p-6 anim-element anim-left delay-500">
-                        <h4 class="font-bold text-blue-400 mb-2 flex items-center"><i class="fas fa-question-circle mr-2"></i> Puis-je payer partout ?</h4>
-                        <p class="text-slate-300 text-sm md:text-base">Oui. La carte World Debit fonctionne mondialement sur tout le réseau Mastercard (TPE, Internet, ATM).</p>
+                    <div class="glass-card p-4 md:p-6 anim-element anim-left delay-500">
+                        <h4 class="font-bold text-blue-400 mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-question-circle mr-2"></i> Puis-je payer partout ?</h4>
+                        <p class="text-slate-300 text-xs md:text-base">Oui. La carte World Debit fonctionne mondialement sur tout le réseau Mastercard (TPE, Internet, ATM).</p>
                     </div>
-                    <div class="glass-card p-5 md:p-6 anim-element anim-right delay-600">
-                        <h4 class="font-bold text-blue-400 mb-2 flex items-center"><i class="fas fa-question-circle mr-2"></i> Est-ce anonyme ?</h4>
-                        <p class="text-slate-300 text-sm md:text-base">Non. C'est confidentiel (cloisonné de votre banque) mais 100% régulé. L'onboarding impose un KYC strict.</p>
+                    <div class="glass-card p-4 md:p-6 anim-element anim-right delay-600">
+                        <h4 class="font-bold text-blue-400 mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-question-circle mr-2"></i> Est-ce anonyme ?</h4>
+                        <p class="text-slate-300 text-xs md:text-base">Non. C'est confidentiel (cloisonné de votre banque) mais 100% régulé. L'onboarding impose un KYC strict.</p>
                     </div>
                 </div>
             </div>
@@ -1188,20 +1217,20 @@
         <!-- SLIDE 21 : Q&A (PRIVÉ) -->
         <div class="slide" id="slide-21">
             <div class="slide-content text-center">
-                <div class="w-20 h-20 mx-auto bg-rose-900/50 rounded-full flex items-center justify-center mb-6 text-rose-400 text-4xl anim-element delay-100">
+                <div class="w-16 h-16 md:w-20 md:h-20 mx-auto bg-rose-900/50 rounded-full flex items-center justify-center mb-4 md:mb-6 text-rose-400 text-3xl md:text-4xl anim-element delay-100">
                     <i class="fas fa-lock"></i>
                 </div>
-                <h2 class="text-5xl font-bold mb-6 anim-element delay-200">Questions Personnelles</h2>
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 md:mb-6 anim-element delay-200">Questions Personnelles</h2>
                 
-                <p class="text-xl text-slate-400 mb-12 anim-element delay-300 max-w-3xl mx-auto px-4">
+                <p class="text-sm md:text-xl text-slate-400 mb-8 md:mb-12 anim-element delay-300 max-w-3xl mx-auto px-4">
                     Afin de garantir votre totale confidentialité, certains sujets ne seront traités qu'en tête-à-tête.
                 </p>
 
-                <div class="glass-card p-8 md:p-10 max-w-2xl mx-auto text-left border-l-4 border-rose-500 anim-element delay-400 mx-4">
-                    <p class="text-white text-lg mb-6 leading-relaxed">
+                <div class="glass-card p-6 md:p-10 max-w-2xl mx-auto text-left border-l-4 border-rose-500 anim-element delay-400 mx-4">
+                    <p class="text-white text-base md:text-lg mb-4 md:mb-6 leading-relaxed">
                         Ces sujets sont <strong>exclusivement réservés à votre Session Privée</strong> d'onboarding :
                     </p>
-                    <ul class="space-y-4 text-slate-300 text-base md:text-lg">
+                    <ul class="space-y-3 md:space-y-4 text-slate-300 text-sm md:text-lg">
                         <li class="flex items-center"><i class="fas fa-file-invoice-dollar text-rose-500 mr-3"></i> Votre fiscalité privée et locale</li>
                         <li class="flex items-center"><i class="fas fa-money-check-alt text-rose-500 mr-3"></i> L'origine de vos fonds et justificatifs</li>
                         <li class="flex items-center"><i class="fas fa-globe text-rose-500 mr-3"></i> Vérification de votre pays de résidence</li>
@@ -1214,11 +1243,11 @@
         <!-- SLIDE 22 : MINI DEMO / TRANSITION -->
         <div class="slide" id="slide-22">
             <div class="slide-content text-center">
-                <h2 class="text-4xl font-bold mb-8 anim-element delay-100">C'est le moment de l'éveil.</h2>
-                <div class="glass-card p-10 max-w-4xl mx-auto anim-element anim-scale delay-300 bg-gradient-to-br from-slate-800 to-slate-900 border-t-4 border-blue-500 mx-4">
-                    <i class="fas fa-mobile-screen-button text-6xl text-blue-400 mb-6"></i>
-                    <h3 class="text-2xl font-bold text-white mb-4">La théorie devient pratique</h3>
-                    <p class="text-slate-300 text-base md:text-lg leading-relaxed">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 md:mb-8 anim-element delay-100">C'est le moment de l'éveil.</h2>
+                <div class="glass-card p-6 md:p-10 max-w-4xl mx-auto anim-element anim-scale delay-300 bg-gradient-to-br from-slate-800 to-slate-900 border-t-4 border-blue-500 mx-4">
+                    <i class="fas fa-mobile-screen-button text-5xl md:text-6xl text-blue-400 mb-4 md:mb-6"></i>
+                    <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4">La théorie devient pratique</h3>
+                    <p class="text-slate-300 text-sm md:text-lg leading-relaxed">
                         L'application que vous installerez est votre pont direct vers ces nouveaux rails. Ce que vous déposez dessus devient instantanément utilisable avec votre carte World Debit, partout dans le monde, en vous affranchissant des limites de l'ancien modèle.
                     </p>
                 </div>
@@ -1229,22 +1258,22 @@
         <div class="slide" id="slide-23">
             <div class="slide-content text-center">
                 <div class="anim-element anim-scale delay-100">
-                    <img src="image_ba6426.png" alt="Drake Digital Logo" class="h-24 md:h-32 mx-auto object-contain mb-8" onerror="this.src='https://placehold.co/400x150/0f172a/3b82f6?text=DRAKE+DIGITAL'">
+                    <img src="image_ba6426.png" alt="Drake Digital Logo" class="h-20 md:h-32 mx-auto object-contain mb-6 md:mb-8" onerror="this.src='https://placehold.co/400x150/0f172a/3b82f6?text=DRAKE+DIGITAL'">
                 </div>
                 
-                <h2 class="text-5xl md:text-6xl font-bold mb-8 anim-element delay-200">
+                <h2 class="text-4xl md:text-6xl font-bold mb-6 md:mb-8 anim-element delay-200">
                     Votre Argent.<br><span class="gradient-text">Partout. Sans Limites.</span>
                 </h2>
                 
-                <p class="text-xl md:text-2xl text-slate-400 mb-12 anim-element delay-300 max-w-2xl mx-auto px-4">
+                <p class="text-sm md:text-2xl text-slate-400 mb-8 md:mb-12 anim-element delay-300 max-w-2xl mx-auto px-4">
                     Ce n'est pas juste une carte. C'est l'architecture de confiance de demain, prête pour vous aujourd'hui.
                 </p>
                 
                 <div class="anim-element delay-400">
-                    <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-10 rounded-full text-lg md:text-xl transition transform hover:scale-105 shadow-[0_0_20px_rgba(59,130,246,0.5)] animate-pulse-slow">
+                    <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 md:py-4 md:px-10 rounded-full text-base md:text-xl transition transform hover:scale-105 shadow-[0_0_20px_rgba(59,130,246,0.5)] animate-pulse-slow">
                         Réserver ma Session Privée
                     </button>
-                    <p class="mt-6 text-slate-500 text-sm md:text-base">Drake Digital • Masterclass Suisse & Europe</p>
+                    <p class="mt-4 md:mt-6 text-slate-500 text-xs md:text-base">Drake Digital • Masterclass Suisse & Europe</p>
                 </div>
             </div>
         </div>
@@ -1259,6 +1288,8 @@
             // Cacher tous les slides
             document.querySelectorAll('.slide').forEach(slide => {
                 slide.classList.remove('active');
+                // Remonter le scroll au top pour les slides mobiles
+                slide.scrollTop = 0;
             });
 
             // Afficher le slide actuel
@@ -1295,30 +1326,15 @@
 
         // Navigation au clavier
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === 'Space') {
+            if (e.key === 'ArrowRight') {
                 nextSlide();
             } else if (e.key === 'ArrowLeft') {
                 prevSlide();
             }
         });
 
-        // Gérer le swipe sur mobile
-        let touchstartX = 0;
-        let touchendX = 0;
-        
-        document.addEventListener('touchstart', e => {
-          touchstartX = e.changedTouches[0].screenX;
-        });
-
-        document.addEventListener('touchend', e => {
-          touchendX = e.changedTouches[0].screenX;
-          handleSwipe();
-        });
-
-        function handleSwipe() {
-          if (touchendX < touchstartX - 50) nextSlide(); // Swipe gauche
-          if (touchendX > touchstartX + 50) prevSlide(); // Swipe droite
-        }
+        // Suppression du Swipe JS qui entrait en conflit avec le Scroll vertical naturel sur mobile
+        // Le passage des slides se fait avec les boutons Précédent/Suivant, ce qui est beaucoup plus fiable.
 
         // Init
         updateSlide();
