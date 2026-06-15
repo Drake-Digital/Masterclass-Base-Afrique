@@ -608,48 +608,48 @@
                     </p>
                 </div>
 
-                <!-- Timeline Horizontale (Inspirée de l'image) -->
-                <div class="glass-card w-full max-w-5xl mx-auto px-4 py-6 mb-8 anim-element anim-scale delay-300 border border-slate-700 bg-slate-900/60 mt-4">
-                    <div class="relative flex justify-between items-center h-48 md:h-40">
-                        <!-- Ligne centrale -->
-                        <div class="absolute left-[5%] right-[5%] h-0.5 bg-slate-600 top-1/2 transform -translate-y-1/2 z-0"></div>
-                        
-                        <!-- Point 1 (Bas) -->
-                        <div class="relative z-10 w-1/4 flex flex-col justify-end h-full pb-2 md:pb-6 px-2">
-                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-slate-900 border-4 border-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.8)]"></div>
-                            <div class="mt-auto pt-6">
-                                <h4 class="text-blue-500 font-bold text-lg mb-1">Année 2024</h4>
-                                <p class="text-slate-400 text-xs md:text-sm leading-tight">Approbation historique des ETF Bitcoin et Ethereum par la SEC américaine.</p>
-                            </div>
+                <!-- Timeline CSS Grid Corrigée (Aucun chevauchement) -->
+                <div class="glass-card w-full max-w-5xl mx-auto px-4 py-8 mb-8 anim-element anim-scale delay-300 border border-slate-700 bg-slate-900/60 mt-4">
+                    
+                    <!-- Ligne 1 : Texte du Haut -->
+                    <div class="grid grid-cols-4 gap-4 mb-2">
+                        <div></div> <!-- Vide -->
+                        <div class="text-center px-1 flex flex-col justify-end">
+                            <h4 class="text-sky-500 font-bold text-sm md:text-lg mb-1">Wall Street</h4>
+                            <p class="text-slate-400 text-xs leading-tight">Adoption de l'infrastructure par les géants comme BlackRock et Fidelity.</p>
                         </div>
-
-                        <!-- Point 2 (Haut) -->
-                        <div class="relative z-10 w-1/4 flex flex-col justify-start h-full pt-2 md:pt-6 px-2">
-                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-slate-900 border-4 border-sky-500 shadow-[0_0_15px_rgba(14,165,233,0.8)]"></div>
-                            <div class="mb-auto pb-6">
-                                <h4 class="text-sky-500 font-bold text-lg mb-1">Wall Street</h4>
-                                <p class="text-slate-400 text-xs md:text-sm leading-tight">Adoption de l'infrastructure par les géants comme BlackRock et Fidelity.</p>
-                            </div>
-                        </div>
-
-                        <!-- Point 3 (Bas) -->
-                        <div class="relative z-10 w-1/4 flex flex-col justify-end h-full pb-2 md:pb-6 px-2">
-                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-slate-900 border-4 border-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.8)]"></div>
-                            <div class="mt-auto pt-6">
-                                <h4 class="text-cyan-400 font-bold text-lg mb-1">Début 2026</h4>
-                                <p class="text-slate-400 text-xs md:text-sm leading-tight">Plus de 134 Milliards $ d'actifs gérés dans les ETF US.</p>
-                            </div>
-                        </div>
-
-                        <!-- Point 4 (Haut) -->
-                        <div class="relative z-10 w-1/4 flex flex-col justify-start h-full pt-2 md:pt-6 px-2">
-                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-slate-900 border-4 border-teal-400 shadow-[0_0_15px_rgba(45,212,191,0.8)]"></div>
-                            <div class="mb-auto pb-6">
-                                <h4 class="text-teal-400 font-bold text-lg mb-1">Aujourd'hui</h4>
-                                <p class="text-slate-400 text-xs md:text-sm leading-tight">Intégration massive par les fonds de pension institutionnels mondiaux.</p>
-                            </div>
+                        <div></div> <!-- Vide -->
+                        <div class="text-center px-1 flex flex-col justify-end">
+                            <h4 class="text-teal-400 font-bold text-sm md:text-lg mb-1">Aujourd'hui</h4>
+                            <p class="text-slate-400 text-xs leading-tight">Intégration massive par les fonds de pension institutionnels mondiaux.</p>
                         </div>
                     </div>
+
+                    <!-- Ligne 2 : Frise et Points -->
+                    <div class="relative h-8 flex items-center justify-center w-full">
+                        <div class="absolute left-[10%] right-[10%] h-0.5 bg-slate-600 z-0"></div>
+                        <div class="grid grid-cols-4 gap-4 w-full relative z-10">
+                            <div class="flex justify-center"><div class="w-5 h-5 md:w-6 md:h-6 rounded-full bg-slate-900 border-4 border-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.8)]"></div></div>
+                            <div class="flex justify-center"><div class="w-5 h-5 md:w-6 md:h-6 rounded-full bg-slate-900 border-4 border-sky-500 shadow-[0_0_15px_rgba(14,165,233,0.8)]"></div></div>
+                            <div class="flex justify-center"><div class="w-5 h-5 md:w-6 md:h-6 rounded-full bg-slate-900 border-4 border-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.8)]"></div></div>
+                            <div class="flex justify-center"><div class="w-5 h-5 md:w-6 md:h-6 rounded-full bg-slate-900 border-4 border-teal-400 shadow-[0_0_15px_rgba(45,212,191,0.8)]"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Ligne 3 : Texte du Bas -->
+                    <div class="grid grid-cols-4 gap-4 mt-2">
+                        <div class="text-center px-1">
+                            <h4 class="text-blue-500 font-bold text-sm md:text-lg mb-1">Année 2024</h4>
+                            <p class="text-slate-400 text-xs leading-tight">Approbation historique des ETF Bitcoin et Ethereum par la SEC américaine.</p>
+                        </div>
+                        <div></div> <!-- Vide -->
+                        <div class="text-center px-1">
+                            <h4 class="text-cyan-400 font-bold text-sm md:text-lg mb-1">Début 2026</h4>
+                            <p class="text-slate-400 text-xs leading-tight">Plus de 134 Milliards $ d'actifs gérés dans les ETF US.</p>
+                        </div>
+                        <div></div> <!-- Vide -->
+                    </div>
+
                 </div>
 
                 <!-- GENIUS ACT & Bull Run -->
