@@ -45,6 +45,10 @@
             height: 100vh;
         }
 
+        /* --- SYSTÈME DE LANGUE --- */
+        body.lang-en .lang-fr { display: none !important; }
+        body.lang-fr .lang-en { display: none !important; }
+
         #presentation-container {
             position: relative;
             width: 100vw;
@@ -205,11 +209,44 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
 
+        #lang-switch {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            display: flex;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 0.25rem;
+            border-radius: 2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .btn-lang {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1.5rem;
+            font-size: 0.875rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #94a3b8;
+        }
+
+        .btn-lang.active {
+            background-color: #3b82f6;
+            color: #ffffff;
+        }
+
         @media (min-width: 768px) {
             #controls {
                 bottom: 2rem;
                 right: 2rem;
                 gap: 1rem;
+            }
+            #lang-switch {
+                top: 2rem;
+                right: 2rem;
             }
         }
 
@@ -260,9 +297,15 @@
         }
     </style>
 </head>
-<body>
+<body class="lang-fr">
 
     <div id="progress-bar" style="width: 0%;"></div>
+
+    <!-- Sélecteur de langue -->
+    <div id="lang-switch">
+        <div id="btn-fr" class="btn-lang active" onclick="setLang('fr')">FR</div>
+        <div id="btn-en" class="btn-lang" onclick="setLang('en')">EN</div>
+    </div>
 
     <div id="controls">
         <button id="prevBtn" class="nav-btn" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
@@ -279,18 +322,24 @@
                     <img src="image_ba6426.png" alt="Drake Digital Logo" class="h-20 md:h-28 mx-auto object-contain" onerror="this.src='https://placehold.co/400x150/0f172a/3b82f6?text=DRAKE+DIGITAL'">
                 </div>
                 <div class="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full bg-blue-900/30 border border-blue-500/30 text-blue-400 mb-4 md:mb-6 anim-element delay-200 text-xs md:text-sm font-bold tracking-widest uppercase">
-                    Masterclass • Suisse & Europe
+                    <span class="lang-fr">Masterclass • Suisse & Europe</span>
+                    <span class="lang-en">Masterclass • Switzerland & Europe</span>
                 </div>
                 <h1 class="text-4xl md:text-7xl font-bold leading-tight mb-4 md:mb-6 anim-element delay-300">
-                    Confidentialité <span class="gradient-text">Opérationnelle</span><br>& Liberté de Paiement
+                    <span class="lang-fr">Confidentialité <span class="gradient-text">Opérationnelle</span><br>& Liberté de Paiement</span>
+                    <span class="lang-en">Operational <span class="gradient-text">Privacy</span><br>& Payment Freedom</span>
                 </h1>
                 <p class="text-lg md:text-2xl text-slate-400 max-w-3xl anim-element delay-400 px-4">
-                    L'éveil des consciences financières : Comment transformer vos fonds en capacité de paiement internationale.
+                    <span class="lang-fr">L'éveil des consciences : Comment transformer vos fonds en véritable capacité de paiement internationale.</span>
+                    <span class="lang-en">Financial Awakening: How to transform your funds into true international payment capacity.</span>
                 </p>
                 <div class="mt-8 md:mt-12 flex space-x-4 anim-element delay-500">
                     <div class="glass-card px-4 py-2 md:px-6 md:py-3 flex items-center space-x-3 border border-slate-700">
                         <i class="fa-brands fa-cc-mastercard text-orange-500 text-xl md:text-2xl"></i>
-                        <span class="font-medium text-slate-300 text-sm md:text-base">Carte World Debit</span>
+                        <span class="font-medium text-slate-300 text-sm md:text-base">
+                            <span class="lang-fr">Carte World Debit</span>
+                            <span class="lang-en">World Debit Card</span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -300,8 +349,14 @@
         <div class="slide" id="slide-2">
             <div class="slide-content">
                 <div class="mb-8 md:mb-10 text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">Les objectifs de cette rencontre</h2>
-                    <p class="text-slate-400 mt-2 md:mt-3 text-lg md:text-xl anim-element delay-200">Éveil des consciences et structuration d'une communauté globale.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">
+                        <span class="lang-fr">Les objectifs de cette rencontre</span>
+                        <span class="lang-en">The objectives of this meeting</span>
+                    </h2>
+                    <p class="text-slate-400 mt-2 md:mt-3 text-lg md:text-xl anim-element delay-200">
+                        <span class="lang-fr">Éveil des consciences et structuration d'une communauté globale.</span>
+                        <span class="lang-en">Awakening awareness and structuring a global community.</span>
+                    </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full mt-2 md:mt-4">
@@ -309,24 +364,42 @@
                         <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-blue-900/50 text-blue-400 flex items-center justify-center text-xl md:text-2xl mb-4 md:mb-6">
                             <i class="fas fa-eye"></i>
                         </div>
-                        <h3 class="font-bold text-xl md:text-2xl mb-2 md:mb-4 text-white">Éveil des Consciences</h3>
-                        <p class="text-slate-400 text-sm md:text-base leading-relaxed">Comprendre les enjeux profonds de notre époque et identifier les signes des changements monétaires majeurs (IA, Régulation, Rails).</p>
+                        <h3 class="font-bold text-xl md:text-2xl mb-2 md:mb-4 text-white">
+                            <span class="lang-fr">Éveil des Consciences</span>
+                            <span class="lang-en">Awakening Awareness</span>
+                        </h3>
+                        <p class="text-slate-400 text-sm md:text-base leading-relaxed">
+                            <span class="lang-fr">Comprendre les enjeux profonds de notre époque et identifier les signes des changements monétaires majeurs (IA, Régulation, Nouvelles technologies).</span>
+                            <span class="lang-en">Understand the deep issues of our time and identify the signs of major monetary changes (AI, Regulation, New technologies).</span>
+                        </p>
                     </div>
                     
                     <div class="glass-card p-6 md:p-8 anim-element delay-400 hover:bg-slate-800 transition duration-300 transform hover:-translate-y-2 border-t-4 border-t-emerald-500">
                         <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-emerald-900/50 text-emerald-400 flex items-center justify-center text-xl md:text-2xl mb-4 md:mb-6">
                             <i class="fas fa-globe-americas"></i>
                         </div>
-                        <h3 class="font-bold text-xl md:text-2xl mb-2 md:mb-4 text-white">Portée Mondiale</h3>
-                        <p class="text-slate-400 text-sm md:text-base leading-relaxed">Découvrir un mécanisme opérationnel avec une intégration AML fonctionnelle et "No-Risk" sur <strong class="text-emerald-400">plus de 170 pays</strong>.</p>
+                        <h3 class="font-bold text-xl md:text-2xl mb-2 md:mb-4 text-white">
+                            <span class="lang-fr">Portée Mondiale</span>
+                            <span class="lang-en">Global Reach</span>
+                        </h3>
+                        <p class="text-slate-400 text-sm md:text-base leading-relaxed">
+                            <span class="lang-fr">Découvrir un mécanisme opérationnel sécurisé et conforme aux lois sur <strong class="text-emerald-400">plus de 170 pays</strong>.</span>
+                            <span class="lang-en">Discover a secure operational mechanism compliant with laws in <strong class="text-emerald-400">over 170 countries</strong>.</span>
+                        </p>
                     </div>
 
                     <div class="glass-card p-6 md:p-8 anim-element delay-500 hover:bg-slate-800 transition duration-300 transform hover:-translate-y-2 border-t-4 border-t-purple-500">
                         <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-purple-900/50 text-purple-400 flex items-center justify-center text-xl md:text-2xl mb-4 md:mb-6">
                             <i class="fas fa-users"></i>
                         </div>
-                        <h3 class="font-bold text-xl md:text-2xl mb-2 md:mb-4 text-white">Communauté Forte</h3>
-                        <p class="text-slate-400 text-sm md:text-base leading-relaxed">Consolider un réseau mondial d'acteurs avertis, capables de sécuriser leurs opérations et d'accompagner leurs pairs via la cooptation.</p>
+                        <h3 class="font-bold text-xl md:text-2xl mb-2 md:mb-4 text-white">
+                            <span class="lang-fr">Communauté Forte</span>
+                            <span class="lang-en">Strong Community</span>
+                        </h3>
+                        <p class="text-slate-400 text-sm md:text-base leading-relaxed">
+                            <span class="lang-fr">Consolider un réseau mondial de personnes averties, capables de sécuriser leurs opérations et d'accompagner leurs proches via la recommandation.</span>
+                            <span class="lang-en">Consolidate a global network of informed people, able to secure their operations and support their network through recommendation.</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -336,8 +409,14 @@
         <div class="slide" id="slide-3">
             <div class="slide-content">
                 <div class="mb-6 md:mb-10 text-center md:text-left">
-                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">Qui suis-je ? <span class="gradient-text">Steeve Yenot</span></h2>
-                    <p class="text-slate-400 mt-2 text-lg md:text-xl anim-element delay-200">Comprendre les processus pour anticiper les changements.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">
+                        <span class="lang-fr">Qui suis-je ? <span class="gradient-text">Steeve Yenot</span></span>
+                        <span class="lang-en">Who am I? <span class="gradient-text">Steeve Yenot</span></span>
+                    </h2>
+                    <p class="text-slate-400 mt-2 text-lg md:text-xl anim-element delay-200">
+                        <span class="lang-fr">Comprendre les rouages pour anticiper les changements.</span>
+                        <span class="lang-en">Understanding the mechanics to anticipate changes.</span>
+                    </p>
                 </div>
                 
                 <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-center">
@@ -353,18 +432,39 @@
                     
                     <div class="w-full md:w-2/3 space-y-4 md:space-y-6">
                         <div class="glass-card p-4 md:p-6 border-l-4 border-blue-500 anim-element anim-right delay-400">
-                            <h3 class="font-bold text-white mb-2 md:mb-3 text-lg md:text-xl flex items-center"><i class="fas fa-industry text-blue-400 w-6 md:w-8"></i> 20 ans d'expertise Industrie 4.0</h3>
-                            <p class="text-slate-300 text-sm md:text-base leading-relaxed">Leader en transformation industrielle et automatisation. Mon métier a toujours été de concevoir et d'optimiser des processus complexes en partant d'une compréhension globale de l'exécution et des flux (ex: Chef de Systèmes de Production chez Liebherr).</p>
+                            <h3 class="font-bold text-white mb-2 md:mb-3 text-lg md:text-xl flex items-center">
+                                <i class="fas fa-industry text-blue-400 w-6 md:w-8"></i> 
+                                <span class="lang-fr">20 ans d'expertise dans l'Industrie</span>
+                                <span class="lang-en">20 years of Industry expertise</span>
+                            </h3>
+                            <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                                <span class="lang-fr">Expert en transformation et automatisation. Mon métier a toujours été de concevoir et d'optimiser des processus complexes en partant d'une compréhension globale (ex: Chef de Systèmes de Production chez Liebherr).</span>
+                                <span class="lang-en">Expert in transformation and automation. My job has always been to design and optimize complex processes based on a global understanding (e.g., Head of Production Systems at Liebherr).</span>
+                            </p>
                         </div>
                         
                         <div class="glass-card p-4 md:p-6 border-l-4 border-purple-500 anim-element anim-right delay-500">
-                            <h3 class="font-bold text-white mb-2 md:mb-3 text-lg md:text-xl flex items-center"><i class="fas fa-eye text-purple-400 w-6 md:w-8"></i> L'éveil face aux enjeux actuels</h3>
-                            <p class="text-slate-300 text-sm md:text-base leading-relaxed">Inquiet, comme beaucoup, des bouleversements macro-économiques majeurs de notre époque, j'ai cherché à comprendre les changements monétaires en cours (dette, IA, régulations).</p>
+                            <h3 class="font-bold text-white mb-2 md:mb-3 text-lg md:text-xl flex items-center">
+                                <i class="fas fa-eye text-purple-400 w-6 md:w-8"></i> 
+                                <span class="lang-fr">L'éveil face aux enjeux actuels</span>
+                                <span class="lang-en">Awakening to current challenges</span>
+                            </h3>
+                            <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                                <span class="lang-fr">Inquiet, comme beaucoup, des bouleversements économiques majeurs de notre époque, j'ai cherché à comprendre comment les règles de l'argent étaient en train de changer sous nos yeux.</span>
+                                <span class="lang-en">Concerned, like many, by the major economic upheavals of our time, I sought to understand how the rules of money were changing right before our eyes.</span>
+                            </p>
                         </div>
 
                         <div class="glass-card p-4 md:p-6 border-l-4 border-emerald-500 anim-element anim-right delay-600">
-                            <h3 class="font-bold text-white mb-2 md:mb-3 text-lg md:text-xl flex items-center"><i class="fas fa-search text-emerald-400 w-6 md:w-8"></i> Identifier les solutions</h3>
-                            <p class="text-slate-300 text-sm md:text-base leading-relaxed">Grâce à mon bagage analytique, j'ai audité les infrastructures existantes pour identifier les acteurs capables de sécuriser notre liberté d'action financière pour le futur.</p>
+                            <h3 class="font-bold text-white mb-2 md:mb-3 text-lg md:text-xl flex items-center">
+                                <i class="fas fa-search text-emerald-400 w-6 md:w-8"></i> 
+                                <span class="lang-fr">Identifier les solutions</span>
+                                <span class="lang-en">Identifying solutions</span>
+                            </h3>
+                            <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                                <span class="lang-fr">Grâce à mon habitude d'analyser les systèmes, j'ai audité les infrastructures existantes pour trouver qui étaient les acteurs capables de sécuriser notre liberté d'action financière pour le futur.</span>
+                                <span class="lang-en">Thanks to my habit of analyzing systems, I audited existing infrastructures to find the players capable of securing our financial freedom of action for the future.</span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -375,8 +475,14 @@
         <div class="slide" id="slide-4">
             <div class="slide-content">
                 <div class="mb-6 md:mb-10 text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">Le Partenaire & <span class="gradient-text">L'Infrastructure</span></h2>
-                    <p class="text-slate-400 mt-2 text-lg md:text-xl anim-element delay-200">La fusion de la rigueur suisse et de l'agilité numérique mondiale.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">
+                        <span class="lang-fr">Le Partenaire & <span class="gradient-text">L'Infrastructure</span></span>
+                        <span class="lang-en">The Partner & <span class="gradient-text">The Infrastructure</span></span>
+                    </h2>
+                    <p class="text-slate-400 mt-2 text-lg md:text-xl anim-element delay-200">
+                        <span class="lang-fr">L'alliance de la rigueur suisse et des nouvelles technologies mondiales.</span>
+                        <span class="lang-en">The alliance of Swiss rigor and global new technologies.</span>
+                    </p>
                 </div>
                 
                 <div class="flex flex-col-reverse md:flex-row gap-6 md:gap-10 items-center mt-2 md:mt-6">
@@ -384,25 +490,31 @@
                         <div class="glass-card p-6 md:p-8 border-t-4 border-brand-accent anim-element anim-left delay-300 relative overflow-hidden">
                             <i class="fas fa-quote-right absolute top-4 right-4 md:top-6 md:right-6 text-4xl md:text-6xl text-slate-700/30"></i>
                             <h3 class="text-2xl md:text-4xl font-bold text-white mb-1 md:mb-2">Oscar Flores</h3>
-                            <p class="text-brand-accent font-medium mb-4 md:mb-8 text-sm md:text-xl tracking-wide uppercase">Fondateur & CEO d'Unblock</p>
+                            <p class="text-brand-accent font-medium mb-4 md:mb-8 text-sm md:text-xl tracking-wide uppercase">
+                                <span class="lang-fr">Fondateur & CEO d'Unblock</span>
+                                <span class="lang-en">Founder & CEO of Unblock</span>
+                            </p>
                             
                             <ul class="space-y-3 md:space-y-5">
                                 <li class="flex items-start">
                                     <i class="fas fa-award text-yellow-500 mt-1 mr-3 md:mr-4 text-lg md:text-xl"></i>
                                     <p class="text-slate-300 text-sm md:text-lg leading-relaxed">
-                                        À la tête de cette infrastructure technologique globale, Oscar Flores figure parmi les <strong>300 personnalités les plus riches de Suisse</strong> (Classement officiel du magazine <em>Bilan</em>).
+                                        <span class="lang-fr">À la tête de cette infrastructure technologique globale, Oscar Flores figure parmi les <strong>300 personnalités les plus riches de Suisse</strong> (Classement officiel du magazine <em>Bilan</em>).</span>
+                                        <span class="lang-en">Leading this global technological infrastructure, Oscar Flores is among the <strong>300 wealthiest personalities in Switzerland</strong> (Official ranking by <em>Bilan</em> magazine).</span>
                                     </p>
                                 </li>
                                 <li class="flex items-start">
                                     <i class="fas fa-shield-alt text-blue-400 mt-1 mr-3 md:mr-4 text-lg md:text-xl"></i>
                                     <p class="text-slate-300 text-sm md:text-lg leading-relaxed">
-                                        Son expertise, ses licences internationales et sa vision ont permis de développer une plateforme produit extrêmement robuste.
+                                        <span class="lang-fr">Son expertise, ses licences internationales et sa vision ont permis de développer une plateforme extrêmement robuste.</span>
+                                        <span class="lang-en">His expertise, international licenses, and vision have allowed the development of an extremely robust platform.</span>
                                     </p>
                                 </li>
                                 <li class="flex items-start">
                                     <i class="fas fa-check-circle text-emerald-400 mt-1 mr-3 md:mr-4 text-lg md:text-xl"></i>
                                     <p class="text-slate-300 text-sm md:text-lg leading-relaxed">
-                                        <strong>L'objectif :</strong> Offrir une fiabilité institutionnelle sans faille tout en garantissant la fluidité pour vos opérations internationales quotidiennes sur plus de 170 pays.
+                                        <span class="lang-fr"><strong>L'objectif :</strong> Offrir une fiabilité institutionnelle sans faille tout en garantissant la simplicité pour vos opérations internationales quotidiennes sur plus de 170 pays.</span>
+                                        <span class="lang-en"><strong>The objective:</strong> To offer flawless institutional reliability while ensuring simplicity for your daily international operations across more than 170 countries.</span>
                                     </p>
                                 </li>
                             </ul>
@@ -412,7 +524,10 @@
                     <div class="w-2/3 md:w-2/5 anim-element anim-right delay-400 mobile-hide-img">
                         <div class="rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(255,255,255,0.1)] border border-slate-700 p-2 bg-slate-800">
                             <img src="Oscar Steeve Signature.jpeg" alt="Oscar Flores et Steeve Yenot" class="w-full h-auto rounded-xl object-cover" onerror="this.src='https://placehold.co/600x450/1e293b/3b82f6?text=Oscar+Flores+&+Steeve+Yenot'">
-                            <p class="text-center text-xs md:text-sm text-slate-400 mt-2 md:mt-3 mb-1 italic">Partenariat stratégique : Validation des infrastructures.</p>
+                            <p class="text-center text-xs md:text-sm text-slate-400 mt-2 md:mt-3 mb-1 italic">
+                                <span class="lang-fr">Partenariat stratégique : Validation des infrastructures.</span>
+                                <span class="lang-en">Strategic partnership: Infrastructure validation.</span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -424,11 +539,16 @@
             <div class="slide-content text-center">
                 <div class="mb-4">
                     <div class="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full bg-orange-900/30 border border-orange-500/30 text-orange-400 mb-2 md:mb-4 anim-element delay-100 font-bold uppercase tracking-widest text-xs md:text-sm">
-                        Le Défi Sécuritaire
+                        <span class="lang-fr">Le Défi Sécuritaire</span>
+                        <span class="lang-en">The Security Challenge</span>
                     </div>
-                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-200">Le Guichet Central face à l'IA</h2>
+                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-200">
+                        <span class="lang-fr">Le Guichet Central face à l'IA</span>
+                        <span class="lang-en">The Central Desk facing AI</span>
+                    </h2>
                     <p class="text-slate-400 mt-2 md:mt-4 text-sm md:text-xl max-w-3xl mx-auto anim-element delay-300">
-                        Le système traditionnel oblige la banque à filtrer <strong class="text-white">chaque opération individuellement</strong>. Face aux fraudes générées par l'IA, le système s'alourdit.
+                        <span class="lang-fr">Le système traditionnel oblige la banque à filtrer <strong class="text-white">chaque opération individuellement</strong>. Face aux fraudes générées par l'Intelligence Artificielle, le système s'alourdit.</span>
+                        <span class="lang-en">The traditional system forces the bank to filter <strong class="text-white">each operation individually</strong>. Faced with frauds generated by Artificial Intelligence, the system becomes burdened.</span>
                     </p>
                 </div>
 
@@ -436,11 +556,14 @@
                     <!-- Client -->
                     <div class="flex flex-col items-center">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-slate-800 rounded-full flex items-center justify-center text-slate-300 text-xl md:text-2xl border border-slate-600 mb-2 md:mb-3 z-10"><i class="fas fa-user"></i></div>
-                        <span class="text-slate-400 font-medium text-sm md:text-base">Vous (Paiement)</span>
+                        <span class="text-slate-400 font-medium text-sm md:text-base">
+                            <span class="lang-fr">Vous (Paiement)</span>
+                            <span class="lang-en">You (Payment)</span>
+                        </span>
                     </div>
 
                     <!-- Animation Blocage Banque -->
-                    <div class="relative w-48 h-48 md:w-64 md:h-64 mx-auto md:mx-8 flex items-center justify-center">
+                    <div class="relative w-48 h-48 md:w-64 h-64 mx-auto md:mx-8 flex items-center justify-center">
                         <!-- Attaques IA -->
                         <div class="ai-particle ai-p1"><i class="fas fa-robot"></i></div>
                         <div class="ai-particle ai-p2"><i class="fas fa-bug"></i></div>
@@ -450,7 +573,11 @@
                         <div class="w-24 h-24 md:w-32 md:h-32 bg-slate-900 rounded-full border-4 border-blue-500 shield-anim flex items-center justify-center relative z-10">
                             <div class="text-center">
                                 <i class="fas fa-building-columns text-2xl md:text-3xl text-blue-400 mb-1"></i>
-                                <div class="text-[10px] md:text-xs text-white font-bold"><i class="fas fa-exclamation-triangle text-orange-500 mr-1"></i>Perturbé</div>
+                                <div class="text-[10px] md:text-xs text-white font-bold">
+                                    <i class="fas fa-exclamation-triangle text-orange-500 mr-1"></i>
+                                    <span class="lang-fr">Perturbé</span>
+                                    <span class="lang-en">Disrupted</span>
+                                </div>
                             </div>
                         </div>
 
@@ -462,13 +589,23 @@
                     <!-- Destination -->
                     <div class="flex flex-col items-center opacity-50">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-slate-800 rounded-full flex items-center justify-center text-slate-500 text-xl md:text-2xl border border-slate-700 mb-2 md:mb-3"><i class="fas fa-globe"></i></div>
-                        <span class="text-slate-500 font-medium text-sm md:text-base">Destination</span>
+                        <span class="text-slate-500 font-medium text-sm md:text-base">
+                            <span class="lang-fr">Destination</span>
+                            <span class="lang-en">Destination</span>
+                        </span>
                     </div>
                 </div>
 
                 <div class="mt-6 md:mt-8 glass-card p-4 md:p-6 max-w-3xl mx-auto border-l-4 border-l-orange-500 anim-element delay-500 text-left">
-                    <h3 class="font-bold text-white text-lg md:text-xl mb-1 md:mb-2 flex items-center"><i class="fas fa-hourglass-half text-orange-400 mr-3"></i> La Conséquence</h3>
-                    <p class="text-slate-300 text-sm md:text-base">Pour se protéger des attaques cyber massives automatisées (IA), la banque n'a d'autre choix que d'ajouter des contrôles manuels, d'exiger des justificatifs constants et de ralentir les flux. <strong class="text-orange-400">La friction devient permanente.</strong></p>
+                    <h3 class="font-bold text-white text-lg md:text-xl mb-1 md:mb-2 flex items-center">
+                        <i class="fas fa-hourglass-half text-orange-400 mr-3"></i> 
+                        <span class="lang-fr">La Conséquence</span>
+                        <span class="lang-en">The Consequence</span>
+                    </h3>
+                    <p class="text-slate-300 text-sm md:text-base">
+                        <span class="lang-fr">Pour se protéger des attaques informatiques de plus en plus intelligentes, la banque n'a d'autre choix que d'ajouter des contrôles humains, d'exiger des justificatifs et de ralentir vos paiements. <strong class="text-orange-400">La lenteur devient permanente.</strong></span>
+                        <span class="lang-en">To protect themselves from increasingly intelligent cyberattacks, banks have no choice but to add human controls, demand justifications, and slow down your payments. <strong class="text-orange-400">Slowness becomes permanent.</strong></span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -478,11 +615,16 @@
             <div class="slide-content text-center">
                 <div class="mb-4">
                     <div class="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full bg-emerald-900/30 border border-emerald-500/30 text-emerald-400 mb-2 md:mb-4 anim-element delay-100 font-bold uppercase tracking-widest text-xs md:text-sm">
-                        Le Changement de Paradigme
+                        <span class="lang-fr">La Solution Technologique</span>
+                        <span class="lang-en">The Technological Solution</span>
                     </div>
-                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-200">La Validation Communautaire (Blockchain)</h2>
+                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-200">
+                        <span class="lang-fr">La Validation Communautaire</span>
+                        <span class="lang-en">Community Validation</span>
+                    </h2>
                     <p class="text-slate-400 mt-2 md:mt-4 text-sm md:text-xl max-w-3xl mx-auto anim-element delay-300">
-                        Au lieu de confier la sécurité à un seul guichet vulnérable, le registre vérifie l'opération instantanément via un consensus mathématique <strong class="text-white">décentralisé</strong>.
+                        <span class="lang-fr">Au lieu de confier la sécurité à un seul guichet vulnérable, un registre (la Blockchain) vérifie l'opération instantanément via un calcul mathématique <strong class="text-white">décentralisé</strong>.</span>
+                        <span class="lang-en">Instead of entrusting security to a single vulnerable desk, a ledger (the Blockchain) verifies the operation instantly via a <strong class="text-white">decentralized</strong> mathematical calculation.</span>
                     </p>
                 </div>
 
@@ -508,16 +650,37 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mt-4 md:mt-6 max-w-4xl mx-auto">
                     <div class="glass-card p-4 md:p-6 anim-element delay-500 border-t-2 border-emerald-500">
-                        <h4 class="font-bold text-white mb-1 md:mb-2 text-sm md:text-base"><i class="fas fa-bolt text-emerald-400 mr-2"></i> Instantanéité</h4>
-                        <p class="text-slate-400 text-xs md:text-sm">Le réseau vérifie l'état des fonds et valide mathématiquement en quelques secondes, 24/7.</p>
+                        <h4 class="font-bold text-white mb-1 md:mb-2 text-sm md:text-base">
+                            <i class="fas fa-bolt text-emerald-400 mr-2"></i> 
+                            <span class="lang-fr">Instantanéité</span>
+                            <span class="lang-en">Instantaneity</span>
+                        </h4>
+                        <p class="text-slate-400 text-xs md:text-sm">
+                            <span class="lang-fr">Le réseau vérifie l'état des fonds et valide mathématiquement en quelques secondes, 24/7.</span>
+                            <span class="lang-en">The network verifies the state of funds and validates mathematically in a few seconds, 24/7.</span>
+                        </p>
                     </div>
                     <div class="glass-card p-4 md:p-6 anim-element delay-600 border-t-2 border-emerald-500">
-                        <h4 class="font-bold text-white mb-1 md:mb-2 text-sm md:text-base"><i class="fas fa-link text-emerald-400 mr-2"></i> Inviolabilité</h4>
-                        <p class="text-slate-400 text-xs md:text-sm">Impossible pour une IA de pirater un registre qui est copié et vérifié sur des milliers d'ordinateurs simultanément.</p>
+                        <h4 class="font-bold text-white mb-1 md:mb-2 text-sm md:text-base">
+                            <i class="fas fa-link text-emerald-400 mr-2"></i> 
+                            <span class="lang-fr">Sécurité absolue</span>
+                            <span class="lang-en">Absolute security</span>
+                        </h4>
+                        <p class="text-slate-400 text-xs md:text-sm">
+                            <span class="lang-fr">Impossible pour un pirate de tromper un système qui est copié et vérifié sur des milliers d'ordinateurs en même temps.</span>
+                            <span class="lang-en">Impossible for a hacker to deceive a system that is copied and verified on thousands of computers simultaneously.</span>
+                        </p>
                     </div>
                     <div class="glass-card p-4 md:p-6 anim-element delay-700 border-t-2 border-emerald-500 bg-emerald-900/10">
-                        <h4 class="font-bold text-white mb-1 md:mb-2 text-sm md:text-base"><i class="fas fa-truck-fast text-emerald-400 mr-2"></i> Fluidité (Token)</h4>
-                        <p class="text-emerald-300 text-xs md:text-sm">L'opération devient un enregistrement immuable (Token). La valeur peut circuler librement sans friction locale.</p>
+                        <h4 class="font-bold text-white mb-1 md:mb-2 text-sm md:text-base">
+                            <i class="fas fa-truck-fast text-emerald-400 mr-2"></i> 
+                            <span class="lang-fr">Liberté totale</span>
+                            <span class="lang-en">Total freedom</span>
+                        </h4>
+                        <p class="text-emerald-300 text-xs md:text-sm">
+                            <span class="lang-fr">Votre argent est numérisé. Il peut circuler librement sans les barrières habituelles de votre banque locale.</span>
+                            <span class="lang-en">Your money is digitized. It can circulate freely without the usual barriers of your local bank.</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -527,9 +690,13 @@
         <div class="slide" id="slide-7">
             <div class="slide-content text-center">
                 <div class="mb-6 md:mb-8">
-                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-100">Le Système Financier <span class="gradient-text">Macro</span></h2>
+                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-100">
+                        <span class="lang-fr">Le Système Financier <span class="gradient-text">Global</span></span>
+                        <span class="lang-en">The Global Financial <span class="gradient-text">System</span></span>
+                    </h2>
                     <p class="text-slate-400 mt-2 md:mt-4 text-sm md:text-xl max-w-4xl mx-auto anim-element delay-200">
-                        Deux réalités qui cohabitent aujourd'hui avec des vitesses et des contraintes opposées.
+                        <span class="lang-fr">Deux mondes qui cohabitent aujourd'hui avec des vitesses et des contraintes opposées.</span>
+                        <span class="lang-en">Two worlds coexisting today with opposing speeds and constraints.</span>
                     </p>
                 </div>
 
@@ -537,37 +704,70 @@
                     <!-- Le système bancaire (Le Paquebot) -->
                     <div class="flex-1 glass-card p-6 md:p-8 border-t-4 border-rose-500 anim-element anim-left delay-300 relative bg-slate-900/80">
                         <div class="absolute -top-3 md:-top-4 left-1/2 transform -translate-x-1/2 bg-rose-600 text-white px-3 md:px-4 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-lg whitespace-nowrap">
-                            Le Paquebot Bancaire
+                            <span class="lang-fr">Le Paquebot Bancaire</span>
+                            <span class="lang-en">The Banking Ocean Liner</span>
                         </div>
                         <i class="fas fa-ship text-4xl md:text-6xl text-slate-600 mb-4 md:mb-6 mt-4"></i>
-                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4">Stockage Centralisé</h3>
-                        <p class="text-slate-400 text-xs md:text-sm mb-4 leading-relaxed">L'infrastructure traditionnelle, conçue pour conserver, peine à suivre le rythme.</p>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4">
+                            <span class="lang-fr">Stockage Centralisé</span>
+                            <span class="lang-en">Centralized Storage</span>
+                        </h3>
+                        <p class="text-slate-400 text-xs md:text-sm mb-4 leading-relaxed">
+                            <span class="lang-fr">L'infrastructure traditionnelle, conçue pour conserver, peine à suivre le rythme d'aujourd'hui.</span>
+                            <span class="lang-en">Traditional infrastructure, designed to store, struggles to keep up with today's pace.</span>
+                        </p>
                         <ul class="text-left space-y-2 md:space-y-3 text-slate-300 text-sm md:text-base">
-                            <li class="flex items-start"><i class="fas fa-anchor text-rose-400 mt-1 mr-3 w-4 shrink-0"></i> <span><strong>Ralenti</strong>&nbsp;par la sur-réglementation constante.</span></li>
-                            <li class="flex items-start"><i class="fas fa-shield-virus text-rose-400 mt-1 mr-3 w-4 shrink-0"></i> <span><strong>Asphyxié</strong>&nbsp;par les défenses anti-IA et les contrôles manuels.</span></li>
+                            <li class="flex items-start">
+                                <i class="fas fa-anchor text-rose-400 mt-1 mr-3 w-4 shrink-0"></i> 
+                                <span class="lang-fr"><strong class="font-bold">Ralenti</strong>&nbsp;par des règles de plus en plus lourdes.</span>
+                                <span class="lang-en"><strong class="font-bold">Slowed down</strong>&nbsp;by increasingly heavy rules.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-shield-virus text-rose-400 mt-1 mr-3 w-4 shrink-0"></i> 
+                                <span class="lang-fr"><strong class="font-bold">Asphyxié</strong>&nbsp;par les contrôles de sécurité.</span>
+                                <span class="lang-en"><strong class="font-bold">Asphyxiated</strong>&nbsp;by security controls.</span>
+                            </li>
                         </ul>
                     </div>
 
                     <!-- VS / Tension -->
                     <div class="flex flex-col justify-center items-center px-4 anim-element anim-scale delay-400 py-2 md:py-0">
                         <div class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-slate-600 flex items-center justify-center text-slate-500 font-bold mb-1 md:mb-2 bg-[#0f172a] text-sm md:text-base">VS</div>
-                        <span class="text-xs md:text-sm font-bold text-slate-500 uppercase">Tension</span>
+                        <span class="text-xs md:text-sm font-bold text-slate-500 uppercase">
+                            <span class="lang-fr">Tension</span>
+                            <span class="lang-en">Tension</span>
+                        </span>
                     </div>
 
                     <!-- Le Cash / Mastercard -->
                     <div class="flex-1 glass-card p-6 md:p-8 border-t-4 border-blue-500 anim-element anim-right delay-500 relative bg-slate-900/80">
                         <div class="absolute -top-3 md:-top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-3 md:px-4 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-lg whitespace-nowrap">
-                            Les Rails de Paiement
+                            <span class="lang-fr">Les Rails de Paiement</span>
+                            <span class="lang-en">The Payment Rails</span>
                         </div>
                         <div class="flex justify-center space-x-4 md:space-x-6 mb-4 md:mb-6 mt-4">
                             <i class="fas fa-money-bill-wave text-4xl md:text-5xl text-emerald-500"></i>
                             <i class="fa-brands fa-cc-mastercard text-4xl md:text-5xl text-orange-500"></i>
                         </div>
-                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4">Liquidité & Paiement</h3>
-                        <p class="text-slate-400 text-xs md:text-sm mb-4 leading-relaxed">Le réseau d'exécution quotidien (Visa, Mastercard, Cash).</p>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4">
+                            <span class="lang-fr">Liquidité & Paiement</span>
+                            <span class="lang-en">Liquidity & Payment</span>
+                        </h3>
+                        <p class="text-slate-400 text-xs md:text-sm mb-4 leading-relaxed">
+                            <span class="lang-fr">Le réseau de paiement que nous utilisons tous les jours (Visa, Mastercard, Argent liquide).</span>
+                            <span class="lang-en">The payment network we use every day (Visa, Mastercard, Cash).</span>
+                        </p>
                         <ul class="text-left space-y-2 md:space-y-3 text-slate-300 text-sm md:text-base">
-                            <li class="flex items-start"><i class="fas fa-bolt text-blue-400 mt-1 mr-3 w-4 shrink-0"></i> <span><strong>Fluide :</strong>&nbsp;Conçu pour la vitesse et le volume.</span></li>
-                            <li class="flex items-start"><i class="fas fa-globe text-blue-400 mt-1 mr-3 w-4 shrink-0"></i> <span><strong>Mondial :</strong>&nbsp;Accepté partout, sans friction 24/7.</span></li>
+                            <li class="flex items-start">
+                                <i class="fas fa-bolt text-blue-400 mt-1 mr-3 w-4 shrink-0"></i> 
+                                <span class="lang-fr"><strong class="font-bold">Fluide :</strong>&nbsp;Conçu pour la vitesse et le volume.</span>
+                                <span class="lang-en"><strong class="font-bold">Fluid:</strong>&nbsp;Designed for speed and volume.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-globe text-blue-400 mt-1 mr-3 w-4 shrink-0"></i> 
+                                <span class="lang-fr"><strong class="font-bold">Mondial :</strong>&nbsp;Accepté partout, sans problème, 24/7.</span>
+                                <span class="lang-en"><strong class="font-bold">Global:</strong>&nbsp;Accepted everywhere, without friction, 24/7.</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -578,9 +778,13 @@
         <div class="slide" id="slide-8">
             <div class="slide-content text-center">
                 <div class="mb-6 md:mb-8">
-                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-100">La Désolidarisation <span class="gradient-text">Stratégique</span></h2>
+                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-100">
+                        <span class="lang-fr">La Séparation <span class="gradient-text">Stratégique</span></span>
+                        <span class="lang-en">The Strategic <span class="gradient-text">Separation</span></span>
+                    </h2>
                     <p class="text-slate-400 mt-2 md:mt-4 text-sm md:text-xl max-w-4xl mx-auto anim-element delay-200">
-                        Afin de ne pas voir tous les passagers "couler avec le paquebot", le système <strong>désolidarise la fluidité du paiement et les lourdeurs du stockage bancaire</strong>.
+                        <span class="lang-fr">Pour ne pas couler avec le paquebot bancaire, le système <strong>sépare complètement le stockage de votre argent et la fluidité de vos paiements</strong>.</span>
+                        <span class="lang-en">To avoid sinking with the banking ocean liner, the system <strong>completely separates the storage of your money and the fluidity of your payments</strong>.</span>
                     </p>
                 </div>
 
@@ -588,36 +792,65 @@
                     <!-- Stockage Décentralisé -->
                     <div class="flex-1 glass-card p-6 md:p-8 border-t-4 border-emerald-500 anim-element anim-left delay-300 relative bg-slate-900/80 shadow-[0_0_40px_rgba(16,185,129,0.15)]">
                         <div class="absolute -top-3 md:-top-4 left-1/2 transform -translate-x-1/2 bg-emerald-600 text-white px-3 md:px-4 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-lg whitespace-nowrap">
-                            Stockage Décentralisé
+                            <span class="lang-fr">Stockage Décentralisé</span>
+                            <span class="lang-en">Decentralized Storage</span>
                         </div>
                         <i class="fas fa-cubes text-4xl md:text-6xl text-emerald-400 mb-4 md:mb-6 mt-4"></i>
-                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Sauver le Dollar</h3>
-                        <p class="text-slate-400 text-xs md:text-sm mb-4 leading-relaxed">Remplacer le stockage physique par un système décentralisé basé sur le <strong>dollar numérisé</strong>.</p>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">
+                            <span class="lang-fr">Protéger la Valeur</span>
+                            <span class="lang-en">Protect Value</span>
+                        </h3>
+                        <p class="text-slate-400 text-xs md:text-sm mb-4 leading-relaxed">
+                            <span class="lang-fr">Remplacer le coffre-fort physique par un système moderne basé sur les <strong>monnaies numériques stables</strong>.</span>
+                            <span class="lang-en">Replace the physical safe with a modern system based on <strong>stable digital currencies</strong>.</span>
+                        </p>
                         <div class="bg-emerald-900/30 border border-emerald-500/30 p-3 rounded-lg text-left">
-                            <p class="text-emerald-300 text-xs md:text-sm font-medium"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i> En faisant le choix de cette technologie, vous mettez un pied dans le futur institutionnel.</p>
+                            <p class="text-emerald-300 text-xs md:text-sm font-medium">
+                                <i class="fas fa-lightbulb text-yellow-400 mr-2"></i> 
+                                <span class="lang-fr">En faisant le choix de cette technologie aujourd'hui, vous mettez un pied dans le futur.</span>
+                                <span class="lang-en">By choosing this technology today, you step into the future.</span>
+                            </p>
                         </div>
                     </div>
 
                     <!-- Flèches Désolidarisation -->
                     <div class="flex flex-col justify-center items-center px-4 anim-element anim-scale delay-400 py-2 md:py-0">
                         <i class="fas fa-link text-3xl md:text-4xl text-brand-accent mb-1 md:mb-2 transform rotate-90 md:rotate-0"></i>
-                        <span class="text-[10px] md:text-sm font-bold text-blue-400 uppercase tracking-widest text-center hidden md:block">Connexion<br>Directe</span>
+                        <span class="text-[10px] md:text-sm font-bold text-blue-400 uppercase tracking-widest text-center hidden md:block">
+                            <span class="lang-fr">Connexion<br>Directe</span>
+                            <span class="lang-en">Direct<br>Connection</span>
+                        </span>
                     </div>
 
                     <!-- Le Cash / Mastercard (Conservé et fluide) -->
                     <div class="flex-1 glass-card p-6 md:p-8 border-t-4 border-blue-500 anim-element anim-right delay-500 relative bg-slate-900/80">
                         <div class="absolute -top-3 md:-top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-3 md:px-4 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-lg whitespace-nowrap">
-                            Dépense Distribuée
+                            <span class="lang-fr">Paiement Distribué</span>
+                            <span class="lang-en">Distributed Payment</span>
                         </div>
                         <div class="flex justify-center space-x-4 md:space-x-6 mb-4 md:mb-6 mt-4">
                             <i class="fas fa-money-bill-wave text-4xl md:text-5xl text-emerald-500"></i>
                             <i class="fa-brands fa-cc-mastercard text-4xl md:text-5xl text-orange-500"></i>
                         </div>
-                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4">Liquidité & Paiement</h3>
-                        <p class="text-slate-400 text-xs md:text-sm mb-4 leading-relaxed">Les rails mondiaux conservent toute leur puissance, mais sont alimentés par la blockchain.</p>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4">
+                            <span class="lang-fr">Liquidité & Paiement</span>
+                            <span class="lang-en">Liquidity & Payment</span>
+                        </h3>
+                        <p class="text-slate-400 text-xs md:text-sm mb-4 leading-relaxed">
+                            <span class="lang-fr">Les réseaux mondiaux conservent toute leur puissance, mais sont alimentés en direct par les nouvelles technologies.</span>
+                            <span class="lang-en">Global networks retain their full power, but are directly fueled by new technologies.</span>
+                        </p>
                         <ul class="text-left space-y-2 md:space-y-3 text-slate-300 text-sm md:text-base">
-                            <li class="flex items-start"><i class="fas fa-bolt text-blue-400 mt-1 mr-3 w-4 shrink-0"></i> <span><strong>Fluidité absolue</strong>&nbsp;via carte.</span></li>
-                            <li class="flex items-start"><i class="fas fa-globe text-blue-400 mt-1 mr-3 w-4 shrink-0"></i> <span><strong>Liberté d'action</strong>&nbsp;mondiale 24/7.</span></li>
+                            <li class="flex items-start">
+                                <i class="fas fa-bolt text-blue-400 mt-1 mr-3 w-4 shrink-0"></i> 
+                                <span class="lang-fr"><strong class="font-bold">Fluidité absolue</strong>&nbsp;avec votre carte.</span>
+                                <span class="lang-en"><strong class="font-bold">Absolute fluidity</strong>&nbsp;with your card.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-globe text-blue-400 mt-1 mr-3 w-4 shrink-0"></i> 
+                                <span class="lang-fr"><strong class="font-bold">Liberté d'action</strong>&nbsp;mondiale sans demander la permission.</span>
+                                <span class="lang-en"><strong class="font-bold">Global freedom</strong>&nbsp;of action without asking permission.</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -628,55 +861,79 @@
         <div class="slide" id="slide-9">
             <div class="slide-content text-center">
                 <div class="mb-4">
-                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-100">Validation <span class="gradient-text">Institutionnelle</span></h2>
+                    <h2 class="text-3xl md:text-5xl font-bold anim-element delay-100">
+                        <span class="lang-fr">La Validation <span class="gradient-text">Mondiale</span></span>
+                        <span class="lang-en">Global <span class="gradient-text">Validation</span></span>
+                    </h2>
                     <p class="text-slate-400 mt-2 text-sm md:text-xl max-w-4xl mx-auto anim-element delay-200">
-                        Cette transition n'est plus une hypothèse, c'est une certitude adoptée par Wall Street et validée par le gouvernement américain.
+                        <span class="lang-fr">Cette transition n'est plus une théorie. Elle est adoptée par les géants de la finance et validée par le gouvernement américain.</span>
+                        <span class="lang-en">This transition is no longer a theory. It is adopted by financial giants and validated by the American government.</span>
                     </p>
                 </div>
 
-                <!-- Timeline Horizontale (Corrigée pour mobile et anti-chevauchement) -->
-                <div class="glass-card w-full max-w-5xl mx-auto px-4 py-4 md:py-6 mb-6 md:mb-8 anim-element anim-scale delay-300 border border-slate-700 bg-slate-900/60 mt-4 overflow-x-auto">
-                    <div class="min-w-[600px] relative flex flex-col justify-between items-center h-40">
+                <!-- Timeline Horizontale -->
+                <div class="glass-card w-full max-w-5xl mx-auto px-2 md:px-4 py-4 md:py-6 mb-6 md:mb-8 anim-element anim-scale delay-300 border border-slate-700 bg-slate-900/60 mt-4 overflow-x-auto">
+                    <div class="min-w-[600px] flex flex-col h-40">
                         
                         <!-- Ligne 1 : Textes du Haut -->
-                        <div class="w-full flex justify-between px-2 h-1/3 items-end pb-2">
-                            <div class="w-1/4"></div> <!-- Vide -->
-                            <div class="w-1/4 text-center px-1">
+                        <div class="flex justify-between items-end h-1/3 w-full px-4">
+                            <div class="w-1/4"></div>
+                            <div class="w-1/4 text-center px-2">
                                 <h4 class="text-sky-500 font-bold text-sm md:text-lg mb-1 leading-tight">Wall Street</h4>
-                                <p class="text-slate-400 text-[10px] md:text-xs leading-tight">Adoption de l'infrastructure par les géants comme BlackRock et Fidelity.</p>
+                                <p class="text-slate-400 text-[10px] md:text-xs leading-tight">
+                                    <span class="lang-fr">Adoption par les géants de la finance (BlackRock, Fidelity).</span>
+                                    <span class="lang-en">Adoption by financial giants (BlackRock, Fidelity).</span>
+                                </p>
                             </div>
-                            <div class="w-1/4"></div> <!-- Vide -->
-                            <div class="w-1/4 text-center px-1">
-                                <h4 class="text-teal-400 font-bold text-sm md:text-lg mb-1 leading-tight">Aujourd'hui</h4>
-                                <p class="text-slate-400 text-[10px] md:text-xs leading-tight">Intégration massive par les fonds de pension institutionnels mondiaux.</p>
+                            <div class="w-1/4"></div>
+                            <div class="w-1/4 text-center px-2">
+                                <h4 class="text-teal-400 font-bold text-sm md:text-lg mb-1 leading-tight">
+                                    <span class="lang-fr">Aujourd'hui</span>
+                                    <span class="lang-en">Today</span>
+                                </h4>
+                                <p class="text-slate-400 text-[10px] md:text-xs leading-tight">
+                                    <span class="lang-fr">Intégration par les grands fonds d'investissement mondiaux.</span>
+                                    <span class="lang-en">Integration by major global investment funds.</span>
+                                </p>
                             </div>
                         </div>
 
                         <!-- Ligne 2 : Frise et Points -->
-                        <div class="w-full relative h-1/3 flex items-center">
-                            <!-- Ligne centrale continue -->
+                        <div class="relative flex items-center justify-between h-1/3 w-full px-12 my-2">
+                            <!-- Ligne continue -->
                             <div class="absolute left-[10%] right-[10%] h-0.5 bg-slate-600 top-1/2 transform -translate-y-1/2 z-0"></div>
                             
-                            <div class="w-full flex justify-between relative z-10 px-2">
-                                <div class="w-1/4 flex justify-center"><div class="w-4 h-4 md:w-6 md:h-6 rounded-full bg-slate-900 border-2 md:border-4 border-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.8)]"></div></div>
-                                <div class="w-1/4 flex justify-center"><div class="w-4 h-4 md:w-6 md:h-6 rounded-full bg-slate-900 border-2 md:border-4 border-sky-500 shadow-[0_0_15px_rgba(14,165,233,0.8)]"></div></div>
-                                <div class="w-1/4 flex justify-center"><div class="w-4 h-4 md:w-6 md:h-6 rounded-full bg-slate-900 border-2 md:border-4 border-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.8)]"></div></div>
-                                <div class="w-1/4 flex justify-center"><div class="w-4 h-4 md:w-6 md:h-6 rounded-full bg-slate-900 border-2 md:border-4 border-teal-400 shadow-[0_0_15px_rgba(45,212,191,0.8)]"></div></div>
-                            </div>
+                            <!-- Points -->
+                            <div class="relative z-10 w-4 h-4 md:w-6 md:h-6 rounded-full bg-slate-900 border-2 md:border-4 border-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.8)]"></div>
+                            <div class="relative z-10 w-4 h-4 md:w-6 md:h-6 rounded-full bg-slate-900 border-2 md:border-4 border-sky-500 shadow-[0_0_15px_rgba(14,165,233,0.8)]"></div>
+                            <div class="relative z-10 w-4 h-4 md:w-6 md:h-6 rounded-full bg-slate-900 border-2 md:border-4 border-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.8)]"></div>
+                            <div class="relative z-10 w-4 h-4 md:w-6 md:h-6 rounded-full bg-slate-900 border-2 md:border-4 border-teal-400 shadow-[0_0_15px_rgba(45,212,191,0.8)]"></div>
                         </div>
 
                         <!-- Ligne 3 : Textes du Bas -->
-                        <div class="w-full flex justify-between px-2 h-1/3 items-start pt-2">
-                            <div class="w-1/4 text-center px-1">
-                                <h4 class="text-blue-500 font-bold text-sm md:text-lg mb-1 leading-tight">Année 2024</h4>
-                                <p class="text-slate-400 text-[10px] md:text-xs leading-tight">Approbation historique des ETF Bitcoin et Ethereum par la SEC.</p>
+                        <div class="flex justify-between items-start h-1/3 w-full px-4">
+                            <div class="w-1/4 text-center px-2">
+                                <h4 class="text-blue-500 font-bold text-sm md:text-lg mb-1 leading-tight">
+                                    <span class="lang-fr">Année 2024</span>
+                                    <span class="lang-en">Year 2024</span>
+                                </h4>
+                                <p class="text-slate-400 text-[10px] md:text-xs leading-tight">
+                                    <span class="lang-fr">Approbation historique des actifs numériques par les États-Unis.</span>
+                                    <span class="lang-en">Historic approval of digital assets by the United States.</span>
+                                </p>
                             </div>
-                            <div class="w-1/4"></div> <!-- Vide -->
-                            <div class="w-1/4 text-center px-1">
-                                <h4 class="text-cyan-400 font-bold text-sm md:text-lg mb-1 leading-tight">Début 2026</h4>
-                                <p class="text-slate-400 text-[10px] md:text-xs leading-tight">Plus de 134 Milliards $ d'actifs gérés dans les ETF US.</p>
+                            <div class="w-1/4"></div>
+                            <div class="w-1/4 text-center px-2">
+                                <h4 class="text-cyan-400 font-bold text-sm md:text-lg mb-1 leading-tight">
+                                    <span class="lang-fr">Début 2026</span>
+                                    <span class="lang-en">Early 2026</span>
+                                </h4>
+                                <p class="text-slate-400 text-[10px] md:text-xs leading-tight">
+                                    <span class="lang-fr">Plus de 134 Milliards de dollars sécurisés dans ces nouveaux fonds.</span>
+                                    <span class="lang-en">Over 134 Billion dollars secured in these new funds.</span>
+                                </p>
                             </div>
-                            <div class="w-1/4"></div> <!-- Vide -->
+                            <div class="w-1/4"></div>
                         </div>
                     </div>
                 </div>
@@ -687,15 +944,23 @@
                         <div class="flex items-center justify-between mb-2 md:mb-3">
                             <div class="flex items-center">
                                 <i class="fas fa-landmark-flag text-xl md:text-2xl text-blue-400 mr-2 md:mr-3"></i>
-                                <h3 class="text-lg md:text-xl font-bold text-white">Le GENIUS Act (Loi Trump)</h3>
+                                <h3 class="text-lg md:text-xl font-bold text-white">
+                                    <span class="lang-fr">Le GENIUS Act (Loi US)</span>
+                                    <span class="lang-en">The GENIUS Act (US Law)</span>
+                                </h3>
                             </div>
-                            <span class="text-[10px] md:text-xs font-bold bg-blue-900/50 border border-blue-500/30 text-blue-300 px-2 py-1 md:px-3 md:py-1 rounded-full whitespace-nowrap ml-2">18 Juil. 2025</span>
+                            <span class="text-[10px] md:text-xs font-bold bg-blue-900/50 border border-blue-500/30 text-blue-300 px-2 py-1 md:px-3 md:py-1 rounded-full whitespace-nowrap ml-2">
+                                <span class="lang-fr">18 Juil. 2025</span>
+                                <span class="lang-en">July 18, 2025</span>
+                            </span>
                         </div>
                         <p class="text-slate-300 text-xs md:text-sm leading-relaxed mb-1 md:mb-2">
-                            En complément de l'adoption par Wall Street, l'administration US s'apprête à autoriser officiellement chaque citoyen à détenir ses actifs sur wallet (<strong>"Be Your Own Bank"</strong>).
+                            <span class="lang-fr">L'administration américaine s'apprête à autoriser officiellement chaque citoyen à détenir et contrôler son propre argent numérique (<strong>"Soyez votre propre banque"</strong>).</span>
+                            <span class="lang-en">The US administration is preparing to officially authorize every citizen to hold and control their own digital money (<strong>"Be Your Own Bank"</strong>).</span>
                         </p>
                         <p class="text-blue-400 font-medium text-xs md:text-sm">
-                            Le statut légal de la monnaie programmée sur blockchain est définitivement clarifié.
+                            <span class="lang-fr">C'est la reconnaissance légale absolue de cette technologie.</span>
+                            <span class="lang-en">This is the absolute legal recognition of this technology.</span>
                         </p>
                     </div>
 
@@ -703,15 +968,20 @@
                         <div class="flex items-center justify-between mb-2 md:mb-3">
                             <div class="flex items-center">
                                 <i class="fas fa-rocket text-xl md:text-2xl text-teal-400 mr-2 md:mr-3"></i>
-                                <h3 class="text-lg md:text-xl font-bold text-white">Le Catalyseur Bull Run</h3>
+                                <h3 class="text-lg md:text-xl font-bold text-white">
+                                    <span class="lang-fr">Le Détonateur Mondial</span>
+                                    <span class="lang-en">The Global Detonator</span>
+                                </h3>
                             </div>
                             <span class="text-[10px] md:text-xs font-bold bg-teal-900/50 border border-teal-500/30 text-teal-300 px-2 py-1 md:px-3 md:py-1 rounded-full whitespace-nowrap ml-2">2025 - 2026</span>
                         </div>
                         <p class="text-slate-300 text-xs md:text-sm leading-relaxed mb-1 md:mb-2">
-                            En offrant cette clarté institutionnelle à la première économie mondiale, le dernier frein psychologique saute.
+                            <span class="lang-fr">En offrant cette clarté légale à la première économie mondiale, le dernier frein psychologique saute.</span>
+                            <span class="lang-en">By offering this legal clarity to the world's leading economy, the last psychological barrier falls.</span>
                         </p>
                         <p class="text-teal-400 font-medium text-xs md:text-sm">
-                            Cette reconnaissance étatique valide massivement l'infrastructure numérique et alimente directement un marché haussier structurel.
+                            <span class="lang-fr">Cette confiance d'État valide totalement notre solution et oblige l'Europe à suivre le mouvement très bientôt.</span>
+                            <span class="lang-en">This state confidence fully validates our solution and forces Europe to follow suit very soon.</span>
                         </p>
                     </div>
                 </div>
@@ -722,9 +992,13 @@
         <div class="slide" id="slide-10">
             <div class="slide-content text-center">
                 <div class="mb-6 md:mb-10">
-                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">Démystifier la "Crypto"</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">
+                        <span class="lang-fr">Démystifier la "Crypto"</span>
+                        <span class="lang-en">Demystifying "Crypto"</span>
+                    </h2>
                     <p class="text-slate-400 mt-2 md:mt-4 text-sm md:text-xl max-w-3xl mx-auto anim-element delay-200">
-                        Le terme "Crypto" fait peur aux novices car il mélange tout. Séparons les deux usages réels qui cohabitent sur la Blockchain.
+                        <span class="lang-fr">Le terme "Crypto" fait peur aux débutants car il mélange tout. Séparons les deux choses qui existent sur ce nouveau réseau.</span>
+                        <span class="lang-en">The term "Crypto" scares beginners because it mixes everything. Let's separate the two things that exist on this new network.</span>
                     </p>
                 </div>
 
@@ -734,12 +1008,24 @@
                         <div class="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-full bg-orange-900/30 flex items-center justify-center mb-4 md:mb-6 text-orange-400 text-3xl md:text-4xl">
                             <i class="fab fa-bitcoin"></i>
                         </div>
-                        <h3 class="text-xl md:text-2xl font-bold text-white mb-1 md:mb-2">1. L'Actif Volatil</h3>
-                        <p class="text-orange-400 font-medium mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm">Réserve de Valeur / Spéculation</p>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-1 md:mb-2">
+                            <span class="lang-fr">1. L'Actif Volatil</span>
+                            <span class="lang-en">1. The Volatile Asset</span>
+                        </h3>
+                        <p class="text-orange-400 font-medium mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm">
+                            <span class="lang-fr">L'investissement</span>
+                            <span class="lang-en">The Investment</span>
+                        </p>
                         <ul class="text-left text-slate-300 space-y-3 md:space-y-4 text-sm md:text-base">
                             <li><i class="fas fa-chart-area text-orange-500 mr-2"></i> <strong>Exemples :</strong> Bitcoin (BTC), Ethereum (ETH).</li>
-                            <li><i class="fas fa-arrow-trend-up text-orange-500 mr-2"></i> <strong>Le But :</strong> L'investissement. Le prix monte ou descend selon l'offre et la demande.</li>
-                            <li><i class="fas fa-times-circle text-orange-500 mr-2"></i> <strong>Problème :</strong> Difficile à utiliser pour payer un café si son prix change de 10% dans la journée.</li>
+                            <li><i class="fas fa-arrow-trend-up text-orange-500 mr-2"></i> <strong><span class="lang-fr">Le But :</span><span class="lang-en">The Goal:</span></strong> 
+                                <span class="lang-fr">Spéculer. Le prix monte ou descend tous les jours.</span>
+                                <span class="lang-en">Speculate. The price goes up or down every day.</span>
+                            </li>
+                            <li><i class="fas fa-times-circle text-orange-500 mr-2"></i> <strong><span class="lang-fr">Problème :</span><span class="lang-en">Problem:</span></strong> 
+                                <span class="lang-fr">Difficile à utiliser pour payer un café ou une facture si son prix change en permanence.</span>
+                                <span class="lang-en">Difficult to use to pay for a coffee or a bill if its price changes constantly.</span>
+                            </li>
                         </ul>
                     </div>
 
@@ -748,12 +1034,24 @@
                         <div class="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-full bg-emerald-900/50 flex items-center justify-center mb-4 md:mb-6 text-emerald-400 text-3xl md:text-4xl">
                             <i class="fas fa-dollar-sign"></i>
                         </div>
-                        <h3 class="text-xl md:text-2xl font-bold text-white mb-1 md:mb-2">2. L'Actif Stable (Stablecoin)</h3>
-                        <p class="text-emerald-400 font-medium mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm">Transport & Paiement</p>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-1 md:mb-2">
+                            <span class="lang-fr">2. La Monnaie Stable (Stablecoin)</span>
+                            <span class="lang-en">2. The Stable Currency (Stablecoin)</span>
+                        </h3>
+                        <p class="text-emerald-400 font-medium mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm">
+                            <span class="lang-fr">L'outil de Paiement</span>
+                            <span class="lang-en">The Payment Tool</span>
+                        </p>
                         <ul class="text-left text-slate-300 space-y-3 md:space-y-4 text-sm md:text-base">
                             <li><i class="fas fa-coins text-emerald-500 mr-2"></i> <strong>Exemples :</strong> Tether (USDT), Circle (USDC).</li>
-                            <li><i class="fas fa-equals text-emerald-500 mr-2"></i> <strong>Le But :</strong> La stabilité. Un jeton vaut TOUJOURS exactement 1 Dollar.</li>
-                            <li><i class="fas fa-check-circle text-emerald-500 mr-2"></i> <strong>Avantage :</strong> C'est la monnaie parfaite pour utiliser les rails ultra-rapides de la blockchain SANS risque de perdre de la valeur.</li>
+                            <li><i class="fas fa-equals text-emerald-500 mr-2"></i> <strong><span class="lang-fr">Le But :</span><span class="lang-en">The Goal:</span></strong> 
+                                <span class="lang-fr">La sécurité. Un jeton numérique vaut TOUJOURS exactement 1 Dollar.</span>
+                                <span class="lang-en">Security. One digital token is ALWAYS worth exactly 1 Dollar.</span>
+                            </li>
+                            <li><i class="fas fa-check-circle text-emerald-500 mr-2"></i> <strong><span class="lang-fr">Avantage :</span><span class="lang-en">Advantage:</span></strong> 
+                                <span class="lang-fr">C'est la monnaie parfaite pour voyager sur internet très vite, SANS risque de perdre de la valeur.</span>
+                                <span class="lang-en">It is the perfect currency to travel on the internet very fast, WITHOUT the risk of losing value.</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -764,9 +1062,13 @@
         <div class="slide" id="slide-11">
             <div class="slide-content">
                 <div class="mb-6 md:mb-10 text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">Zoom sur la technologie utile : <span class="gradient-text">Les Stablecoins</span></h2>
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">
+                        <span class="lang-fr">La technologie de l'argent : <span class="gradient-text">Les Monnaies Stables</span></span>
+                        <span class="lang-en">The technology of money: <span class="gradient-text">Stable Currencies</span></span>
+                    </h2>
                     <p class="text-slate-400 mt-2 text-sm md:text-xl max-w-4xl mx-auto anim-element delay-200">
-                        Pour que le jeton vaille toujours 1$, il faut une garantie réelle derrière. C'est ici qu'intervient la régulation financière.
+                        <span class="lang-fr">Pour que ce jeton numérique vaille toujours 1 Dollar, il ne s'agit pas de magie, mais d'une garantie bien réelle.</span>
+                        <span class="lang-en">For this digital token to always be worth 1 Dollar, it is not magic, but a very real guarantee.</span>
                     </p>
                 </div>
 
@@ -780,7 +1082,10 @@
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-white text-sm md:text-lg">Tether (USDT)</h4>
-                                    <p class="text-[#009393] text-[10px] md:text-xs font-medium">Capitalisation massive</p>
+                                    <p class="text-[#009393] text-[10px] md:text-xs font-medium">
+                                        <span class="lang-fr">Le plus utilisé au monde</span>
+                                        <span class="lang-en">The most used in the world</span>
+                                    </p>
                                 </div>
                             </div>
                             <!-- USDC -->
@@ -790,7 +1095,10 @@
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-white text-sm md:text-lg">Circle (USDC)</h4>
-                                    <p class="text-[#2775CA] text-[10px] md:text-xs font-medium">Standard institutionnel</p>
+                                    <p class="text-[#2775CA] text-[10px] md:text-xs font-medium">
+                                        <span class="lang-fr">Le standard des entreprises</span>
+                                        <span class="lang-en">The corporate standard</span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -798,18 +1106,39 @@
 
                     <div class="w-full md:w-2/3 space-y-4 md:space-y-6">
                         <div class="glass-card p-4 md:p-6 anim-element anim-right delay-400 border-l-4 border-l-emerald-500">
-                            <h3 class="font-bold text-lg md:text-2xl text-white mb-1 md:mb-2 flex items-center"><i class="fas fa-vault text-emerald-400 w-6 md:w-8"></i> Sécurisation & Réserves</h3>
-                            <p class="text-slate-300 text-xs md:text-lg leading-relaxed">Pour chaque dollar numérique (USDT/USDC) en circulation, <strong>un équivalent en actifs réels</strong> (Cash ou Bons du Trésor US ultra-liquides et sûrs) est conservé dans des coffres institutionnels.</p>
+                            <h3 class="font-bold text-lg md:text-2xl text-white mb-1 md:mb-2 flex items-center">
+                                <i class="fas fa-vault text-emerald-400 w-6 md:w-8"></i> 
+                                <span class="lang-fr">Des Réserves Réelles</span>
+                                <span class="lang-en">Real Reserves</span>
+                            </h3>
+                            <p class="text-slate-300 text-xs md:text-lg leading-relaxed">
+                                <span class="lang-fr">Pour chaque dollar numérique en circulation, <strong>un vrai dollar</strong> (ou des bons du gouvernement américain très sûrs) est conservé et verrouillé dans un coffre-fort d'une banque classique.</span>
+                                <span class="lang-en">For every digital dollar in circulation, <strong>one real dollar</strong> (or very safe US government bonds) is kept and locked in a traditional bank vault.</span>
+                            </p>
                         </div>
 
                         <div class="glass-card p-4 md:p-6 anim-element anim-right delay-500 border-l-4 border-l-blue-500">
-                            <h3 class="font-bold text-lg md:text-2xl text-white mb-1 md:mb-2 flex items-center"><i class="fas fa-building-shield text-blue-400 w-6 md:w-8"></i> Le Rôle de la SEC</h3>
-                            <p class="text-slate-300 text-xs md:text-lg leading-relaxed"><strong>La SEC (Gendarme financier des États-Unis)</strong> impose des règles strictes et audite activement ces émetteurs pour s'assurer que ces réserves existent bel et bien et protègent les utilisateurs.</p>
+                            <h3 class="font-bold text-lg md:text-2xl text-white mb-1 md:mb-2 flex items-center">
+                                <i class="fas fa-building-shield text-blue-400 w-6 md:w-8"></i> 
+                                <span class="lang-fr">Surveillé par l'État (la SEC)</span>
+                                <span class="lang-en">Monitored by the State (the SEC)</span>
+                            </h3>
+                            <p class="text-slate-300 text-xs md:text-lg leading-relaxed">
+                                <span class="lang-fr"><strong>La SEC, qui est le gendarme financier des États-Unis</strong>, surveille de très près ces entreprises pour s'assurer que l'argent réel est bien dans les coffres pour protéger les utilisateurs.</span>
+                                <span class="lang-en"><strong>The SEC, which is the financial watchdog of the United States</strong>, closely monitors these companies to ensure that the real money is indeed in the vaults to protect users.</span>
+                            </p>
                         </div>
 
                         <div class="glass-card p-4 md:p-6 anim-element anim-right delay-600 border-l-4 border-l-brand-accent">
-                            <h3 class="font-bold text-lg md:text-2xl text-white mb-1 md:mb-2 flex items-center"><i class="fas fa-truck-fast text-brand-accent w-6 md:w-8"></i> Un Véhicule de Transport</h3>
-                            <p class="text-slate-300 text-xs md:text-lg leading-relaxed">Ce ne sont pas des placements. C'est simplement le <strong>véhicule parfait</strong> pour déplacer des fonds de votre épargne vers votre carte de paiement internationale, sans les lenteurs du réseau SWIFT.</p>
+                            <h3 class="font-bold text-lg md:text-2xl text-white mb-1 md:mb-2 flex items-center">
+                                <i class="fas fa-truck-fast text-brand-accent w-6 md:w-8"></i> 
+                                <span class="lang-fr">Un simple moyen de transport</span>
+                                <span class="lang-en">A simple means of transport</span>
+                            </h3>
+                            <p class="text-slate-300 text-xs md:text-lg leading-relaxed">
+                                <span class="lang-fr">Il ne s'agit pas de "jouer en bourse". C'est juste le <strong>véhicule parfait</strong> pour déplacer votre argent vers votre carte de paiement internationale, sans être freiné par votre banque locale.</span>
+                                <span class="lang-en">This is not about "playing the stock market". It's simply the <strong>perfect vehicle</strong> to move your money to your international payment card, without being hindered by your local bank.</span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -819,8 +1148,14 @@
         <!-- SLIDE 12 : L'ARCHITECTURE -->
         <div class="slide" id="slide-12">
             <div class="slide-content text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-2 md:mb-4 anim-element delay-100">L'Architecture <span class="gradient-text">Simplifiée</span></h2>
-                <p class="text-slate-400 text-sm md:text-xl mb-6 md:mb-12 anim-element delay-200">Comment nous transformons ces actifs en capacité de paiement quotidienne.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-2 md:mb-4 anim-element delay-100">
+                    <span class="lang-fr">Le Mécanisme <span class="gradient-text">Simplifié</span></span>
+                    <span class="lang-en">The Simplified <span class="gradient-text">Mechanism</span></span>
+                </h2>
+                <p class="text-slate-400 text-sm md:text-xl mb-6 md:mb-12 anim-element delay-200">
+                    <span class="lang-fr">Comment nous transformons votre monnaie en liberté de paiement.</span>
+                    <span class="lang-en">How we transform your currency into payment freedom.</span>
+                </p>
 
                 <div class="flex flex-col md:flex-row items-stretch justify-between gap-2 md:gap-4 w-full relative px-2">
                     <!-- Ligne connectrice fond -->
@@ -831,8 +1166,14 @@
                         <div class="w-12 h-12 md:w-16 md:h-16 mx-auto bg-blue-900/50 rounded-full flex items-center justify-center mb-2 md:mb-4 text-blue-400 text-xl md:text-2xl shadow-[0_0_20px_rgba(59,130,246,0.3)]">
                             <i class="fas fa-wallet"></i>
                         </div>
-                        <h3 class="font-bold text-lg md:text-xl text-white mb-1 md:mb-2">1. Dépôt</h3>
-                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Alimentation par carte ou virement bancaire classique.</p>
+                        <h3 class="font-bold text-lg md:text-xl text-white mb-1 md:mb-2">
+                            <span class="lang-fr">1. Dépôt</span>
+                            <span class="lang-en">1. Deposit</span>
+                        </h3>
+                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">
+                            <span class="lang-fr">Vous envoyez de l'argent par carte bancaire classique ou virement.</span>
+                            <span class="lang-en">You send money by traditional bank card or wire transfer.</span>
+                        </p>
                     </div>
 
                     <div class="flex items-center justify-center anim-element delay-400 py-1 md:py-0">
@@ -845,8 +1186,14 @@
                         <div class="w-12 h-12 md:w-16 md:h-16 mx-auto bg-sky-900/50 rounded-full flex items-center justify-center mb-2 md:mb-4 text-sky-400 text-xl md:text-2xl shadow-[0_0_20px_rgba(14,165,233,0.3)]">
                             <i class="fas fa-coins"></i>
                         </div>
-                        <h3 class="font-bold text-lg md:text-xl text-white mb-1 md:mb-2">2. Tokenisation</h3>
-                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Conversion instantanée de vos devises Fiat ($, €, £, CHF, FCFA...) en stablecoins (USDC/USDT).</p>
+                        <h3 class="font-bold text-lg md:text-xl text-white mb-1 md:mb-2">
+                            <span class="lang-fr">2. Numérisation</span>
+                            <span class="lang-en">2. Digitization</span>
+                        </h3>
+                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">
+                            <span class="lang-fr">Conversion instantanée de vos devises ($, €, £, CHF, FCFA...) en monnaies numériques stables (USDC/USDT).</span>
+                            <span class="lang-en">Instant conversion of your traditional currencies ($, €, £, CHF, FCFA...) into stable digital currencies (USDC/USDT).</span>
+                        </p>
                     </div>
 
                     <div class="flex items-center justify-center anim-element delay-600 py-1 md:py-0">
@@ -860,7 +1207,10 @@
                             <i class="fas fa-shield-halved"></i>
                         </div>
                         <h3 class="font-bold text-lg md:text-xl text-white mb-1 md:mb-2">3. Conversion</h3>
-                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Vos jetons sont reconvertis de manière sécurisée vers un compte opérationnel (CHF, USD).</p>
+                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">
+                            <span class="lang-fr">Vos fonds voyagent et arrivent de manière protégée sur un compte traditionnel pour vous (Francs Suisses ou Dollars).</span>
+                            <span class="lang-en">Your funds travel and arrive securely in a traditional account for you (Swiss Francs or Dollars).</span>
+                        </p>
                     </div>
 
                     <div class="flex items-center justify-center anim-element delay-800 py-1 md:py-0">
@@ -873,8 +1223,14 @@
                         <div class="w-12 h-12 md:w-16 md:h-16 mx-auto bg-emerald-900/50 rounded-full flex items-center justify-center mb-2 md:mb-4 text-emerald-400 text-xl md:text-2xl shadow-[0_0_20px_rgba(16,185,129,0.3)]">
                             <i class="fa-brands fa-cc-mastercard"></i>
                         </div>
-                        <h3 class="font-bold text-lg md:text-xl text-white mb-1 md:mb-2">4. Paiement Libre</h3>
-                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">Dépensez ou retirez du cash partout dans le monde via votre carte.</p>
+                        <h3 class="font-bold text-lg md:text-xl text-white mb-1 md:mb-2">
+                            <span class="lang-fr">4. Paiement Libre</span>
+                            <span class="lang-en">4. Free Payment</span>
+                        </h3>
+                        <p class="text-slate-400 text-xs md:text-sm leading-relaxed">
+                            <span class="lang-fr">Vous pouvez dépenser ou retirer de l'argent liquide partout dans le monde avec votre carte.</span>
+                            <span class="lang-en">You can spend or withdraw cash anywhere in the world with your card.</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -884,34 +1240,68 @@
         <div class="slide" id="slide-13">
             <div class="slide-content">
                 <div class="mb-6 md:mb-10 text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">Carte <span class="gradient-text">World Debit</span></h2>
-                    <p class="text-slate-400 mt-2 text-sm md:text-xl anim-element delay-200">Conçu pour d'importants besoins de liquidités internationales.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">
+                        <span class="lang-fr">La Carte <span class="gradient-text">World Debit</span></span>
+                        <span class="lang-en">The <span class="gradient-text">World Debit</span> Card</span>
+                    </h2>
+                    <p class="text-slate-400 mt-2 text-sm md:text-xl anim-element delay-200">
+                        <span class="lang-fr">Pensée pour ceux qui ont besoin d'avoir toujours de l'argent disponible.</span>
+                        <span class="lang-en">Designed for those who need to always have money available.</span>
+                    </p>
                 </div>
 
                 <div class="glass-card overflow-hidden anim-element anim-scale delay-300 border border-slate-700 max-w-5xl mx-auto w-full">
                     <div class="bg-gradient-to-r from-slate-900 to-slate-800 p-4 md:p-6 border-b border-slate-700 flex items-center justify-between">
-                        <h3 class="text-lg md:text-2xl font-bold text-white flex items-center"><i class="fas fa-gem text-blue-400 mr-3"></i> Limites de Transactions Officielles</h3>
+                        <h3 class="text-lg md:text-2xl font-bold text-white flex items-center">
+                            <i class="fas fa-gem text-blue-400 mr-3"></i> 
+                            <span class="lang-fr">Les Plafonds Officiels</span>
+                            <span class="lang-en">Official Limits</span>
+                        </h3>
                         <i class="fa-brands fa-cc-mastercard text-3xl md:text-4xl text-slate-500"></i>
                     </div>
                     <div class="p-0 overflow-x-auto">
                         <table class="w-full text-left border-collapse min-w-[600px]">
                             <thead>
                                 <tr class="bg-slate-800/50 text-slate-300 text-xs md:text-sm uppercase tracking-wider">
-                                    <th class="p-3 md:p-5 border-b border-slate-700 font-medium">Type d'Opération</th>
-                                    <th class="p-3 md:p-5 border-b border-slate-700 font-medium text-right">Par Transaction</th>
-                                    <th class="p-3 md:p-5 border-b border-slate-700 font-medium text-right text-blue-400">Limite Journalière</th>
-                                    <th class="p-3 md:p-5 border-b border-slate-700 font-medium text-right">Limite Mensuelle</th>
+                                    <th class="p-3 md:p-5 border-b border-slate-700 font-medium">
+                                        <span class="lang-fr">L'action</span>
+                                        <span class="lang-en">The Action</span>
+                                    </th>
+                                    <th class="p-3 md:p-5 border-b border-slate-700 font-medium text-right">
+                                        <span class="lang-fr">Maximum par Achat</span>
+                                        <span class="lang-en">Maximum per Purchase</span>
+                                    </th>
+                                    <th class="p-3 md:p-5 border-b border-slate-700 font-medium text-right text-blue-400">
+                                        <span class="lang-fr">Maximum par Jour</span>
+                                        <span class="lang-en">Maximum per Day</span>
+                                    </th>
+                                    <th class="p-3 md:p-5 border-b border-slate-700 font-medium text-right">
+                                        <span class="lang-fr">Maximum par Mois</span>
+                                        <span class="lang-en">Maximum per Month</span>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="text-white text-base md:text-xl">
                                 <tr class="hover:bg-slate-800/30 transition">
-                                    <td class="p-3 md:p-5 border-b border-slate-700"><i class="fas fa-shopping-bag text-slate-500 mr-3"></i> <strong>Paiement Commerçant (POS)</strong></td>
+                                    <td class="p-3 md:p-5 border-b border-slate-700">
+                                        <i class="fas fa-shopping-bag text-slate-500 mr-3"></i> 
+                                        <strong class="text-base md:text-xl">
+                                            <span class="lang-fr">Paiement en Magasin / Ligne</span>
+                                            <span class="lang-en">In-Store / Online Payment</span>
+                                        </strong>
+                                    </td>
                                     <td class="p-3 md:p-5 border-b border-slate-700 text-right">50 000 CHF</td>
                                     <td class="p-3 md:p-5 border-b border-slate-700 text-right font-bold text-blue-400">100 000 CHF</td>
                                     <td class="p-3 md:p-5 border-b border-slate-700 text-right">200 000 CHF</td>
                                 </tr>
                                 <tr class="hover:bg-slate-800/30 transition bg-slate-900/30">
-                                    <td class="p-3 md:p-5 border-b border-slate-700"><i class="fas fa-money-bill-wave text-emerald-500 mr-3"></i> <strong>Retrait Espèces (ATM)</strong></td>
+                                    <td class="p-3 md:p-5 border-b border-slate-700">
+                                        <i class="fas fa-money-bill-wave text-emerald-500 mr-3"></i> 
+                                        <strong class="text-base md:text-xl">
+                                            <span class="lang-fr">Retrait d'Argent Liquide (ATM)</span>
+                                            <span class="lang-en">Cash Withdrawal (ATM)</span>
+                                        </strong>
+                                    </td>
                                     <td class="p-3 md:p-5 border-b border-slate-700 text-right">5 000 CHF</td>
                                     <td class="p-3 md:p-5 border-b border-slate-700 text-right font-bold text-emerald-400">25 000 CHF</td>
                                     <td class="p-3 md:p-5 border-b border-slate-700 text-right text-slate-500">-</td>
@@ -922,11 +1312,17 @@
                     
                     <div class="bg-slate-800/80 p-4 md:p-5 border-t border-slate-700 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 text-xs md:text-base">
                         <div class="flex justify-between items-center p-2 md:p-3 rounded-lg bg-slate-900/50 border border-slate-700/50">
-                            <span class="text-slate-400">Frais d'émission (Paiement Unique)</span>
+                            <span class="text-slate-400">
+                                <span class="lang-fr">Prix pour obtenir la carte (une seule fois)</span>
+                                <span class="lang-en">Price to obtain the card (one-time)</span>
+                            </span>
                             <span class="font-bold text-white text-base md:text-xl">320 CHF</span>
                         </div>
                         <div class="flex justify-between items-center p-2 md:p-3 rounded-lg bg-slate-900/50 border border-slate-700/50">
-                            <span class="text-slate-400">Frais de maintenance mensuelle / inactivité</span>
+                            <span class="text-slate-400">
+                                <span class="lang-fr">Frais d'abonnement ou de non-utilisation</span>
+                                <span class="lang-en">Subscription or non-use fees</span>
+                            </span>
                             <span class="font-bold text-emerald-400 text-base md:text-xl">0 CHF</span>
                         </div>
                     </div>
@@ -939,10 +1335,17 @@
             <div class="slide-content">
                 <div class="mb-6 md:mb-8 text-center">
                     <div class="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full bg-emerald-900/30 border border-emerald-500/30 text-emerald-400 mb-2 anim-element delay-100 text-[10px] md:text-sm font-bold uppercase tracking-wider">
-                        KYC / AML Policy
+                        <span class="lang-fr">Vérification & Sécurité</span>
+                        <span class="lang-en">Verification & Security</span>
                     </div>
-                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-200">Couverture Mondiale & <span class="gradient-text">Conformité</span></h2>
-                    <p class="text-slate-400 mt-2 text-sm md:text-xl anim-element delay-300">Une infrastructure légalement armée pour on-boarder une communauté sur <strong class="text-white">plus de 170 pays</strong> (No-Risk).</p>
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-200">
+                        <span class="lang-fr">Une Couverture <span class="gradient-text">Mondiale</span></span>
+                        <span class="lang-en"><span class="gradient-text">Global</span> Coverage</span>
+                    </h2>
+                    <p class="text-slate-400 mt-2 text-sm md:text-xl anim-element delay-300">
+                        <span class="lang-fr">Une structure légalement armée pour accompagner et intégrer des personnes sur <strong class="text-white">plus de 170 pays</strong> en toute sécurité.</span>
+                        <span class="lang-en">A legally armed structure to support and onboard people in <strong class="text-white">over 170 countries</strong> in total security.</span>
+                    </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 w-full max-w-6xl mx-auto">
@@ -950,9 +1353,18 @@
                     <div class="glass-card p-4 md:p-6 border-l-4 border-red-600 anim-element anim-left delay-400 flex items-start space-x-3 md:space-x-4">
                         <div class="text-2xl md:text-4xl shrink-0 mt-1">🇨🇭</div>
                         <div>
-                            <h3 class="font-bold text-base md:text-xl text-white mb-1">Suisse (Atomo Sàrl)</h3>
-                            <p class="text-slate-300 text-xs md:text-sm mb-1 md:mb-2">Membre approuvé <strong class="text-brand-accent">VQF SRO</strong> (#100977).</p>
-                            <p class="text-slate-400 text-[10px] md:text-xs leading-relaxed hidden md:block">Entité officiellement reconnue, responsable de la lutte anti-blanchiment d'argent et du financement du terrorisme (AML/CFT).</p>
+                            <h3 class="font-bold text-base md:text-xl text-white mb-1">
+                                <span class="lang-fr">Suisse (Atomo Sàrl)</span>
+                                <span class="lang-en">Switzerland (Atomo Sàrl)</span>
+                            </h3>
+                            <p class="text-slate-300 text-xs md:text-sm mb-1 md:mb-2">
+                                <span class="lang-fr">Membre approuvé <strong class="text-brand-accent">VQF SRO</strong>.</span>
+                                <span class="lang-en">Approved member <strong class="text-brand-accent">VQF SRO</strong>.</span>
+                            </p>
+                            <p class="text-slate-400 text-[10px] md:text-xs leading-relaxed hidden md:block">
+                                <span class="lang-fr">Entité officiellement reconnue, responsable de la lutte anti-blanchiment d'argent et de la sécurité des fonds.</span>
+                                <span class="lang-en">Officially recognized entity, responsible for anti-money laundering and fund security.</span>
+                            </p>
                         </div>
                     </div>
 
@@ -961,8 +1373,14 @@
                         <div class="text-2xl md:text-4xl shrink-0 mt-1">🇺🇸</div>
                         <div>
                             <h3 class="font-bold text-base md:text-xl text-white mb-1">USA (Atomic Tech LLC)</h3>
-                            <p class="text-slate-300 text-xs md:text-sm mb-1 md:mb-2">Enregistré <strong class="text-brand-accent">FinCEN</strong> & Licence MTL Floride.</p>
-                            <p class="text-slate-400 text-[10px] md:text-xs leading-relaxed hidden md:block">Approuvé comme Money Service Business par le réseau de répression des crimes financiers et l'OFR de Floride.</p>
+                            <p class="text-slate-300 text-xs md:text-sm mb-1 md:mb-2">
+                                <span class="lang-fr">Enregistré auprès de l'État (Floride et <strong class="text-brand-accent">FinCEN</strong>).</span>
+                                <span class="lang-en">State registered (Florida and <strong class="text-brand-accent">FinCEN</strong>).</span>
+                            </p>
+                            <p class="text-slate-400 text-[10px] md:text-xs leading-relaxed hidden md:block">
+                                <span class="lang-fr">Approuvé comme entreprise financière légitime par le réseau américain de répression des crimes financiers.</span>
+                                <span class="lang-en">Approved as a legitimate financial business by the US Financial Crimes Enforcement Network.</span>
+                            </p>
                         </div>
                     </div>
 
@@ -971,8 +1389,14 @@
                         <div class="text-2xl md:text-4xl shrink-0 mt-1">🇨🇷</div>
                         <div>
                             <h3 class="font-bold text-base md:text-xl text-white mb-1">Costa Rica</h3>
-                            <p class="text-slate-300 text-xs md:text-sm mb-1 md:mb-2">Approuvé par la <strong class="text-brand-accent">SUGEF</strong>.</p>
-                            <p class="text-slate-400 text-[10px] md:text-xs leading-relaxed hidden md:block">Opérateur de change et de transfert d'argent formellement reconnu depuis Mai 2022.</p>
+                            <p class="text-slate-300 text-xs md:text-sm mb-1 md:mb-2">
+                                <span class="lang-fr">Approuvé par la <strong class="text-brand-accent">SUGEF</strong>.</span>
+                                <span class="lang-en">Approved by <strong class="text-brand-accent">SUGEF</strong>.</span>
+                            </p>
+                            <p class="text-slate-400 text-[10px] md:text-xs leading-relaxed hidden md:block">
+                                <span class="lang-fr">Opérateur de change et de transfert d'argent formellement reconnu et surveillé par les autorités.</span>
+                                <span class="lang-en">Currency exchange and money transfer operator formally recognized and monitored by authorities.</span>
+                            </p>
                         </div>
                     </div>
 
@@ -981,48 +1405,79 @@
                         <div class="text-2xl md:text-4xl shrink-0 mt-1">🇸🇻</div>
                         <div>
                             <h3 class="font-bold text-base md:text-xl text-white mb-1">El Salvador</h3>
-                            <p class="text-slate-300 text-xs md:text-sm mb-1 md:mb-2">Approuvé <strong class="text-brand-accent">SSF & Banco Central</strong>.</p>
-                            <p class="text-slate-400 text-[10px] md:text-xs leading-relaxed hidden md:block">Licence officielle en tant que processeur de paiements crypto reconnue par la Banque Centrale.</p>
+                            <p class="text-slate-300 text-xs md:text-sm mb-1 md:mb-2">
+                                <span class="lang-fr">Approuvé par la <strong class="text-brand-accent">Banque Centrale</strong>.</span>
+                                <span class="lang-en">Approved by the <strong class="text-brand-accent">Central Bank</strong>.</span>
+                            </p>
+                            <p class="text-slate-400 text-[10px] md:text-xs leading-relaxed hidden md:block">
+                                <span class="lang-fr">Licence officielle en tant que système de paiements numériques reconnue par le gouvernement.</span>
+                                <span class="lang-en">Official license as a digital payment system recognized by the government.</span>
+                            </p>
                         </div>
                     </div>
                 </div>
-                <p class="text-center text-slate-500 text-[10px] md:text-sm mt-4 md:mt-6 anim-element delay-800 px-2 md:px-4">*Les exceptions spécifiques (juridictions sous sanction ou High-Risk) sont traitées en session privée lors du processus d'onboarding.</p>
+                <p class="text-center text-slate-500 text-[10px] md:text-sm mt-4 md:mt-6 anim-element delay-800 px-2 md:px-4">
+                    <span class="lang-fr">*Les exceptions spécifiques (pays sous sanction mondiale) sont vérifiées en session privée lors de la création du compte.</span>
+                    <span class="lang-en">*Specific exceptions (globally sanctioned countries) are verified in a private session during account creation.</span>
+                </p>
             </div>
         </div>
 
         <!-- SLIDE 15 : DISCRÉTION VS OPACITÉ -->
         <div class="slide" id="slide-15">
             <div class="slide-content text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4 md:mb-8 anim-element delay-100">Discrétion <span class="text-slate-500">≠</span> Opacité</h2>
-                <p class="text-slate-400 text-sm md:text-xl mb-6 md:mb-12 anim-element delay-200">Clarifions ce que nous faisons, et ce que nous ne faisons pas.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 md:mb-8 anim-element delay-100">
+                    <span class="lang-fr">Discrétion <span class="text-slate-500">≠</span> Opacité</span>
+                    <span class="lang-en">Discretion <span class="text-slate-500">≠</span> Opacity</span>
+                </h2>
+                <p class="text-slate-400 text-sm md:text-xl mb-6 md:mb-12 anim-element delay-200">
+                    <span class="lang-fr">Clarifions tout de suite ce que nous faisons, et ce que nous ne faisons pas.</span>
+                    <span class="lang-en">Let's clarify right away what we do, and what we don't do.</span>
+                </p>
                 
                 <div class="flex flex-col md:flex-row justify-center gap-6 md:gap-8 max-w-5xl mx-auto">
                     <div class="flex-1 glass-card p-6 md:p-10 anim-element anim-left delay-300 border-t-4 border-slate-700">
                         <div class="w-16 h-16 md:w-20 md:h-20 mx-auto bg-slate-800 rounded-full flex items-center justify-center mb-4 md:mb-6 text-slate-400 text-2xl md:text-3xl">
                             <i class="fas fa-mask"></i>
                         </div>
-                        <h3 class="font-bold text-xl md:text-2xl text-white mb-2 md:mb-4">Ce que nous ne faisons PAS</h3>
-                        <p class="text-slate-400 text-sm md:text-base leading-relaxed">Nous ne fournissons pas d'anonymat total, ni de moyens pour contourner les contrôles KYC/AML imposés par les lois internationales.</p>
+                        <h3 class="font-bold text-xl md:text-2xl text-white mb-2 md:mb-4">
+                            <span class="lang-fr">Ce que nous ne faisons PAS</span>
+                            <span class="lang-en">What we do NOT do</span>
+                        </h3>
+                        <p class="text-slate-400 text-sm md:text-base leading-relaxed">
+                            <span class="lang-fr">Nous ne fournissons pas de comptes anonymes pour vous cacher. Nous respectons strictement les contrôles d'identité imposés par la loi pour éviter tout problème.</span>
+                            <span class="lang-en">We do not provide anonymous accounts to hide you. We strictly respect the identity checks required by law to avoid any problems.</span>
+                        </p>
                     </div>
 
                     <div class="flex-1 glass-card p-6 md:p-10 anim-element anim-right delay-500 border-t-4 border-brand-accent shadow-[0_0_30px_rgba(59,130,246,0.15)]">
                         <div class="w-16 h-16 md:w-20 md:h-20 mx-auto bg-blue-900/50 rounded-full flex items-center justify-center mb-4 md:mb-6 text-blue-400 text-2xl md:text-3xl">
                             <i class="fas fa-user-shield"></i>
                         </div>
-                        <h3 class="font-bold text-xl md:text-2xl text-white mb-2 md:mb-4">Confidentialité Opérationnelle</h3>
-                        <p class="text-slate-300 text-sm md:text-base leading-relaxed"><strong>Nous cloisonnons vos flux.</strong> Votre banque principale (où réside votre épargne) n'est plus exposée aux détails de vos paiements internationaux ou de vos retraits cash.</p>
+                        <h3 class="font-bold text-xl md:text-2xl text-white mb-2 md:mb-4">
+                            <span class="lang-fr">Ce que nous offrons : La Discrétion</span>
+                            <span class="lang-en">What we offer: Discretion</span>
+                        </h3>
+                        <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                            <span class="lang-fr"><strong>Nous séparons vos activités.</strong> Votre banque locale n'a plus besoin de savoir combien vous payez sur internet à l'étranger, ni pourquoi vous retirez du liquide le week-end.</span>
+                            <span class="lang-en"><strong>We separate your activities.</strong> Your local bank no longer needs to know how much you pay online abroad, nor why you withdraw cash on the weekend.</span>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 16 : CAS D'USAGE (NOUVEAU) -->
+        <!-- SLIDE 16 : CAS D'USAGE -->
         <div class="slide" id="slide-16">
             <div class="slide-content text-center">
                 <div class="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full bg-blue-900/30 border border-blue-500/30 text-blue-400 mb-4 md:mb-6 anim-element delay-100 text-[10px] md:text-sm font-bold tracking-widest uppercase">
-                    Dans la vraie vie
+                    <span class="lang-fr">Dans la vraie vie</span>
+                    <span class="lang-en">In real life</span>
                 </div>
-                <h2 class="text-3xl md:text-5xl font-bold mb-6 md:mb-8 anim-element delay-200">De la théorie <span class="gradient-text">à la pratique</span></h2>
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 md:mb-8 anim-element delay-200">
+                    <span class="lang-fr">De la théorie <span class="gradient-text">à la pratique</span></span>
+                    <span class="lang-en">From theory <span class="gradient-text">to practice</span></span>
+                </h2>
                 
                 <div class="flex flex-col md:flex-row gap-6 md:gap-8 max-w-6xl mx-auto text-left w-full mt-2 md:mt-4">
                     <!-- Cas 1 -->
@@ -1031,17 +1486,34 @@
                             <div class="w-10 h-10 md:w-14 md:h-14 bg-purple-900/50 rounded-full flex items-center justify-center mr-3 md:mr-4 shrink-0">
                                 <i class="fas fa-globe text-xl md:text-2xl text-purple-400"></i>
                             </div>
-                            <h3 class="text-xl md:text-2xl font-bold text-white">L'Entrepreneur</h3>
+                            <h3 class="text-xl md:text-2xl font-bold text-white">
+                                <span class="lang-fr">Exemple 1 : L'Achat Imprévu</span>
+                                <span class="lang-en">Example 1: The Unexpected Purchase</span>
+                            </h3>
                         </div>
                         
                         <div class="mb-4 md:mb-6 p-3 md:p-4 rounded-lg border border-rose-500/30 bg-rose-900/10">
-                            <h4 class="text-rose-400 font-bold mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-times-circle mr-2"></i> Système Bancaire</h4>
-                            <p class="text-slate-400 text-xs md:text-sm">Vous devez payer une facture de serveurs de 40 000 CHF à l'étranger un vendredi soir. Votre banque bloque le virement par sécurité IA et demande 3 justificatifs lundi matin.</p>
+                            <h4 class="text-rose-400 font-bold mb-1 md:mb-2 flex items-center text-sm md:text-base">
+                                <i class="fas fa-times-circle mr-2"></i> 
+                                <span class="lang-fr">Avec votre Banque classique</span>
+                                <span class="lang-en">With your traditional Bank</span>
+                            </h4>
+                            <p class="text-slate-400 text-xs md:text-sm">
+                                <span class="lang-fr">Vous devez payer d'urgence 40 000 Francs Suisses à l'étranger un vendredi soir. Le robot de la banque trouve cela bizarre, bloque l'envoi et vous demande d'appeler lundi matin avec des factures.</span>
+                                <span class="lang-en">You urgently need to pay 40,000 Swiss Francs abroad on a Friday evening. The bank's robot finds it suspicious, blocks the transfer, and asks you to call on Monday morning with invoices.</span>
+                            </p>
                         </div>
                         
                         <div class="p-3 md:p-4 rounded-lg border border-emerald-500/30 bg-emerald-900/10">
-                            <h4 class="text-emerald-400 font-bold mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-check-circle mr-2"></i> World Debit</h4>
-                            <p class="text-slate-300 text-xs md:text-sm">Vous chargez 40k en USDC, ça passe sur la carte. C'est payé mondialement en 2 minutes, un vendredi soir à 22h.</p>
+                            <h4 class="text-emerald-400 font-bold mb-1 md:mb-2 flex items-center text-sm md:text-base">
+                                <i class="fas fa-check-circle mr-2"></i> 
+                                <span class="lang-fr">Avec la carte World Debit</span>
+                                <span class="lang-en">With the World Debit card</span>
+                            </h4>
+                            <p class="text-slate-300 text-xs md:text-sm">
+                                <span class="lang-fr">Vous mettez votre argent sur la carte. Vous faites le paiement, et il est validé partout dans le monde en 2 minutes, même un vendredi à 22h.</span>
+                                <span class="lang-en">You put your money on the card. You make the payment, and it is validated anywhere in the world in 2 minutes, even on a Friday at 10 PM.</span>
+                            </p>
                         </div>
                     </div>
 
@@ -1051,17 +1523,34 @@
                             <div class="w-10 h-10 md:w-14 md:h-14 bg-emerald-900/50 rounded-full flex items-center justify-center mr-3 md:mr-4 shrink-0">
                                 <i class="fas fa-car text-xl md:text-2xl text-emerald-400"></i>
                             </div>
-                            <h3 class="text-xl md:text-2xl font-bold text-white">Le Résident</h3>
+                            <h3 class="text-xl md:text-2xl font-bold text-white">
+                                <span class="lang-fr">Exemple 2 : L'Argent Liquide</span>
+                                <span class="lang-en">Example 2: Cash Money</span>
+                            </h3>
                         </div>
                         
                         <div class="mb-4 md:mb-6 p-3 md:p-4 rounded-lg border border-rose-500/30 bg-rose-900/10">
-                            <h4 class="text-rose-400 font-bold mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-times-circle mr-2"></i> Système Bancaire</h4>
-                            <p class="text-slate-400 text-xs md:text-sm">Vous voulez acheter une voiture d'occasion à 20 000 CHF ce week-end. Les distributeurs ATM de votre banque locale vous limitent à 2 000 CHF par semaine.</p>
+                            <h4 class="text-rose-400 font-bold mb-1 md:mb-2 flex items-center text-sm md:text-base">
+                                <i class="fas fa-times-circle mr-2"></i> 
+                                <span class="lang-fr">Avec votre Banque classique</span>
+                                <span class="lang-en">With your traditional Bank</span>
+                            </h4>
+                            <p class="text-slate-400 text-xs md:text-sm">
+                                <span class="lang-fr">Vous avez trouvé une belle voiture d'occasion à 20 000 CHF ce week-end et le vendeur veut du liquide. Le distributeur (Bancomat) de votre banque vous empêche de retirer plus de 2 000 CHF par semaine.</span>
+                                <span class="lang-en">You found a nice used car for 20,000 CHF this weekend and the seller wants cash. Your bank's ATM prevents you from withdrawing more than 2,000 CHF per week.</span>
+                            </p>
                         </div>
                         
                         <div class="p-3 md:p-4 rounded-lg border border-emerald-500/30 bg-emerald-900/10">
-                            <h4 class="text-emerald-400 font-bold mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-check-circle mr-2"></i> World Debit</h4>
-                            <p class="text-slate-300 text-xs md:text-sm">La limite ATM Premium le permet : vous vous rendez au distributeur le samedi matin et retirez les 20 000 CHF en cash.</p>
+                            <h4 class="text-emerald-400 font-bold mb-1 md:mb-2 flex items-center text-sm md:text-base">
+                                <i class="fas fa-check-circle mr-2"></i> 
+                                <span class="lang-fr">Avec la carte World Debit</span>
+                                <span class="lang-en">With the World Debit card</span>
+                            </h4>
+                            <p class="text-slate-300 text-xs md:text-sm">
+                                <span class="lang-fr">Le plafond très élevé de notre carte vous permet de vous rendre à un distributeur et de retirer les 20 000 CHF immédiatement le samedi matin.</span>
+                                <span class="lang-en">The very high limit of our card allows you to go to an ATM and withdraw the 20,000 CHF immediately on Saturday morning.</span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -1072,37 +1561,67 @@
         <div class="slide" id="slide-17">
             <div class="slide-content">
                 <div class="mb-6 md:mb-10 text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">À qui cela s'adresse ?</h2>
-                    <p class="text-slate-400 mt-2 text-sm md:text-xl anim-element delay-200">Des profils qui ont besoin d'un accès fluide, pas d'une contrainte supplémentaire.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold anim-element delay-100">
+                        <span class="lang-fr">À qui cela s'adresse ?</span>
+                        <span class="lang-en">Who is this for?</span>
+                    </h2>
+                    <p class="text-slate-400 mt-2 text-sm md:text-xl anim-element delay-200">
+                        <span class="lang-fr">À tous ceux qui refusent d'être bloqués pour utiliser leur propre argent.</span>
+                        <span class="lang-en">To all those who refuse to be blocked from using their own money.</span>
+                    </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full max-w-5xl mx-auto mt-2 md:mt-4">
                     <div class="glass-card p-4 md:p-8 flex space-x-3 md:space-x-6 items-center anim-element delay-300 border-l-4 border-orange-500">
                         <div class="w-10 h-10 md:w-16 md:h-16 rounded-full bg-slate-800 flex items-center justify-center text-xl md:text-3xl text-orange-400 shrink-0"><i class="fab fa-bitcoin"></i></div>
                         <div>
-                            <h3 class="font-bold text-base md:text-xl text-white mb-1">L'Investisseur Crypto</h3>
-                            <p class="text-slate-400 text-xs md:text-base">Convertir une partie de ses actifs en liquidité réelle sans risquer de voir son compte bancaire local bloqué.</p>
+                            <h3 class="font-bold text-base md:text-xl text-white mb-1">
+                                <span class="lang-fr">L'Investisseur de l'ère numérique</span>
+                                <span class="lang-en">The Digital Era Investor</span>
+                            </h3>
+                            <p class="text-slate-400 text-xs md:text-base">
+                                <span class="lang-fr">Pouvoir transformer ses gains informatiques en argent réel sans risquer de voir sa banque paniquer et fermer son compte.</span>
+                                <span class="lang-en">Being able to transform digital gains into real money without risking seeing your bank panic and close your account.</span>
+                            </p>
                         </div>
                     </div>
                     <div class="glass-card p-4 md:p-8 flex space-x-3 md:space-x-6 items-center anim-element delay-400 border-l-4 border-purple-500">
                         <div class="w-10 h-10 md:w-16 md:h-16 rounded-full bg-slate-800 flex items-center justify-center text-xl md:text-3xl text-purple-400 shrink-0"><i class="fas fa-plane-departure"></i></div>
                         <div>
-                            <h3 class="font-bold text-base md:text-xl text-white mb-1">L'Entrepreneur International</h3>
-                            <p class="text-slate-400 text-xs md:text-base">Payer des voyages, des serveurs ou des fournisseurs B2B sans les blocages de l'IA bancaire.</p>
+                            <h3 class="font-bold text-base md:text-xl text-white mb-1">
+                                <span class="lang-fr">La personne qui voyage ou entreprend</span>
+                                <span class="lang-en">The Traveler or Entrepreneur</span>
+                            </h3>
+                            <p class="text-slate-400 text-xs md:text-base">
+                                <span class="lang-fr">Payer des voyages, des outils en ligne ou des fournisseurs étrangers sans être bloqué par une sécurité trop stricte.</span>
+                                <span class="lang-en">Pay for trips, online tools, or foreign suppliers without being blocked by overly strict security.</span>
+                            </p>
                         </div>
                     </div>
                     <div class="glass-card p-4 md:p-8 flex space-x-3 md:space-x-6 items-center anim-element delay-500 border-l-4 border-emerald-500">
                         <div class="w-10 h-10 md:w-16 md:h-16 rounded-full bg-slate-800 flex items-center justify-center text-xl md:text-3xl text-emerald-400 shrink-0"><i class="fas fa-money-bill-wave"></i></div>
                         <div>
-                            <h3 class="font-bold text-base md:text-xl text-white mb-1">Le Résident Européen/Suisse</h3>
-                            <p class="text-slate-400 text-xs md:text-base">Accéder à de fortes capacités de retraits cash (25 000 CHF/jour en ATM) face aux restrictions locales.</p>
+                            <h3 class="font-bold text-base md:text-xl text-white mb-1">
+                                <span class="lang-fr">Le Résident Suisse ou Européen</span>
+                                <span class="lang-en">The Swiss or European Resident</span>
+                            </h3>
+                            <p class="text-slate-400 text-xs md:text-base">
+                                <span class="lang-fr">Retrouver la liberté d'avoir de l'argent liquide quand on veut (jusqu'à 25 000 CHF/jour) face aux limites de sa région.</span>
+                                <span class="lang-en">Regain the freedom to have cash whenever you want (up to 25,000 CHF/day) facing local limits.</span>
+                            </p>
                         </div>
                     </div>
                     <div class="glass-card p-4 md:p-8 flex space-x-3 md:space-x-6 items-center anim-element delay-600 border-l-4 border-yellow-500">
                         <div class="w-10 h-10 md:w-16 md:h-16 rounded-full bg-slate-800 flex items-center justify-center text-xl md:text-3xl text-yellow-400 shrink-0"><i class="fas fa-network-wired"></i></div>
                         <div>
-                            <h3 class="font-bold text-base md:text-xl text-white mb-1">Le Bâtisseur de Réseau</h3>
-                            <p class="text-slate-400 text-xs md:text-base">Créer un réseau de recommandation mondial (sur les 170 pays) et générer du revenu via la cooptation.</p>
+                            <h3 class="font-bold text-base md:text-xl text-white mb-1">
+                                <span class="lang-fr">Le Concrétiseur de Réseau</span>
+                                <span class="lang-en">The Network Builder</span>
+                            </h3>
+                            <p class="text-slate-400 text-xs md:text-base">
+                                <span class="lang-fr">Aider son entourage partout dans le monde à retrouver cette liberté, et être récompensé financièrement pour ces recommandations.</span>
+                                <span class="lang-en">Help your network anywhere in the world regain this freedom, and be financially rewarded for these recommendations.</span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -1113,16 +1632,26 @@
         <div class="slide" id="slide-18">
             <div class="slide-content text-center">
                 <div class="inline-block px-3 py-1 md:px-4 md:py-1 rounded-full bg-brand-accent/20 border border-brand-accent/50 text-blue-300 mb-4 md:mb-6 anim-element delay-100 text-[10px] md:text-sm font-bold uppercase tracking-wider">
-                    Passer à l'action
+                    <span class="lang-fr">Passer à l'action</span>
+                    <span class="lang-en">Take action</span>
                 </div>
-                <h2 class="text-4xl md:text-5xl font-bold mb-6 md:mb-8 anim-element delay-200">L'Offre <span class="gradient-text">Masterclass</span></h2>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 md:mb-8 anim-element delay-200">
+                    <span class="lang-fr">L'Offre <span class="gradient-text">Masterclass</span></span>
+                    <span class="lang-en">The <span class="gradient-text">Masterclass</span> Offer</span>
+                </h2>
                 
                 <div class="glass-card max-w-4xl mx-auto p-6 md:p-12 border-2 border-brand-accent anim-element anim-scale delay-300 relative overflow-hidden shadow-[0_0_50px_rgba(59,130,246,0.3)]">
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"></div>
                     <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
                     
-                    <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4 relative z-10">Ouverture de compte AML + Carte World Debit</h3>
-                    <p class="text-slate-400 text-sm md:text-lg mb-6 md:mb-8 relative z-10">Vous n'achetez pas seulement une carte, vous achetez un onboarding accompagné de A à Z par notre équipe.</p>
+                    <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4 relative z-10">
+                        <span class="lang-fr">Création du compte + Carte World Debit</span>
+                        <span class="lang-en">Account creation + World Debit Card</span>
+                    </h3>
+                    <p class="text-slate-400 text-sm md:text-lg mb-6 md:mb-8 relative z-10">
+                        <span class="lang-fr">Vous n'achetez pas seulement une carte, vous bénéficiez d'un accompagnement humain de A à Z par notre équipe pour créer et configurer votre compte.</span>
+                        <span class="lang-en">You are not just buying a card, you benefit from human support from A to Z by our team to create and configure your account.</span>
+                    </p>
                     
                     <div class="flex items-end justify-center mb-6 md:mb-8 relative z-10">
                         <span class="text-5xl md:text-7xl font-bold text-white drop-shadow-lg">320 CHF</span>
@@ -1134,13 +1663,15 @@
                         <div class="text-emerald-400 font-medium text-sm md:text-lg lg:text-xl flex items-start text-left w-full">
                             <i class="fas fa-gift mr-3 md:mr-4 mt-1 text-xl md:text-2xl shrink-0"></i>
                             <p>
-                                <strong>Bonus Réseau :</strong> +20 CHF crédités par personne cooptée pour le réseau direct et +10 CHF pour le réseau indirect.
+                                <span class="lang-fr"><strong>La Récompense Réseau :</strong> Nous vous reversons 20 CHF pour chaque personne directe que vous aidez à nous rejoindre, et 10 CHF pour chaque personne aidée par votre réseau (indirect).</span>
+                                <span class="lang-en"><strong>The Network Reward:</strong> We give you back 20 CHF for each direct person you help join us, and 10 CHF for each person helped by your network (indirect).</span>
                             </p>
                         </div>
                         <div class="text-purple-400 font-medium text-sm md:text-lg lg:text-xl flex items-start mt-2 bg-purple-900/20 px-4 py-3 md:px-6 md:py-4 rounded-xl border border-purple-500/30 text-left w-full">
                             <i class="fas fa-graduation-cap mr-3 md:mr-4 mt-1 text-lg md:text-2xl shrink-0"></i>
                             <p>
-                                <strong>Inclus :</strong> Accès exclusif à la Masterclass Niveau 2 (en construction).
+                                <span class="lang-fr"><strong>En cadeau :</strong> Vous obtenez votre accès exclusif à notre prochaine Masterclass VIP de "Niveau 2".</span>
+                                <span class="lang-en"><strong>As a gift:</strong> You get your exclusive access to our next VIP "Level 2" Masterclass.</span>
                             </p>
                         </div>
                     </div>
@@ -1151,38 +1682,68 @@
         <!-- SLIDE 19 : PROCESSUS D'ONBOARDING -->
         <div class="slide" id="slide-19">
             <div class="slide-content text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4 md:mb-6 anim-element delay-100">Et maintenant ? Le Processus</h2>
-                <p class="text-sm md:text-xl text-slate-400 mb-8 md:mb-12 anim-element delay-200">Ne prenez aucun risque seul. Nous vous accompagnons à chaque étape.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 md:mb-6 anim-element delay-100">
+                    <span class="lang-fr">Et maintenant ? Le Processus</span>
+                    <span class="lang-en">What now? The Process</span>
+                </h2>
+                <p class="text-sm md:text-xl text-slate-400 mb-8 md:mb-12 anim-element delay-200">
+                    <span class="lang-fr">Ne faites rien tout seul. Nous allons vous guider pour chaque étape.</span>
+                    <span class="lang-en">Don't do anything alone. We will guide you through every step.</span>
+                </p>
 
                 <div class="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-6 max-w-5xl mx-auto md:mb-16 px-4">
                     <div class="glass-card p-4 md:p-6 w-full md:w-1/4 anim-element delay-300">
                         <div class="text-2xl md:text-3xl text-blue-400 mb-2 md:mb-3"><i class="fab fa-whatsapp"></i></div>
-                        <h4 class="font-bold text-base md:text-lg text-white mb-1">1. Contact</h4>
-                        <p class="text-slate-400 text-xs md:text-sm">Réservez via le formulaire ou WhatsApp.</p>
+                        <h4 class="font-bold text-base md:text-lg text-white mb-1">
+                            <span class="lang-fr">1. Le Contact</span>
+                            <span class="lang-en">1. The Contact</span>
+                        </h4>
+                        <p class="text-slate-400 text-xs md:text-sm">
+                            <span class="lang-fr">Vous nous envoyez simplement un message pour réserver.</span>
+                            <span class="lang-en">You simply send us a message to book.</span>
+                        </p>
                     </div>
                     <i class="fas fa-arrow-right text-2xl text-slate-600 desktop-arrow-right anim-element delay-400 hidden md:block"></i>
                     <i class="fas fa-arrow-down mobile-arrow-down text-slate-500 anim-element delay-400"></i>
                     
                     <div class="glass-card p-4 md:p-6 w-full md:w-1/4 anim-element delay-500 border-b-4 border-brand-accent bg-slate-800">
                         <div class="text-2xl md:text-3xl text-brand-accent mb-2 md:mb-3"><i class="fas fa-handshake"></i></div>
-                        <h4 class="font-bold text-base md:text-lg text-white mb-1">2. Session Privée</h4>
-                        <p class="text-slate-400 text-xs md:text-sm">Validation du besoin (Pays, source de fonds).</p>
+                        <h4 class="font-bold text-base md:text-lg text-white mb-1">
+                            <span class="lang-fr">2. L'Entretien</span>
+                            <span class="lang-en">2. The Interview</span>
+                        </h4>
+                        <p class="text-slate-400 text-xs md:text-sm">
+                            <span class="lang-fr">Un rendez-vous privé pour discuter de votre besoin précis et de votre pays.</span>
+                            <span class="lang-en">A private meeting to discuss your specific needs and your country.</span>
+                        </p>
                     </div>
                     <i class="fas fa-arrow-right text-2xl text-slate-600 desktop-arrow-right anim-element delay-600 hidden md:block"></i>
                     <i class="fas fa-arrow-down mobile-arrow-down text-slate-500 anim-element delay-600"></i>
                     
                     <div class="glass-card p-4 md:p-6 w-full md:w-1/4 anim-element delay-700">
                         <div class="text-2xl md:text-3xl text-purple-400 mb-2 md:mb-3"><i class="fas fa-id-card"></i></div>
-                        <h4 class="font-bold text-base md:text-lg text-white mb-1">3. KYC / AML</h4>
-                        <p class="text-slate-400 text-xs md:text-sm">Vérification de conformité de l'identité.</p>
+                        <h4 class="font-bold text-base md:text-lg text-white mb-1">
+                            <span class="lang-fr">3. L'Identité</span>
+                            <span class="lang-en">3. The Identity</span>
+                        </h4>
+                        <p class="text-slate-400 text-xs md:text-sm">
+                            <span class="lang-fr">Nous vérifions vos papiers officiels pour que tout soit parfaitement en règle avec la loi.</span>
+                            <span class="lang-en">We verify your official documents so that everything is perfectly in order with the law.</span>
+                        </p>
                     </div>
                     <i class="fas fa-arrow-right text-2xl text-slate-600 desktop-arrow-right anim-element delay-800 hidden md:block"></i>
                     <i class="fas fa-arrow-down mobile-arrow-down text-slate-500 anim-element delay-800"></i>
                     
                     <div class="glass-card p-4 md:p-6 w-full md:w-1/4 anim-element delay-800">
                         <div class="text-2xl md:text-3xl text-emerald-400 mb-2 md:mb-3"><i class="fas fa-check-circle"></i></div>
-                        <h4 class="font-bold text-base md:text-lg text-white mb-1">4. Activation</h4>
-                        <p class="text-slate-400 text-xs md:text-sm">Carte World Debit et premier dépôt.</p>
+                        <h4 class="font-bold text-base md:text-lg text-white mb-1">
+                            <span class="lang-fr">4. L'Action</span>
+                            <span class="lang-en">4. The Action</span>
+                        </h4>
+                        <p class="text-slate-400 text-xs md:text-sm">
+                            <span class="lang-fr">Votre carte est activée et vous pouvez placer votre premier argent dessus.</span>
+                            <span class="lang-en">Your card is activated and you can put your first money on it.</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1194,24 +1755,55 @@
                 <div class="w-16 h-16 md:w-20 md:h-20 mx-auto bg-blue-900/50 rounded-full flex items-center justify-center mb-4 md:mb-6 text-blue-400 text-3xl md:text-4xl anim-element delay-100">
                     <i class="fas fa-comments"></i>
                 </div>
-                <h2 class="text-3xl md:text-5xl font-bold mb-4 md:mb-6 anim-element delay-200">Questions d'ordre général</h2>
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 md:mb-6 anim-element delay-200">
+                    <span class="lang-fr">Questions d'ordre général</span>
+                    <span class="lang-en">General Questions</span>
+                </h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 max-w-4xl mx-auto mt-2 md:mt-8 text-left px-2 md:px-4">
                     <div class="glass-card p-4 md:p-6 anim-element anim-left delay-300">
-                        <h4 class="font-bold text-blue-400 mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-question-circle mr-2"></i> Dois-je posséder de la crypto ?</h4>
-                        <p class="text-slate-300 text-xs md:text-base">Non. La recharge du compte peut se faire en stablecoins, mais aussi par simple virement bancaire ou carte de crédit.</p>
+                        <h4 class="font-bold text-blue-400 mb-1 md:mb-2 flex items-center text-sm md:text-base">
+                            <i class="fas fa-question-circle mr-2 shrink-0"></i> 
+                            <span class="lang-fr">Dois-je m'y connaitre en informatique ou posséder ces "monnaies numériques" avant ?</span>
+                            <span class="lang-en">Do I need to know about computers or own these "digital currencies" beforehand?</span>
+                        </h4>
+                        <p class="text-slate-300 text-xs md:text-base">
+                            <span class="lang-fr">Pas du tout. Vous pouvez très bien remplir votre compte avec votre carte bancaire normale, c'est très simple.</span>
+                            <span class="lang-en">Not at all. You can easily fund your account with your normal bank card, it's very simple.</span>
+                        </p>
                     </div>
                     <div class="glass-card p-4 md:p-6 anim-element anim-right delay-400">
-                        <h4 class="font-bold text-blue-400 mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-question-circle mr-2"></i> Le stablecoin est garanti par l'État ?</h4>
-                        <p class="text-slate-300 text-xs md:text-base">Non. Il est audité par la SEC et repose sur des réserves privées tangibles (Bons du Trésor). Ce n'est pas une monnaie d'État.</p>
+                        <h4 class="font-bold text-blue-400 mb-1 md:mb-2 flex items-center text-sm md:text-base">
+                            <i class="fas fa-question-circle mr-2 shrink-0"></i> 
+                            <span class="lang-fr">Ce système est-il magique ou soutenu par le gouvernement ?</span>
+                            <span class="lang-en">Is this system magic or supported by the government?</span>
+                        </h4>
+                        <p class="text-slate-300 text-xs md:text-base">
+                            <span class="lang-fr">Non, ce n'est pas de l'argent du gouvernement. Mais l'entreprise qui le gère est strictement surveillée par les autorités américaines (la SEC).</span>
+                            <span class="lang-en">No, it's not government money. But the company managing it is strictly monitored by American authorities (the SEC).</span>
+                        </p>
                     </div>
                     <div class="glass-card p-4 md:p-6 anim-element anim-left delay-500">
-                        <h4 class="font-bold text-blue-400 mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-question-circle mr-2"></i> Puis-je payer partout ?</h4>
-                        <p class="text-slate-300 text-xs md:text-base">Oui. La carte World Debit fonctionne mondialement sur tout le réseau Mastercard (TPE, Internet, ATM).</p>
+                        <h4 class="font-bold text-blue-400 mb-1 md:mb-2 flex items-center text-sm md:text-base">
+                            <i class="fas fa-question-circle mr-2 shrink-0"></i> 
+                            <span class="lang-fr">Est-ce que cette carte marchera dans la boulangerie en bas de chez moi ?</span>
+                            <span class="lang-en">Will this card work in the bakery down the street?</span>
+                        </h4>
+                        <p class="text-slate-300 text-xs md:text-base">
+                            <span class="lang-fr">Oui. C'est une carte Mastercard tout à fait normale. Elle marchera dans tous les magasins et distributeurs du monde qui acceptent Mastercard.</span>
+                            <span class="lang-en">Yes. It is a completely normal Mastercard. It will work in all shops and ATMs in the world that accept Mastercard.</span>
+                        </p>
                     </div>
                     <div class="glass-card p-4 md:p-6 anim-element anim-right delay-600">
-                        <h4 class="font-bold text-blue-400 mb-1 md:mb-2 flex items-center text-sm md:text-base"><i class="fas fa-question-circle mr-2"></i> Est-ce anonyme ?</h4>
-                        <p class="text-slate-300 text-xs md:text-base">Non. C'est confidentiel (cloisonné de votre banque) mais 100% régulé. L'onboarding impose un KYC strict.</p>
+                        <h4 class="font-bold text-blue-400 mb-1 md:mb-2 flex items-center text-sm md:text-base">
+                            <i class="fas fa-question-circle mr-2 shrink-0"></i> 
+                            <span class="lang-fr">Est-ce que c'est un moyen d'être anonyme pour me cacher ?</span>
+                            <span class="lang-en">Is this a way to be anonymous to hide myself?</span>
+                        </h4>
+                        <p class="text-slate-300 text-xs md:text-base">
+                            <span class="lang-fr">Non. C'est simplement discret face à votre banquier, mais nous vérifierons officiellement votre identité avant de vous donner accès à ce service, comme la loi nous y oblige.</span>
+                            <span class="lang-en">No. It is simply discreet from your banker, but we will officially verify your identity before giving you access to this service, as the law requires us to do.</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1223,21 +1815,38 @@
                 <div class="w-16 h-16 md:w-20 md:h-20 mx-auto bg-rose-900/50 rounded-full flex items-center justify-center mb-4 md:mb-6 text-rose-400 text-3xl md:text-4xl anim-element delay-100">
                     <i class="fas fa-lock"></i>
                 </div>
-                <h2 class="text-3xl md:text-5xl font-bold mb-4 md:mb-6 anim-element delay-200">Questions Personnelles</h2>
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 md:mb-6 anim-element delay-200">
+                    <span class="lang-fr">Questions Personnelles</span>
+                    <span class="lang-en">Personal Questions</span>
+                </h2>
                 
                 <p class="text-sm md:text-xl text-slate-400 mb-8 md:mb-12 anim-element delay-300 max-w-3xl mx-auto px-4">
-                    Afin de garantir votre totale confidentialité, certains sujets ne seront traités qu'en tête-à-tête.
+                    <span class="lang-fr">Pour garantir le secret de vos informations, certains sujets ne seront abordés qu'en tête-à-tête avec nous.</span>
+                    <span class="lang-en">To guarantee the secrecy of your information, certain subjects will only be discussed one-on-one with us.</span>
                 </p>
 
                 <div class="glass-card p-6 md:p-10 max-w-2xl mx-auto text-left border-l-4 border-rose-500 anim-element delay-400 mx-4">
                     <p class="text-white text-base md:text-lg mb-4 md:mb-6 leading-relaxed">
-                        Ces sujets sont <strong>exclusivement réservés à votre Session Privée</strong> d'onboarding :
+                        <span class="lang-fr">Ces sujets sont <strong>exclusivement réservés à notre appel privé</strong> de création de compte :</span>
+                        <span class="lang-en">These subjects are <strong>strictly reserved for our private call</strong> for account creation:</span>
                     </p>
                     <ul class="space-y-3 md:space-y-4 text-slate-300 text-sm md:text-lg">
-                        <li class="flex items-center"><i class="fas fa-file-invoice-dollar text-rose-500 mr-3"></i> Votre fiscalité privée et locale</li>
-                        <li class="flex items-center"><i class="fas fa-money-check-alt text-rose-500 mr-3"></i> L'origine de vos fonds et justificatifs</li>
-                        <li class="flex items-center"><i class="fas fa-globe text-rose-500 mr-3"></i> Vérification de votre pays de résidence</li>
-                        <li class="flex items-center"><i class="fas fa-building text-rose-500 mr-3"></i> Montages juridiques spécifiques (Sociétés)</li>
+                        <li class="flex items-center"><i class="fas fa-file-invoice-dollar text-rose-500 mr-3"></i> 
+                            <span class="lang-fr">Vos questions sur les impôts et lois de votre propre pays</span>
+                            <span class="lang-en">Your questions about taxes and laws in your own country</span>
+                        </li>
+                        <li class="flex items-center"><i class="fas fa-money-check-alt text-rose-500 mr-3"></i> 
+                            <span class="lang-fr">D'où vient votre argent et comment nous le justifier</span>
+                            <span class="lang-en">Where your money comes from and how to justify it to us</span>
+                        </li>
+                        <li class="flex items-center"><i class="fas fa-globe text-rose-500 mr-3"></i> 
+                            <span class="lang-fr">Confirmer ensemble que votre pays n'est pas sur liste noire</span>
+                            <span class="lang-en">Confirm together that your country is not on a blacklist</span>
+                        </li>
+                        <li class="flex items-center"><i class="fas fa-building text-rose-500 mr-3"></i> 
+                            <span class="lang-fr">Les cas particuliers (si vous avez une entreprise, etc.)</span>
+                            <span class="lang-en">Special cases (if you have a business, etc.)</span>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -1246,12 +1855,19 @@
         <!-- SLIDE 22 : MINI DEMO / TRANSITION -->
         <div class="slide" id="slide-22">
             <div class="slide-content text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 md:mb-8 anim-element delay-100">C'est le moment de l'éveil.</h2>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 md:mb-8 anim-element delay-100">
+                    <span class="lang-fr">C'est le moment de prendre le contrôle.</span>
+                    <span class="lang-en">It's time to take control.</span>
+                </h2>
                 <div class="glass-card p-6 md:p-10 max-w-4xl mx-auto anim-element anim-scale delay-300 bg-gradient-to-br from-slate-800 to-slate-900 border-t-4 border-blue-500 mx-4">
                     <i class="fas fa-mobile-screen-button text-5xl md:text-6xl text-blue-400 mb-4 md:mb-6"></i>
-                    <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4">La théorie devient pratique</h3>
+                    <h3 class="text-xl md:text-2xl font-bold text-white mb-2 md:mb-4">
+                        <span class="lang-fr">La théorie devient réalité</span>
+                        <span class="lang-en">Theory becomes reality</span>
+                    </h3>
                     <p class="text-slate-300 text-sm md:text-lg leading-relaxed">
-                        L'application que vous installerez est votre pont direct vers ces nouveaux rails. Ce que vous déposez dessus devient instantanément utilisable avec votre carte World Debit, partout dans le monde, en vous affranchissant des limites de l'ancien modèle.
+                        <span class="lang-fr">L'application que vous allez installer sur votre téléphone est un pont direct vers ce monde beaucoup plus rapide. L'argent que vous mettez dessus devient instantanément utilisable avec votre carte, partout, et vous vous libérez des lenteurs de l'ancien modèle.</span>
+                        <span class="lang-en">The application you are going to install on your phone is a direct bridge to this much faster world. The money you put on it becomes instantly usable with your card, everywhere, and you free yourself from the slowness of the old model.</span>
                     </p>
                 </div>
             </div>
@@ -1265,18 +1881,24 @@
                 </div>
                 
                 <h2 class="text-4xl md:text-6xl font-bold mb-6 md:mb-8 anim-element delay-200">
-                    Votre Argent.<br><span class="gradient-text">Partout. Sans Limites.</span>
+                    <span class="lang-fr">Votre Argent.<br><span class="gradient-text">Partout. Sans Limites.</span></span>
+                    <span class="lang-en">Your Money.<br><span class="gradient-text">Everywhere. Without Limits.</span></span>
                 </h2>
                 
                 <p class="text-sm md:text-2xl text-slate-400 mb-8 md:mb-12 anim-element delay-300 max-w-2xl mx-auto px-4">
-                    Ce n'est pas juste une carte. C'est l'architecture de confiance de demain, prête pour vous aujourd'hui.
+                    <span class="lang-fr">Ce n'est pas juste une carte de crédit. C'est l'avenir qui est déjà prêt pour vous aujourd'hui.</span>
+                    <span class="lang-en">It's not just a credit card. It's the future that is already ready for you today.</span>
                 </p>
                 
                 <div class="anim-element delay-400">
                     <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 md:py-4 md:px-10 rounded-full text-base md:text-xl transition transform hover:scale-105 shadow-[0_0_20px_rgba(59,130,246,0.5)] animate-pulse-slow">
-                        Réserver ma Session Privée
+                        <span class="lang-fr">Réserver ma Session Privée</span>
+                        <span class="lang-en">Book my Private Session</span>
                     </button>
-                    <p class="mt-4 md:mt-6 text-slate-500 text-xs md:text-base">Drake Digital • Masterclass Suisse & Europe</p>
+                    <p class="mt-4 md:mt-6 text-slate-500 text-xs md:text-base">
+                        <span class="lang-fr">Drake Digital • Masterclass Suisse & Europe</span>
+                        <span class="lang-en">Drake Digital • Masterclass Switzerland & Europe</span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -1286,6 +1908,20 @@
     <script>
         let currentSlide = 1;
         const totalSlides = 23;
+
+        // Fonction pour changer la langue
+        function setLang(lang) {
+            document.body.className = `lang-${lang}`;
+            
+            // Mise à jour de l'apparence des boutons
+            document.getElementById('btn-fr').className = lang === 'fr' 
+                ? 'btn-lang active bg-blue-500 text-white' 
+                : 'btn-lang text-slate-400 hover:text-white';
+                
+            document.getElementById('btn-en').className = lang === 'en' 
+                ? 'btn-lang active bg-blue-500 text-white' 
+                : 'btn-lang text-slate-400 hover:text-white';
+        }
 
         function updateSlide() {
             // Cacher tous les slides
@@ -1336,11 +1972,10 @@
             }
         });
 
-        // Suppression du Swipe JS qui entrait en conflit avec le Scroll vertical naturel sur mobile
-        // Le passage des slides se fait avec les boutons Précédent/Suivant, ce qui est beaucoup plus fiable.
-
         // Init
         updateSlide();
+        // Langue par défaut
+        setLang('fr');
     </script>
 </body>
 </html>
