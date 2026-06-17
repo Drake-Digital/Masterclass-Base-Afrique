@@ -118,9 +118,9 @@
             100% { transform: translateX(100%); opacity: 0.2; }
         }
         @keyframes liquid-flow-slow {
-            0% { transform: translateY(-50%) scaleY(0.3); opacity: 0.3; }
-            50% { transform: translateY(0%) scaleY(1); opacity: 1; }
-            100% { transform: translateY(50%) scaleY(0.3); opacity: 0.3; }
+            0% { transform: translateX(-50%) scaleX(0.3); opacity: 0.3; }
+            50% { transform: translateX(0%) scaleX(1); opacity: 1; }
+            100% { transform: translateX(50%) scaleX(0.3); opacity: 0.3; }
         }
         @keyframes pulse-red {
             0%, 100% { border-color: #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
@@ -186,7 +186,7 @@
 
     <div id="controls">
         <button id="prevBtn" class="nav-btn" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
-        <span id="slide-counter" class="text-slate-600 text-xs md:text-base font-bold flex items-center px-1 md:px-2">1 / 21</span>
+        <span id="slide-counter" class="text-slate-600 text-xs md:text-base font-bold flex items-center px-1 md:px-2">1 / 22</span>
         <button id="nextBtn" class="nav-btn" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
     </div>
 
@@ -307,20 +307,21 @@
                         </div>
                     </div>
 
-                    <!-- L'entonnoir qui clignote en rouge -->
+                    <!-- L'entonnoir qui clignote en rouge (Rotation -90deg pour être dans le sens de l'écoulement) -->
                     <div class="w-32 h-32 md:w-40 md:h-40 bg-red-50 rounded-full border-4 border-red-500 flex flex-col items-center justify-center relative z-10 shadow-lg animate-pulse-red shrink-0">
-                        <i class="fas fa-filter text-3xl md:text-4xl text-red-500 mb-1"></i>
-                        <span class="text-[10px] md:text-xs font-bold text-red-600 text-center leading-tight">Blocage &<br>Régulations</span>
+                        <!-- fa-filter rotated by -90deg so wide part is left, narrow is right -->
+                        <i class="fas fa-filter text-3xl md:text-4xl text-red-500 mb-1 -rotate-90"></i>
+                        <span class="text-[10px] md:text-xs font-bold text-red-600 text-center leading-tight">Goulot<br>d'étranglement</span>
                     </div>
 
-                    <!-- Flux sortant étranglé (Goutte à goutte) -->
+                    <!-- Flux sortant étranglé (Goutte à goutte horizontal) -->
                     <div class="flex flex-col items-center w-full md:w-1/3 white-card p-4 shadow-sm relative overflow-hidden opacity-60">
                         <div class="w-12 h-12 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center text-xl mb-2"><i class="fas fa-globe"></i></div>
                         <span class="text-slate-500 font-bold text-xs md:text-sm">Marché International</span>
                         <div class="text-[10px] text-slate-400 mt-1 font-mono">USD / CHF</div>
-                        <!-- Animation lente/goutte à goutte -->
-                        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-8 w-1 bg-red-300 overflow-hidden">
-                            <div class="w-full h-4 bg-red-500 animate-flow-slow"></div>
+                        <!-- Animation lente horizontale -->
+                        <div class="absolute bottom-0 left-0 h-1 w-full bg-red-300 overflow-hidden">
+                            <div class="w-full h-full bg-red-500 animate-flow-slow"></div>
                         </div>
                     </div>
                 </div>
@@ -677,7 +678,7 @@
                     <div class="white-card p-4 md:p-6 w-full md:flex-1 anim-element delay-200 flex flex-col justify-start border-2 border-transparent hover:border-blue-200 transition">
                         <div class="w-12 h-12 md:w-16 md:h-16 mx-auto bg-blue-50 rounded-full flex items-center justify-center mb-2 md:mb-4 text-brand-primary text-xl md:text-2xl shadow-sm"><i class="fas fa-wallet"></i></div>
                         <h3 class="font-bold text-brand-dark mb-1 md:mb-2 text-base md:text-lg">1. Dépôt</h3>
-                        <p class="text-slate-500 text-xs md:text-sm">Alimentez avec vos devises actuelles (carte, virement, ou wallet).</p>
+                        <p class="text-slate-500 text-xs md:text-sm">Alimentez avec vos devises actuelles.</p>
                     </div>
 
                     <div class="flex items-center justify-center anim-element delay-300 py-1 md:py-0 bg-transparent">
@@ -689,7 +690,7 @@
                     <div class="white-card p-4 md:p-6 w-full md:flex-1 anim-element delay-400 flex flex-col justify-start border-2 border-transparent hover:border-sky-200 transition">
                         <div class="w-12 h-12 md:w-16 md:h-16 mx-auto bg-sky-50 rounded-full flex items-center justify-center mb-2 md:mb-4 text-sky-500 text-xl md:text-2xl shadow-sm"><i class="fas fa-coins"></i></div>
                         <h3 class="font-bold text-brand-dark mb-1 md:mb-2 text-base md:text-lg">2. Numérisation</h3>
-                        <p class="text-slate-500 text-xs md:text-sm">Conversion de la monnaie en dollars numériques pour voyager vite.</p>
+                        <p class="text-slate-500 text-xs md:text-sm">Conversion en dollars numériques pour la vitesse.</p>
                     </div>
 
                     <div class="flex items-center justify-center anim-element delay-500 py-1 md:py-0 bg-transparent">
@@ -701,7 +702,7 @@
                     <div class="white-card p-4 md:p-6 w-full md:flex-1 anim-element delay-600 flex flex-col justify-start border-2 border-transparent hover:border-purple-200 transition">
                         <div class="w-12 h-12 md:w-16 md:h-16 mx-auto bg-purple-50 rounded-full flex items-center justify-center mb-2 md:mb-4 text-purple-500 text-xl md:text-2xl shadow-sm"><i class="fas fa-shield-halved"></i></div>
                         <h3 class="font-bold text-brand-dark mb-1 md:mb-2 text-base md:text-lg">3. Sécurisation</h3>
-                        <p class="text-slate-500 text-xs md:text-sm">Réception sur votre compte sécurisé (CHF ou USD).</p>
+                        <p class="text-slate-500 text-xs md:text-sm">Réception sur votre compte suisse protégé.</p>
                     </div>
 
                     <div class="flex items-center justify-center anim-element delay-700 py-1 md:py-0 bg-transparent">
@@ -713,14 +714,75 @@
                     <div class="white-card p-4 md:p-6 w-full md:flex-1 anim-element delay-800 border-2 border-emerald-400 shadow-float flex flex-col justify-start">
                         <div class="w-12 h-12 md:w-16 md:h-16 mx-auto bg-emerald-50 rounded-full flex items-center justify-center mb-2 md:mb-4 text-emerald-500 text-2xl md:text-3xl shadow-sm"><i class="fa-brands fa-cc-mastercard"></i></div>
                         <h3 class="font-bold text-brand-dark mb-1 md:mb-2 text-base md:text-lg">4. Action</h3>
-                        <p class="text-slate-500 text-xs md:text-sm">Vous payez ou retirez librement partout dans le monde.</p>
+                        <p class="text-slate-500 text-xs md:text-sm">Payez ou retirez librement dans le monde.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 12 : CAS D'USAGE (LIQUIDITÉ PARTAGÉE) -->
+        <!-- SLIDE 12 : MODES DE DÉPÔT -->
         <div class="slide" id="slide-12">
+            <div class="slide-content text-center">
+                <div class="mb-8 md:mb-12">
+                    <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-brand-dark anim-element delay-100">
+                        <span class="lang-fr">Les modes de <span class="text-gradient">dépôt</span></span>
+                        <span class="lang-en">The deposit <span class="text-gradient">methods</span></span>
+                    </h2>
+                    <p class="text-sm md:text-lg text-slate-500 mt-3 md:mt-4 anim-element delay-200 max-w-3xl mx-auto">
+                        <span class="lang-fr">Comment alimenter votre compte en toute sécurité et discrétion, depuis l'Afrique.</span>
+                        <span class="lang-en">How to fund your account safely and discreetly, from Africa.</span>
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full">
+                    <!-- Virement -->
+                    <div class="white-card p-6 md:p-8 anim-element delay-300 flex flex-col text-left border-t-4 border-t-slate-300">
+                        <div class="w-14 h-14 md:w-16 md:h-16 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-building-columns"></i></div>
+                        <h3 class="font-bold text-lg md:text-xl mb-3 text-brand-dark">
+                            <span class="lang-fr">Virement International</span>
+                            <span class="lang-en">International Wire</span>
+                        </h3>
+                        <ul class="text-slate-600 text-xs md:text-sm space-y-3">
+                            <li class="flex items-start"><i class="fas fa-clock text-slate-400 w-5 mt-0.5 shrink-0"></i> <span class="lang-fr"><strong>Délais longs :</strong> Plusieurs jours ouvrés.</span><span class="lang-en"><strong>Long delays:</strong> Several business days.</span></li>
+                            <li class="flex items-start"><i class="fas fa-file-signature text-slate-400 w-5 mt-0.5 shrink-0"></i> <span class="lang-fr"><strong>Contraintes :</strong> Traçabilité bancaire classique et justificatifs locaux requis.</span><span class="lang-en"><strong>Constraints:</strong> Classic bank traceability and proofs required.</span></li>
+                            <li class="flex items-start"><i class="fas fa-user-check text-slate-400 w-5 mt-0.5 shrink-0"></i> <span class="lang-fr"><strong>Règle stricte :</strong> Doit provenir d'un compte au même nom ou compte B2B déclaré lié.</span><span class="lang-en"><strong>Strict rule:</strong> Must come from a same-name account or linked B2B.</span></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- CB -->
+                    <div class="white-card p-6 md:p-8 anim-element delay-400 flex flex-col text-left border-t-4 border-t-brand-accent shadow-float relative">
+                        <div class="absolute top-4 right-4 bg-blue-100 text-brand-primary text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wide">Populaire</div>
+                        <div class="w-14 h-14 md:w-16 md:h-16 bg-blue-50 text-brand-accent rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-credit-card"></i></div>
+                        <h3 class="font-bold text-lg md:text-xl mb-3 text-brand-dark">
+                            <span class="lang-fr">Recharge par CB</span>
+                            <span class="lang-en">Credit Card Recharge</span>
+                        </h3>
+                        <ul class="text-slate-600 text-xs md:text-sm space-y-3">
+                            <li class="flex items-start"><i class="fas fa-bolt text-brand-accent w-5 mt-0.5 shrink-0"></i> <span class="lang-fr"><strong>Instantané :</strong> Équivalent à l'achat d'un article en ligne.</span><span class="lang-en"><strong>Instant:</strong> Equivalent to buying an item online.</span></li>
+                            <li class="flex items-start"><i class="fas fa-user-shield text-brand-accent w-5 mt-0.5 shrink-0"></i> <span class="lang-fr"><strong>Discrétion :</strong> Confidentialité accrue vis-à-vis de la banque d'origine.</span><span class="lang-en"><strong>Discretion:</strong> Increased confidentiality from the origin bank.</span></li>
+                            <li class="flex items-start"><i class="fas fa-exclamation-triangle text-orange-400 w-5 mt-0.5 shrink-0"></i> <span class="lang-fr"><strong>Limites :</strong> Plafonds du provider. Nécessite Visa/Mastercard (sans restriction intl). <span class="text-red-500 font-bold">Pas d'AMEX.</span></span><span class="lang-en"><strong>Limits:</strong> Provider limits. Active intl payments required (Visa/MC). No AMEX.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Crypto -->
+                    <div class="white-card p-6 md:p-8 anim-element delay-500 flex flex-col text-left border-t-4 border-t-emerald-500">
+                        <div class="w-14 h-14 md:w-16 md:h-16 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-wallet"></i></div>
+                        <h3 class="font-bold text-lg md:text-xl mb-3 text-brand-dark">
+                            <span class="lang-fr">Wallet Crypto</span>
+                            <span class="lang-en">Crypto Wallet</span>
+                        </h3>
+                        <ul class="text-slate-600 text-xs md:text-sm space-y-3">
+                            <li class="flex items-start"><i class="fas fa-coins text-emerald-500 w-5 mt-0.5 shrink-0"></i> <span class="lang-fr"><strong>Actifs stables :</strong> Transfert de USDC et/ou USDT.</span><span class="lang-en"><strong>Stable Assets:</strong> USDC and/or USDT transfer.</span></li>
+                            <li class="flex items-start"><i class="fas fa-network-wired text-emerald-500 w-5 mt-0.5 shrink-0"></i> <span class="lang-fr"><strong>Réseau Actuel :</strong> Rail ERC20 actif pour les dépôts.</span><span class="lang-en"><strong>Current Network:</strong> ERC20 rail active.</span></li>
+                            <li class="flex items-start"><i class="fas fa-rocket text-emerald-500 w-5 mt-0.5 shrink-0"></i> <span class="lang-fr"><strong>Évolution :</strong> Intégration prochaine des réseaux Polygon et BEP20.</span><span class="lang-en"><strong>Evolution:</strong> Polygon and BEP20 networks coming soon.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13 : CAS D'USAGE (LIQUIDITÉ PARTAGÉE) -->
+        <div class="slide" id="slide-13">
             <div class="slide-content text-center">
                 <div class="inline-block px-4 py-1.5 rounded-full bg-blue-100 text-brand-primary mb-4 md:mb-6 anim-element delay-100 text-[10px] md:text-sm font-bold tracking-widest uppercase">
                     Dans la vraie vie
@@ -770,8 +832,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 13 : PLAFONDS EN $US AVEC ÉQUIVALENTS FCFA (MIS À JOUR) -->
-        <div class="slide" id="slide-13">
+        <!-- SLIDE 14 : PLAFONDS EN $US AVEC ÉQUIVALENTS FCFA -->
+        <div class="slide" id="slide-14">
             <div class="slide-content text-center">
                 <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-brand-dark mb-2 md:mb-4 anim-element delay-100">
                     <span class="lang-fr">La Carte <span class="text-gradient">World Debit</span></span>
@@ -830,8 +892,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 14 : COUVERTURE & CONFORMITÉ -->
-        <div class="slide" id="slide-14">
+        <!-- SLIDE 15 : COUVERTURE & CONFORMITÉ -->
+        <div class="slide" id="slide-15">
             <div class="slide-content">
                 <div class="mb-8 md:mb-10 text-center">
                     <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-brand-dark anim-element delay-100">
@@ -870,8 +932,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 15 : DISCRÉTION VS OPACITÉ -->
-        <div class="slide" id="slide-15">
+        <!-- SLIDE 16 : DISCRÉTION VS OPACITÉ -->
+        <div class="slide" id="slide-16">
             <div class="slide-content text-center">
                 <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-brand-dark mb-8 md:mb-10 anim-element delay-100">
                     <span class="lang-fr">Discrétion <span class="text-slate-300">≠</span> Opacité</span>
@@ -900,8 +962,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 16 : OPTIONS D'OUVERTURE -->
-        <div class="slide" id="slide-16">
+        <!-- SLIDE 17 : OPTIONS D'OUVERTURE -->
+        <div class="slide" id="slide-17">
             <div class="slide-content text-center">
                 <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-brand-dark mb-8 md:mb-10 anim-element delay-100">
                     <span class="lang-fr">Vos Options <span class="text-gradient">d'Ouverture</span></span>
@@ -940,8 +1002,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 17 : FORCE DU RESEAU -->
-        <div class="slide" id="slide-17">
+        <!-- SLIDE 18 : FORCE DU RESEAU -->
+        <div class="slide" id="slide-18">
             <div class="slide-content text-center">
                 <div class="mb-6 md:mb-8">
                     <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-brand-dark anim-element delay-100">
@@ -972,8 +1034,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 18 : ONBOARDING PROCESS -->
-        <div class="slide" id="slide-18">
+        <!-- SLIDE 19 : ONBOARDING PROCESS -->
+        <div class="slide" id="slide-19">
             <div class="slide-content text-center">
                 <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-brand-dark mb-8 md:mb-12 anim-element delay-100">
                     <span class="lang-fr">Le processus d'accompagnement</span>
@@ -1008,8 +1070,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 19 : QUESTIONS PERSONNELLES -->
-        <div class="slide" id="slide-19">
+        <!-- SLIDE 20 : QUESTIONS PERSONNELLES -->
+        <div class="slide" id="slide-20">
             <div class="slide-content text-center">
                 <div class="w-16 h-16 md:w-20 md:h-20 mx-auto bg-slate-100 rounded-full flex items-center justify-center mb-4 md:mb-6 text-slate-400 text-2xl md:text-3xl anim-element delay-100">
                     <i class="fas fa-lock"></i>
@@ -1034,8 +1096,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 20 : QUESTIONS GÉNÉRALES -->
-        <div class="slide" id="slide-20">
+        <!-- SLIDE 21 : QUESTIONS GÉNÉRALES -->
+        <div class="slide" id="slide-21">
             <div class="slide-content text-center">
                 <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-brand-dark mb-8 md:mb-10 anim-element delay-100">
                     <span class="lang-fr">Questions de la <span class="text-gradient">Communauté</span></span>
@@ -1055,8 +1117,8 @@
             </div>
         </div>
 
-        <!-- SLIDE 21 : CONCLUSION -->
-        <div class="slide" id="slide-21">
+        <!-- SLIDE 22 : CONCLUSION -->
+        <div class="slide" id="slide-22">
             <div class="slide-content text-center">
                 <h2 class="text-3xl md:text-5xl lg:text-7xl font-extrabold text-brand-dark mb-4 md:mb-6 anim-element delay-100 leading-tight">
                     <span class="lang-fr">Votre Argent.<br><span class="text-gradient">Partout. Sans Limites.</span></span>
@@ -1082,7 +1144,7 @@
 
     <script>
         let currentSlide = 1;
-        const totalSlides = 21;
+        const totalSlides = 22; // Mise à jour pour les 22 slides
 
         function setLang(lang) {
             document.body.className = `lang-${lang}`;
