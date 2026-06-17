@@ -79,11 +79,11 @@
         .slide.active { opacity: 1; visibility: visible; z-index: 10; }
 
         .slide-content {
-            margin: auto; /* Centrage vertical/horizontal automatique si l'espace le permet */
+            margin: auto;
             width: 100%;
             max-width: 1200px;
             padding-top: 4rem;
-            padding-bottom: 6rem; /* Espace pour les boutons de navigation */
+            padding-bottom: 6rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -112,47 +112,23 @@
         
         .text-gradient { background: linear-gradient(to right, #1e3a8a, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* Animations */
-        @keyframes ai-attack {
-            0% { transform: translateY(-30px) scale(0.5); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(0) scale(1); opacity: 0; }
+        /* Animations Tunnel/Entonnoir */
+        @keyframes liquid-flow-fast {
+            0% { transform: translateX(-100%); opacity: 0.8; }
+            100% { transform: translateX(100%); opacity: 0.2; }
         }
-        .ai-particle { position: absolute; color: #f97316; font-size: 1.5rem; animation: ai-attack 2s infinite linear; }
-        .ai-p1 { left: 20%; animation-delay: 0s; }
-        .ai-p2 { left: 50%; animation-delay: 0.7s; }
-        .ai-p3 { left: 80%; animation-delay: 1.4s; }
-
-        @keyframes shield-block {
-            0% { transform: scale(1); border-color: #3b82f6; box-shadow: 0 0 15px rgba(59,130,246,0.2); }
-            50% { transform: scale(1.05); border-color: #f97316; box-shadow: 0 0 30px rgba(249,115,22,0.4); }
-            100% { transform: scale(1); border-color: #3b82f6; box-shadow: 0 0 15px rgba(59,130,246,0.2); }
+        @keyframes liquid-flow-slow {
+            0% { transform: translateY(-50%) scaleY(0.3); opacity: 0.3; }
+            50% { transform: translateY(0%) scaleY(1); opacity: 1; }
+            100% { transform: translateY(50%) scaleY(0.3); opacity: 0.3; }
         }
-        .slide.active .shield-anim { animation: shield-block 2s infinite; }
-
-        /* NOUVELLES ANIMATIONS ENTONNOIR */
-        @keyframes funnel-pulse {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); border-color: #ef4444; }
-            70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); border-color: #dc2626; }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); border-color: #ef4444; }
+        @keyframes pulse-red {
+            0%, 100% { border-color: #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
+            50% { border-color: #f87171; box-shadow: 0 0 25px rgba(239, 68, 68, 0.6); }
         }
-        @keyframes flow-fast {
-            0% { transform: translateX(0) scale(1); opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: translateX(80px) scale(0.5); opacity: 0; }
-        }
-        @keyframes flow-slow {
-            0% { transform: translateX(0); opacity: 0; }
-            20% { opacity: 0.5; }
-            80% { opacity: 0.5; }
-            100% { transform: translateX(60px); opacity: 0; }
-        }
-        .slide.active .funnel-anim { animation: funnel-pulse 1.5s infinite; }
-        .particle-in { position: absolute; width: 8px; height: 8px; background-color: #3b82f6; border-radius: 50%; top: -3px; box-shadow: 0 0 8px #3b82f6; }
-        .particle-out { position: absolute; width: 6px; height: 6px; background-color: #f87171; border-radius: 50%; top: -2px; }
-        .slide.active .anim-flow-in { animation: flow-fast 1s infinite linear; }
-        .slide.active .anim-flow-out { animation: flow-slow 3s infinite linear; }
+        .animate-flow-fast { animation: liquid-flow-fast 1.5s infinite linear; }
+        .animate-flow-slow { animation: liquid-flow-slow 3s infinite linear; }
+        .animate-pulse-red { animation: pulse-red 2s infinite ease-in-out; }
 
         @keyframes node-pulse {
             0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); border-color: #cbd5e1; }
@@ -216,22 +192,19 @@
 
     <div id="presentation-container">
 
-        <!-- SLIDE 1 : TITRE -->
+        <!-- SLIDE 1 : TITRE avec Logo et Image Panoramique -->
         <div class="slide active" id="slide-1">
-            <div class="slide-content items-center text-center md:text-left">
-                <div class="w-full mx-auto flex flex-col-reverse md:flex-row items-center gap-8 md:gap-10">
-                    <div class="w-full md:w-1/2 space-y-4 md:space-y-6">
-                        
-                        <!-- AJOUT DU LOGO DRAKE DIGITAL ICI -->
-                        <div class="anim-element delay-100 mb-2 md:mb-4 flex justify-center md:justify-start">
-                            <img src="image_ba6426.png" alt="Drake Digital Logo" class="h-12 md:h-16 object-contain" onerror="this.src='https://placehold.co/400x150/f8fafc/1e3a8a?text=DRAKE+DIGITAL'">
-                        </div>
-
+            <div class="slide-content text-center md:text-left">
+                <div class="w-full mx-auto flex flex-col items-center md:items-start gap-4 mb-6">
+                    <img src="image_ba6426.png" alt="Drake Digital Logo" class="h-12 md:h-16 object-contain" onerror="this.src='https://placehold.co/300x100/f8fafc/1e3a8a?text=DRAKE+DIGITAL'">
+                </div>
+                <div class="w-full mx-auto flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-12">
+                    <div class="w-full lg:w-1/2 space-y-4 md:space-y-6">
                         <div class="inline-block px-4 py-1.5 rounded-full bg-blue-100 text-brand-primary anim-element delay-100 text-[10px] md:text-sm font-bold tracking-widest uppercase">
                             <span class="lang-fr">Masterclass • Afrique & Diaspora</span>
                             <span class="lang-en">Masterclass • Africa & Diaspora</span>
                         </div>
-                        <h1 class="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight text-brand-dark anim-element delay-200">
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-brand-dark anim-element delay-200">
                             <span class="lang-fr">L'Avenir des Paiements <br><span class="text-gradient">Sans Frontières</span></span>
                             <span class="lang-en">The Future of <br><span class="text-gradient">Borderless Payments</span></span>
                         </h1>
@@ -239,7 +212,7 @@
                             <span class="lang-fr">Votre compte en devise forte (USD/CHF) et votre carte Mastercard World, pour reprendre le contrôle de votre économie réelle.</span>
                             <span class="lang-en">Your hard currency account (USD/CHF) and Mastercard World, to regain control of your real economy.</span>
                         </p>
-                        <div class="pt-2 md:pt-4 anim-element delay-400">
+                        <div class="pt-2 anim-element delay-400">
                             <div class="flex items-center justify-center md:justify-start space-x-3 text-slate-600 font-medium text-sm md:text-base">
                                 <i class="fa-brands fa-cc-mastercard text-brand-gold text-xl md:text-2xl"></i>
                                 <span class="lang-fr">Infrastructure institutionnelle Suisse</span>
@@ -247,14 +220,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-full max-w-sm md:max-w-none md:w-1/2 anim-element anim-scale delay-200">
-                        <img src="image_95b7fd_2.jpg" alt="Paiements sans frontières" class="w-full h-auto rounded-2xl md:rounded-3xl shadow-float" onerror="this.src='https://placehold.co/800x450/e2e8f0/1e3a8a?text=Visual+Illustration'">
+                    <div class="w-full lg:w-1/2 anim-element anim-scale delay-200">
+                        <img src="image_95b7fd.jpg" alt="Paiements sans frontières" class="w-full h-auto rounded-2xl md:rounded-3xl shadow-float" onerror="this.src='https://placehold.co/900x500/e2e8f0/1e3a8a?text=Visual+Illustration'">
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 2 : OBJECTIFS & FORCE DU RESEAU -->
+        <!-- SLIDE 2 : OBJECTIFS -->
         <div class="slide" id="slide-2">
             <div class="slide-content text-center">
                 <div class="mb-8 md:mb-12">
@@ -300,72 +273,62 @@
                             <span class="lang-en">3. The Power of the Network</span>
                         </h3>
                         <p class="text-slate-500 text-xs md:text-sm">
-                            <span class="lang-fr">Créer un écosystème où l'effort de chacun (convertir nos devises locales) alimente la liquidité globale de toute la communauté.</span>
-                            <span class="lang-en">Create an ecosystem where everyone's effort (converting our local currencies) feeds the global liquidity of the whole community.</span>
+                            <span class="lang-fr">Créer un écosystème où l'effort de chacun (convertir des FCFA) alimente la liquidité globale de toute la communauté.</span>
+                            <span class="lang-en">Create an ecosystem where everyone's effort (converting local currency) feeds the global liquidity of the whole community.</span>
                         </p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 3 : LE PROBLÈME -->
+        <!-- SLIDE 3 : LE PROBLÈME ANIMÉ (L'ENTONNOIR DE TOUTES LES DEVISES) -->
         <div class="slide" id="slide-3">
             <div class="slide-content text-center">
-                <div class="mb-8 md:mb-12">
+                <div class="mb-6 md:mb-10">
                     <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-brand-dark anim-element delay-100">
                         <span class="lang-fr">L'entonnoir du <span class="text-gradient">Système Local</span></span>
                         <span class="lang-en">The funnel of the <span class="text-gradient">Local System</span></span>
                     </h2>
-                    <p class="text-sm md:text-lg text-slate-500 mt-3 md:mt-4 max-w-3xl mx-auto anim-element delay-200">
-                        <span class="lang-fr">Aujourd'hui, l'argent est là, l'ambition est là, mais le "tuyau" bancaire est bouché.</span>
-                        <span class="lang-en">Today, the money is there, the ambition is there, but the banking "pipe" is clogged.</span>
+                    <p class="text-sm md:text-lg text-slate-500 mt-2 max-w-3xl mx-auto anim-element delay-200">
+                        <span class="lang-fr">Aujourd'hui, l'argent et l'ambition sont là, mais le "tuyau" des devises nationales est étranglé.</span>
+                        <span class="lang-en">Today, the money and ambition are there, but the "pipe" of national currencies is strangled.</span>
                     </p>
                 </div>
 
-                <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 anim-element anim-scale delay-300">
-                    <div class="flex flex-col items-center">
-                        <div class="w-16 h-16 md:w-24 md:h-24 bg-white rounded-full flex items-center justify-center text-brand-primary text-3xl md:text-4xl border-4 border-blue-100 mb-3 shadow-md z-10"><i class="fas fa-industry"></i></div>
-                        <span class="text-slate-600 font-bold text-sm md:text-base">
-                            <span class="lang-fr">Vos Besoins</span>
-                            <span class="lang-en">Your Needs</span>
-                        </span>
-                    </div>
-
-                    <!-- Blocage central animé -->
-                    <div class="relative w-48 h-32 md:w-64 md:h-48 mx-auto flex items-center justify-center">
-                        
-                        <!-- Ligne de flux d'entrée (Rapide) -->
-                        <div class="absolute left-0 w-1/2 h-1 bg-gradient-to-r from-blue-200 to-red-200 -z-0">
-                            <div class="particle-in anim-flow-in" style="left: 5%; animation-delay: 0s;"></div>
-                            <div class="particle-in anim-flow-in" style="left: 5%; animation-delay: 0.3s;"></div>
-                            <div class="particle-in anim-flow-in" style="left: 5%; animation-delay: 0.6s;"></div>
-                        </div>
-
-                        <div class="w-24 h-24 md:w-32 md:h-32 bg-red-50 rounded-full border-4 border-red-500 flex flex-col items-center justify-center relative z-10 shadow-lg funnel-anim">
-                            <i class="fas fa-filter text-2xl md:text-4xl text-red-500 mb-1 md:mb-2"></i>
-                            <span class="text-[10px] md:text-xs font-bold text-red-600 text-center leading-tight">Manque<br>de Devises</span>
-                        </div>
-                        
-                        <!-- Ligne de flux de sortie (Lent / Goutte à goutte) -->
-                        <div class="absolute right-0 w-1/2 h-0.5 bg-red-100 -z-0 border-t border-dashed border-red-300">
-                            <div class="particle-out anim-flow-out" style="left: 10%; animation-delay: 0s;"></div>
-                            <div class="particle-out anim-flow-out" style="left: 10%; animation-delay: 1.5s;"></div>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 anim-element anim-scale delay-300 w-full max-w-4xl mx-auto">
+                    <!-- Flux entrants (Toutes devises) -->
+                    <div class="flex flex-col items-center w-full md:w-1/3 white-card p-4 shadow-sm relative overflow-hidden">
+                        <div class="w-12 h-12 bg-blue-50 text-brand-primary rounded-full flex items-center justify-center text-xl mb-2"><i class="fas fa-wallet"></i></div>
+                        <span class="text-slate-700 font-bold text-xs md:text-sm">Vos Fonds & Ambitions</span>
+                        <div class="text-[10px] text-slate-400 mt-1 font-mono">FCFA, NAIRA, CEDI, SHILLING...</div>
+                        <!-- Animation de flux rapide -->
+                        <div class="absolute bottom-0 left-0 h-1 w-full bg-blue-400 overflow-hidden">
+                            <div class="w-full h-full bg-blue-600 animate-flow-fast"></div>
                         </div>
                     </div>
 
-                    <div class="flex flex-col items-center opacity-70">
-                        <div class="w-16 h-16 md:w-24 md:h-24 bg-white rounded-full flex items-center justify-center text-slate-400 text-3xl md:text-4xl border-4 border-slate-200 mb-3 shadow-sm"><i class="fas fa-globe"></i></div>
-                        <span class="text-slate-500 font-bold text-sm md:text-base">
-                            <span class="lang-fr">Le Marché Mondial</span>
-                            <span class="lang-en">Global Market</span>
-                        </span>
+                    <!-- L'entonnoir qui clignote en rouge -->
+                    <div class="w-32 h-32 md:w-40 md:h-40 bg-red-50 rounded-full border-4 border-red-500 flex flex-col items-center justify-center relative z-10 shadow-lg animate-pulse-red shrink-0">
+                        <i class="fas fa-filter text-3xl md:text-4xl text-red-500 mb-1"></i>
+                        <span class="text-[10px] md:text-xs font-bold text-red-600 text-center leading-tight">Blocage &<br>Régulations</span>
+                    </div>
+
+                    <!-- Flux sortant étranglé (Goutte à goutte) -->
+                    <div class="flex flex-col items-center w-full md:w-1/3 white-card p-4 shadow-sm relative overflow-hidden opacity-60">
+                        <div class="w-12 h-12 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center text-xl mb-2"><i class="fas fa-globe"></i></div>
+                        <span class="text-slate-500 font-bold text-xs md:text-sm">Marché International</span>
+                        <div class="text-[10px] text-slate-400 mt-1 font-mono">USD / CHF</div>
+                        <!-- Animation lente/goutte à goutte -->
+                        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-8 w-1 bg-red-300 overflow-hidden">
+                            <div class="w-full h-4 bg-red-500 animate-flow-slow"></div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="mt-8 md:mt-12 white-card p-4 md:p-6 max-w-2xl mx-auto border-l-4 border-l-red-500 anim-element delay-400 text-left">
+                <div class="white-card p-4 md:p-6 max-w-2xl mx-auto border-l-4 border-l-red-500 anim-element delay-400 text-left mt-6 md:mt-10">
                     <p class="text-slate-600 text-xs md:text-sm">
-                        <span class="lang-fr">Que ce soit à cause de l'inflation, du manque de dollars (USD) ou des plafonds imposés par la Banque Centrale, <strong>vous êtes dépendant d'un système qui limite votre croissance internationale.</strong></span>
-                        <span class="lang-en">Whether due to inflation, a lack of dollars (USD), or caps imposed by the Central Bank, <strong>you are dependent on a system that limits your international growth.</strong></span>
+                        <span class="lang-fr">Que ce soit à cause de l'inflation ou de la pénurie de devises fortes, <strong>le système classique limite volontairement votre accès à l'économie mondiale.</strong> Nous allons voir comment contourner ce goulot d'étranglement.</span>
+                        <span class="lang-en">Whether due to inflation or shortages of hard currency, <strong>the classic system deliberately limits your access to the global economy.</strong> We will see how to bypass this bottleneck.</span>
                     </p>
                 </div>
             </div>
@@ -396,24 +359,24 @@
                         <div class="white-card p-4 md:p-6 border-l-4 border-l-brand-primary anim-element anim-right delay-300">
                             <h3 class="font-bold text-brand-dark mb-1 md:mb-2 text-base md:text-lg flex items-center">
                                 <i class="fas fa-industry text-brand-primary w-6 md:w-8"></i> 
-                                <span class="lang-fr">Expertise Industrie 4.0</span>
-                                <span class="lang-en">Industry 4.0 Expertise</span>
+                                <span class="lang-fr">20 ans d'expertise en optimisation</span>
+                                <span class="lang-en">20 years of optimization expertise</span>
                             </h3>
                             <p class="text-slate-600 text-xs md:text-sm">
-                                <span class="lang-fr">Pendant 20 ans, mon métier a été d'optimiser des processus industriels mondiaux. Ma spécialité : identifier les blocages (goulots d'étranglement) pour les faire sauter.</span>
-                                <span class="lang-en">For 20 years, my job was to optimize global industrial processes. My specialty: identifying blockages (bottlenecks) and breaking them.</span>
+                                <span class="lang-fr">Mon métier d'ingénieur a toujours été d'analyser les systèmes complexes, de repérer où se situent les blocages de flux et de concevoir des infrastructures fluides et rapides.</span>
+                                <span class="lang-en">My job as an engineer has always been to analyze complex systems, locate where the flow blockages are, and design fluid and fast infrastructures.</span>
                             </p>
                         </div>
                         
                         <div class="white-card p-4 md:p-6 border-l-4 border-l-emerald-500 anim-element anim-right delay-400">
                             <h3 class="font-bold text-brand-dark mb-1 md:mb-2 text-base md:text-lg flex items-center">
                                 <i class="fas fa-search text-emerald-500 w-6 md:w-8"></i> 
-                                <span class="lang-fr">L'audit des systèmes financiers</span>
-                                <span class="lang-en">Auditing financial systems</span>
+                                <span class="lang-fr">L'audit des circuits de paiement</span>
+                                <span class="lang-en">Auditing payment channels</span>
                             </h3>
                             <p class="text-slate-600 text-xs md:text-sm">
-                                <span class="lang-fr">Face aux difficultés de paiement rencontrées par mes partenaires en Afrique, j'ai audité les infrastructures mondiales avec un regard d'ingénieur pour trouver le bon "tuyau" financier, rapide et légal.</span>
-                                <span class="lang-en">Faced with payment difficulties encountered by my partners in Africa, I audited global infrastructures with an engineer's eye to find the right, fast, and legal financial "pipe".</span>
+                                <span class="lang-fr">Face aux immenses difficultés rencontrées par mes partenaires pour régler leurs fournisseurs internationaux, j'ai audité les infrastructures mondiales pour identifier un point d'accès légal, direct et fiable.</span>
+                                <span class="lang-en">Faced with the immense difficulties encountered by my partners in settling their international suppliers, I audited global infrastructures to identify a legal, direct, and reliable point of access.</span>
                             </p>
                         </div>
                     </div>
@@ -437,23 +400,23 @@
                             <i class="fas fa-quote-right absolute top-4 md:top-6 right-4 md:right-6 text-4xl md:text-6xl text-slate-100"></i>
                             <h3 class="text-2xl md:text-3xl font-bold text-brand-dark mb-1 md:mb-2">Oscar Flores</h3>
                             <p class="text-brand-accent font-bold mb-4 md:mb-6 text-xs md:text-sm tracking-wide uppercase">
-                                <span class="lang-fr">CEO Partenaire (Suisse)</span>
-                                <span class="lang-en">Partner CEO (Switzerland)</span>
+                                <span class="lang-fr">CEO Partenaire d'Infrastructure</span>
+                                <span class="lang-en">Infrastructure Partner CEO</span>
                             </p>
                             
                             <ul class="space-y-3 md:space-y-4 text-slate-600">
                                 <li class="flex items-start">
                                     <i class="fas fa-award text-brand-gold mt-1 mr-3 md:mr-4 text-lg md:text-xl"></i>
                                     <p class="text-xs md:text-sm leading-relaxed">
-                                        <span class="lang-fr">À la tête de cette infrastructure, Oscar figure parmi les <strong>300 personnalités les plus riches de Suisse</strong>.</span>
-                                        <span class="lang-en">Leading this infrastructure, Oscar is among the <strong>300 richest people in Switzerland</strong>.</span>
+                                        <span class="lang-fr">À la tête de cette plateforme technologique mondiale, Oscar Flores figure parmi les <strong>300 personnalités les plus riches de Suisse</strong> (Magazine <em>Bilan</em>).</span>
+                                        <span class="lang-en">At the head of this global technological platform, Oscar Flores is among the <strong>300 richest individuals in Switzerland</strong> (<em>Bilan</em> Magazine).</span>
                                     </p>
                                 </li>
                                 <li class="flex items-start">
                                     <i class="fas fa-shield-alt text-brand-primary mt-1 mr-3 md:mr-4 text-lg md:text-xl"></i>
                                     <p class="text-xs md:text-sm leading-relaxed">
-                                        <span class="lang-fr">Il apporte la rigueur réglementaire suisse absolue et les licences institutionnelles mondiales. C'est l'alliance de la solidité suisse et de la technologie.</span>
-                                        <span class="lang-en">He brings absolute Swiss regulatory rigor and global institutional licenses. It's the alliance of Swiss solidity and technology.</span>
+                                        <span class="lang-fr">Il apporte la rigueur réglementaire suisse et des garanties de conformité internationales solides. C'est l'alliance de la finance suisse et de l'innovation.</span>
+                                        <span class="lang-en">He brings Swiss regulatory rigor and solid international compliance guarantees. It is the alliance of Swiss finance and innovation.</span>
                                     </p>
                                 </li>
                             </ul>
@@ -482,8 +445,8 @@
                         <span class="lang-en">Demystifying <span class="text-gradient">Global Stakes</span></span>
                     </h2>
                     <p class="text-sm md:text-lg text-slate-500 mt-2 md:mt-4 max-w-3xl mx-auto anim-element delay-200">
-                        <span class="lang-fr">Ne confondez pas le casino d'internet avec la révolution technologique institutionnelle.</span>
-                        <span class="lang-en">Do not confuse the internet casino with the institutional technological revolution.</span>
+                        <span class="lang-fr">Ne confondez pas la spéculation d'internet avec la révolution technologique des institutions.</span>
+                        <span class="lang-en">Do not confuse internet speculation with the institutional technological revolution.</span>
                     </p>
                 </div>
 
@@ -492,17 +455,17 @@
                     <div class="white-card p-6 md:p-8 text-left anim-element anim-left delay-300 opacity-70 border-t-4 border-t-orange-400">
                         <i class="fab fa-bitcoin text-4xl md:text-5xl text-orange-400 mb-4 md:mb-6"></i>
                         <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-2">
-                            <span class="lang-fr">Le Mythe : La Spéculation</span>
-                            <span class="lang-en">The Myth: Speculation</span>
+                            <span class="lang-fr">Le Mythe : La Crypto Spéculative</span>
+                            <span class="lang-en">The Myth: Speculative Crypto</span>
                         </h3>
                         <p class="text-slate-500 text-xs md:text-sm mb-3">
-                            <span class="lang-fr">C'est ce dont parlent les médias. Des actifs (Bitcoin, etc.) dont le prix varie tous les jours.</span>
-                            <span class="lang-en">This is what the media talks about. Assets (Bitcoin, etc.) whose price varies every day.</span>
+                            <span class="lang-fr">C'est le Bitcoin ou les monnaies très volatiles. Le prix varie chaque heure. C'est un terrain de jeu pour boursicoteurs.</span>
+                            <span class="lang-en">This is Bitcoin or highly volatile currencies. The price changes hourly. It's a playground for speculators.</span>
                         </p>
                         <p class="text-orange-500 text-xs md:text-sm font-bold">
                             <i class="fas fa-times-circle mr-2"></i>
-                            <span class="lang-fr">Inutile pour payer un fournisseur au centime près. Nous ne faisons PAS cela.</span>
-                            <span class="lang-en">Useless to pay a supplier to the penny. We do NOT do this.</span>
+                            <span class="lang-fr">Inexploitable pour vos achats professionnels au centime près. Nous ne faisons PAS cela.</span>
+                            <span class="lang-en">Unusable for professional purchases to the exact penny. We do NOT do this.</span>
                         </p>
                     </div>
 
@@ -510,17 +473,17 @@
                     <div class="white-card p-6 md:p-8 text-left anim-element anim-right delay-400 border-t-4 border-t-brand-primary shadow-float">
                         <i class="fas fa-dollar-sign text-4xl md:text-5xl text-brand-primary mb-4 md:mb-6"></i>
                         <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-2">
-                            <span class="lang-fr">La Réalité : L'Outil "Stablecoin"</span>
-                            <span class="lang-en">The Reality: The "Stablecoin" Tool</span>
+                            <span class="lang-fr">La Réalité : Le "Dollar Numérique"</span>
+                            <span class="lang-en">The Reality: The "Digital Dollar"</span>
                         </h3>
                         <p class="text-slate-600 text-xs md:text-sm mb-3">
-                            <span class="lang-fr">C'est la numérisation du Dollar (USDT/USDC). <strong>1 jeton vaudra TOUJOURS 1 Dollar.</strong></span>
-                            <span class="lang-en">This is the digitization of the Dollar (USDT/USDC). <strong>1 token will ALWAYS be worth 1 Dollar.</strong></span>
+                            <span class="lang-fr">C'est la numérisation stable des grandes monnaies (USDC/USDT). <strong>1 jeton vaut TOUJOURS exactement 1 Dollar.</strong></span>
+                            <span class="lang-en">This is the stable tokenization of major currencies (USDC/USDT). <strong>1 token ALWAYS equals exactly 1 Dollar.</strong></span>
                         </p>
                         <p class="text-brand-primary text-xs md:text-sm font-bold">
                             <i class="fas fa-globe mr-2"></i>
-                            <span class="lang-fr">L'État américain vient de valider cette technologie pour maintenir la domination du dollar face aux BRICS.</span>
-                            <span class="lang-en">The US government has just validated this technology to maintain dollar dominance against the BRICS.</span>
+                            <span class="lang-fr">Validée par l'État américain comme une arme géopolitique majeure pour accélérer les paiements face aux BRICS.</span>
+                            <span class="lang-en">Validated by the US government as a major geopolitical tool to speed up payments against the BRICS.</span>
                         </p>
                     </div>
                 </div>
@@ -542,13 +505,13 @@
                     <div class="flex-1 white-card p-6 md:p-8 border-t-4 border-t-red-500 anim-element anim-left delay-200 relative shadow-soft">
                         <div class="absolute -top-3 md:-top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-3 md:px-4 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase shadow-md whitespace-nowrap">
                             <span class="lang-fr">Le Paquebot Bancaire</span>
-                            <span class="lang-en">The Banking Ship</span>
+                            <span class="lang-en">The Banking Liner</span>
                         </div>
                         <i class="fas fa-ship text-4xl md:text-6xl text-slate-300 mb-4 md:mb-6 mt-2 md:mt-4"></i>
                         <h3 class="text-lg md:text-2xl font-bold text-brand-dark mb-2 md:mb-4">Stockage Centralisé</h3>
                         <ul class="text-left space-y-2 md:space-y-3 text-slate-600 text-xs md:text-sm">
                             <li class="flex items-start"><i class="fas fa-anchor text-red-400 mt-1 mr-2 md:mr-3 shrink-0"></i> <span><strong class="text-brand-dark">Ralenti</strong> par le manque de devises.</span></li>
-                            <li class="flex items-start"><i class="fas fa-shield-virus text-red-400 mt-1 mr-2 md:mr-3 shrink-0"></i> <span><strong class="text-brand-dark">Asphyxié</strong> par des contrôles manuels sans fin.</span></li>
+                            <li class="flex items-start"><i class="fas fa-shield-virus text-red-400 mt-1 mr-2 md:mr-3 shrink-0"></i> <span><strong class="text-brand-dark">Asphyxié</strong> par des contrôles manuels et justificatifs sans fin.</span></li>
                         </ul>
                     </div>
 
@@ -569,8 +532,8 @@
                         </div>
                         <h3 class="text-lg md:text-2xl font-bold text-brand-dark mb-2 md:mb-4">Liquidité Mondiale</h3>
                         <ul class="text-left space-y-2 md:space-y-3 text-slate-600 text-xs md:text-sm">
-                            <li class="flex items-start"><i class="fas fa-bolt text-blue-500 mt-1 mr-2 md:mr-3 shrink-0"></i> <span><strong class="text-brand-dark">Fluide :</strong> Conçu pour la vitesse.</span></li>
-                            <li class="flex items-start"><i class="fas fa-globe text-blue-500 mt-1 mr-2 md:mr-3 shrink-0"></i> <span><strong class="text-brand-dark">Mondial :</strong> Accepté partout, 24/7.</span></li>
+                            <li class="flex items-start"><i class="fas fa-bolt text-blue-500 mt-1 mr-2 md:mr-3 shrink-0"></i> <span><strong class="text-brand-dark">Fluide :</strong> Conçu uniquement pour la vitesse d'action.</span></li>
+                            <li class="flex items-start"><i class="fas fa-globe text-blue-500 mt-1 mr-2 md:mr-3 shrink-0"></i> <span><strong class="text-brand-dark">Mondial :</strong> Accepté partout, sans restriction de fuseau horaire, 24/7.</span></li>
                         </ul>
                     </div>
                 </div>
@@ -586,8 +549,8 @@
                         <span class="lang-en">The solution: <span class="text-gradient">The Secure Network</span></span>
                     </h2>
                     <p class="text-sm md:text-lg text-slate-500 mt-2 md:mt-4 max-w-3xl mx-auto anim-element delay-200">
-                        <span class="lang-fr">Pour contourner le "guichet" unique, nous utilisons la Blockchain : une validation mathématique communautaire.</span>
-                        <span class="lang-en">To bypass the single "teller", we use Blockchain: a community mathematical validation.</span>
+                        <span class="lang-fr">Pour court-circuiter le guichet unique, nous utilisons un grand livre décentralisé (Blockchain) : une validation par calcul mathématique communautaire.</span>
+                        <span class="lang-en">To bypass the single desk, we use a decentralized ledger (Blockchain): validation by community mathematical calculation.</span>
                     </p>
                 </div>
 
@@ -609,67 +572,55 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-4 md:mt-8 max-w-4xl mx-auto">
                     <div class="white-card p-4 md:p-6 anim-element delay-400 border-t-2 md:border-t-4 border-t-emerald-500">
-                        <h4 class="font-bold text-brand-dark mb-1 md:mb-2 text-sm md:text-base"><i class="fas fa-bolt text-emerald-500 mr-2"></i> Instantané</h4>
-                        <p class="text-slate-500 text-xs md:text-sm">Validation en quelques secondes, peu importe le pays ou l'heure.</p>
+                        <h4 class="font-bold text-brand-dark mb-1 md:mb-2 text-sm md:text-base"><i class="fas fa-bolt text-emerald-500 mr-2"></i> Instantanéité totale</h4>
+                        <p class="text-slate-500 text-xs md:text-sm">Le réseau valide l'opération mathématiquement en quelques secondes, 24/7.</p>
                     </div>
                     <div class="white-card p-4 md:p-6 anim-element delay-500 border-t-2 md:border-t-4 border-t-emerald-500">
-                        <h4 class="font-bold text-brand-dark mb-1 md:mb-2 text-sm md:text-base"><i class="fas fa-link text-emerald-500 mr-2"></i> Inviolable</h4>
-                        <p class="text-slate-500 text-xs md:text-sm">Copie du registre sur des milliers d'ordinateurs simultanément.</p>
+                        <h4 class="font-bold text-brand-dark mb-1 md:mb-2 text-sm md:text-base"><i class="fas fa-link text-emerald-500 mr-2"></i> Sécurité absolue</h4>
+                        <p class="text-slate-500 text-xs md:text-sm">Impossible de falsifier un registre dupliqué en continu sur des milliers de serveurs.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 9 : DÉSOLIDARISATION STRATÉGIQUE (MODÈLE HYBRIDE) -->
+        <!-- SLIDE 9 : MODÈLE HYBRIDE vs CRYPTO PURE -->
         <div class="slide" id="slide-9">
             <div class="slide-content text-center">
-                <div class="mb-8 md:mb-10">
-                    <div class="inline-block px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-600 mb-3 md:mb-4 anim-element delay-100 text-[10px] md:text-sm font-bold tracking-widest uppercase shadow-sm">
-                        <span class="lang-fr">Le Modèle Hybride</span>
-                        <span class="lang-en">The Hybrid Model</span>
-                    </div>
-                    <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-brand-dark anim-element delay-200">
-                        <span class="lang-fr">La Désolidarisation <span class="text-gradient">Stratégique</span></span>
-                        <span class="lang-en">Strategic <span class="text-gradient">Separation</span></span>
+                <div class="mb-6 md:mb-10">
+                    <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-brand-dark anim-element delay-100">
+                        <span class="lang-fr">Le Pont <span class="text-gradient">Hybride Stratégique</span></span>
+                        <span class="lang-en">The Strategic <span class="text-gradient">Hybrid Bridge</span></span>
                     </h2>
+                    <p class="text-sm md:text-lg text-slate-500 mt-2 max-w-3xl mx-auto anim-element delay-200">
+                        <span class="lang-fr">Contrairement aux 'cryptos pures' déconnectées de la vie réelle, notre modèle fusionne la technologie et les réseaux bancaires classiques.</span>
+                        <span class="lang-en">Unlike 'pure cryptos' disconnected from real life, our model merges technology and classic banking networks.</span>
+                    </p>
                 </div>
 
-                <div class="flex flex-col md:flex-row items-stretch justify-center gap-4 md:gap-6 w-full mt-2">
-                    <!-- Stockage Décentralisé -->
-                    <div class="flex-1 white-card p-6 md:p-8 border-t-4 border-t-emerald-500 anim-element anim-left delay-300 relative shadow-float bg-emerald-50/30">
-                        <div class="absolute -top-3 md:-top-4 left-1/2 transform -translate-x-1/2 bg-emerald-500 text-white px-3 md:px-4 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase shadow-md whitespace-nowrap">
-                            <span class="lang-fr">Le Moteur Blockchain</span>
-                            <span class="lang-en">The Blockchain Engine</span>
-                        </div>
-                        <i class="fas fa-mobile-screen-button text-4xl md:text-6xl text-emerald-500 mb-4 md:mb-6 mt-2 md:mt-4"></i>
-                        <h3 class="text-lg md:text-2xl font-bold text-brand-dark mb-2 md:mb-4">1. Sécuriser la valeur</h3>
-                        <p class="text-slate-600 text-xs md:text-sm leading-relaxed text-left">
-                            <span class="lang-fr">On sépare le stockage de l'argent de la banque lente. Vous stockez vos devises fortes numérisées directement sur l'application de votre téléphone, avec la vitesse d'internet.</span>
-                            <span class="lang-en">We separate money storage from the slow bank. You store your digitized hard currencies directly on your phone's app, with the speed of the internet.</span>
+                <div class="flex flex-col lg:flex-row items-stretch justify-center gap-6 w-full">
+                    <!-- Étape 1 : Outil Crypto -->
+                    <div class="flex-1 white-card p-6 border-t-4 border-t-emerald-500 bg-emerald-50/20 text-left">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-xl mb-4"><i class="fas fa-mobile-screen-button"></i></div>
+                        <h3 class="text-lg font-bold text-brand-dark mb-2">1. La Vitesse de la Blockchain</h3>
+                        <p class="text-slate-600 text-xs md:text-sm leading-relaxed">
+                            <span class="lang-fr">Vous stockez et déplacez vos devises fortes sous forme de Dollars Numériques (USDC) sur votre application de manière instantanée, en évitant les lourdeurs de la banque locale.</span>
+                            <span class="lang-en">You store and move your hard currencies as Digital Dollars (USDC) on your app instantly, avoiding the sluggishness of the local bank.</span>
                         </p>
                     </div>
 
-                    <!-- Flèche / Pont Hybride -->
-                    <div class="flex flex-col justify-center items-center px-2 md:px-4 anim-element anim-scale delay-400 py-2 md:py-0 relative">
-                        <div class="bg-white p-3 md:p-4 rounded-full mb-1 md:mb-2 z-10 border-2 border-brand-accent shadow-md">
-                            <i class="fas fa-link text-xl md:text-3xl text-brand-accent transform rotate-90 md:rotate-0"></i>
-                        </div>
-                        <span class="text-[10px] md:text-xs font-bold text-brand-primary uppercase tracking-widest text-center hidden md:block">Le Pont<br>Hybride</span>
+                    <!-- Le Pont Connecteur -->
+                    <div class="flex flex-col justify-center items-center px-2 py-2 lg:py-0">
+                        <i class="fas fa-shuffle text-2xl text-brand-accent rotate-90 lg:rotate-0"></i>
+                        <span class="text-[10px] font-bold text-brand-primary uppercase mt-1 hidden lg:block">Modèle Hybride</span>
                     </div>
 
-                    <!-- Dépense / Rails Traditionnels -->
-                    <div class="flex-1 white-card p-6 md:p-8 border-t-4 border-t-brand-accent anim-element anim-right delay-500 relative shadow-soft">
-                        <div class="absolute -top-3 md:-top-4 left-1/2 transform -translate-x-1/2 bg-brand-accent text-white px-3 md:px-4 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase shadow-md whitespace-nowrap">
-                            <span class="lang-fr">Les Rails Traditionnels</span>
-                            <span class="lang-en">Traditional Rails</span>
-                        </div>
-                        <div class="flex justify-center space-x-6 mb-4 md:mb-6 mt-2 md:mt-4">
-                            <i class="fa-brands fa-cc-mastercard text-4xl md:text-5xl text-brand-gold"></i>
-                        </div>
-                        <h3 class="text-lg md:text-2xl font-bold text-brand-dark mb-2 md:mb-4">2. Dépense Mondiale</h3>
-                        <p class="text-slate-600 text-xs md:text-sm leading-relaxed text-left">
-                            <span class="lang-fr">Contrairement à la "crypto pure", notre solution <strong>hybride</strong> se branche sur le réseau existant. Vous avez la puissance de la blockchain, couplée à l'acceptation universelle classique.</span>
-                            <span class="lang-en">Unlike "pure crypto", our <strong>hybrid</strong> solution plugs into the existing network. You get blockchain power coupled with classic universal acceptance.</span>
+                    <!-- Étape 2 : Rails Financiers Existants -->
+                    <div class="flex-1 white-card p-6 border-t-4 border-t-brand-accent text-left shadow-float">
+                        <div class="w-12 h-12 bg-blue-50 text-brand-primary rounded-full flex items-center justify-center text-xl mb-4"><i class="fa-brands fa-cc-mastercard"></i></div>
+                        <h3 class="text-lg font-bold text-brand-dark mb-2">2. L'Acceptation des Rails Existants</h3>
+                        <p class="text-slate-600 text-xs md:text-sm leading-relaxed">
+                            <span class="lang-fr">Votre coffre est relié en direct au réseau mondial **Mastercard**. Vous dépensez cet argent ou retirez du cash partout dans le monde. C'est l'avantage d'une solution reconnue partout.</span>
+                            <span class="lang-en">Your vault is connected directly to the global **Mastercard** network. You spend or withdraw cash anywhere in the world. This is the benefit of a globally recognized solution.</span>
                         </p>
                     </div>
                 </div>
@@ -768,7 +719,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 12 : CAS D'USAGE (USURE LENTE / RESEAU) -->
+        <!-- SLIDE 12 : CAS D'USAGE (LIQUIDITÉ PARTAGÉE) -->
         <div class="slide" id="slide-12">
             <div class="slide-content text-center">
                 <div class="inline-block px-4 py-1.5 rounded-full bg-blue-100 text-brand-primary mb-4 md:mb-6 anim-element delay-100 text-[10px] md:text-sm font-bold tracking-widest uppercase">
@@ -807,28 +758,28 @@
                             <h3 class="text-xl md:text-2xl font-bold text-brand-dark">La Boucle Communautaire</h3>
                         </div>
                         <p class="text-slate-600 text-xs md:text-sm mb-4">
-                            <span class="lang-fr">Une personne bloquée avec une monnaie nationale (FCFA, Naira, Shilling...) ne peut pas l'utiliser en Europe. Le système officiel la bride.</span>
-                            <span class="lang-en">Someone stuck with a national currency (FCFA, Naira, Shilling...) cannot use it in Europe. The official system restricts them.</span>
+                            <span class="lang-fr">Une personne seule est bridée par le système officiel de son pays. Son argent ne peut pas circuler à l'international.</span>
+                            <span class="lang-en">An isolated individual is restricted by their country's official system. Their money cannot flow internationally.</span>
                         </p>
                         <div class="p-3 md:p-4 rounded-lg bg-emerald-50 border border-emerald-100">
                             <h4 class="text-emerald-600 font-bold mb-1 flex items-center text-xs md:text-sm"><i class="fas fa-network-wired mr-2"></i> L'Effet Réseau</h4>
-                            <p class="text-slate-700 text-xs font-medium">Si la communauté utilise notre réseau, ces devises locales remontent progressivement. Le groupe entier gagne en liquidité internationale (USD), usant lentement les barrières du système classique.</p>
+                            <p class="text-slate-700 text-xs font-medium">Si toute la communauté utilise notre plateforme pour faire remonter ses devises nationales, nous accumulons une force collective en devises fortes (USD). Le réseau brise les chaînes par usure lente.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 13 : WORLD DEBIT CARD -->
+        <!-- SLIDE 13 : PLAFONDS EN $US AVEC ÉQUIVALENTS FCFA (MIS À JOUR) -->
         <div class="slide" id="slide-13">
             <div class="slide-content text-center">
                 <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-brand-dark mb-2 md:mb-4 anim-element delay-100">
-                    <span class="lang-fr">Carte <span class="text-gradient">World Debit</span></span>
-                    <span class="lang-en"><span class="text-gradient">World Debit</span> Card</span>
+                    <span class="lang-fr">La Carte <span class="text-gradient">World Debit</span></span>
+                    <span class="lang-en">The <span class="text-gradient">World Debit</span> Card</span>
                 </h2>
                 <p class="text-slate-500 mb-6 md:mb-10 anim-element delay-200 text-sm md:text-lg">
-                    <span class="lang-fr">Taillée pour contourner les plafonds des achats matériels.</span>
-                    <span class="lang-en">Tailored to bypass caps on equipment purchases.</span>
+                    <span class="lang-fr">Plafonds géants en Dollars avec équivalents en FCFA pour vos opérations réelles.</span>
+                    <span class="lang-en">Giant limits in Dollars with FCFA equivalents for your real operations.</span>
                 </p>
 
                 <div class="white-card overflow-hidden anim-element anim-scale delay-300 w-full border-2 border-slate-200">
@@ -837,24 +788,40 @@
                         <i class="fa-brands fa-cc-mastercard text-2xl md:text-4xl text-slate-400"></i>
                     </div>
                     <div class="p-0 overflow-x-auto">
-                        <table class="w-full text-left border-collapse min-w-[450px]">
+                        <table class="w-full text-left border-collapse min-w-[550px]">
                             <thead>
                                 <tr class="bg-white text-slate-400 text-xs md:text-sm uppercase tracking-wider">
                                     <th class="p-3 md:p-5 border-b border-slate-100 font-medium">Opération</th>
-                                    <th class="p-3 md:p-5 border-b border-slate-100 font-medium text-right">Par Transaction</th>
-                                    <th class="p-3 md:p-5 border-b border-slate-100 font-bold text-brand-primary text-right">Journalier</th>
+                                    <th class="p-3 md:p-5 border-b border-slate-100 font-medium text-right">Par Transaction ($US / FCFA)</th>
+                                    <th class="p-3 md:p-5 border-b border-slate-100 font-bold text-brand-primary text-right">Journalier ($US / FCFA)</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-brand-dark text-sm md:text-lg">
+                            <tbody class="text-brand-dark text-sm md:text-base lg:text-lg">
                                 <tr class="hover:bg-slate-50 transition">
-                                    <td class="p-3 md:p-5 border-b border-slate-100"><i class="fas fa-shopping-bag text-slate-400 mr-2 md:mr-3"></i> <strong>Paiement (POS)</strong></td>
-                                    <td class="p-3 md:p-5 border-b border-slate-100 text-right font-medium">50 000 CHF</td>
-                                    <td class="p-3 md:p-5 border-b border-slate-100 text-right font-bold text-brand-primary">100 000 CHF</td>
+                                    <td class="p-3 md:p-5 border-b border-slate-100">
+                                        <i class="fas fa-shopping-bag text-slate-400 mr-2 md:mr-3"></i> <strong>Paiements Marchands / Import (POS)</strong>
+                                    </td>
+                                    <td class="p-3 md:p-5 border-b border-slate-100 text-right font-medium">
+                                        <span class="text-brand-dark font-semibold">50 000 $US</span> <br>
+                                        <span class="text-xs text-slate-400 font-mono">~30 000 000 FCFA</span>
+                                    </td>
+                                    <td class="p-3 md:p-5 border-b border-slate-100 text-right font-bold text-brand-primary">
+                                        <span>100 000 $US</span> <br>
+                                        <span class="text-xs text-brand-accent font-mono">~60 000 000 FCFA</span>
+                                    </td>
                                 </tr>
                                 <tr class="hover:bg-slate-50 transition bg-slate-50/50">
-                                    <td class="p-3 md:p-5"><i class="fas fa-money-bill-wave text-emerald-500 mr-2 md:mr-3"></i> <strong>Retrait (ATM)</strong></td>
-                                    <td class="p-3 md:p-5 text-right font-medium">5 000 CHF</td>
-                                    <td class="p-3 md:p-5 text-right font-bold text-emerald-600">25 000 CHF</td>
+                                    <td class="p-3 md:p-5">
+                                        <i class="fas fa-money-bill-wave text-emerald-500 mr-2 md:mr-3"></i> <strong>Retraits d'Argent Liquide (ATM)</strong>
+                                    </td>
+                                    <td class="p-3 md:p-5 text-right font-medium">
+                                        <span class="text-brand-dark font-semibold">5 000 $US</span> <br>
+                                        <span class="text-xs text-slate-400 font-mono">~3 000 000 FCFA</span>
+                                    </td>
+                                    <td class="p-3 md:p-5 text-right font-bold text-emerald-600">
+                                        <span>25 000 $US</span> <br>
+                                        <span class="text-xs text-emerald-600 font-mono">~15 000 000 FCFA</span>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -878,8 +845,8 @@
                         <div class="text-4xl md:text-5xl mb-3 md:mb-4">🇨🇭</div>
                         <h3 class="font-bold text-xl md:text-2xl text-brand-dark mb-2">Suisse</h3>
                         <p class="text-slate-500 text-xs md:text-sm">
-                            <span class="lang-fr">Infrastructure auditée strictement pour la lutte anti-blanchiment. Un gage absolu de sérieux institutionnel.</span>
-                            <span class="lang-en">Infrastructure strictly audited for anti-money laundering. An absolute guarantee of institutional seriousness.</span>
+                            <span class="lang-fr">Infrastructures auditées pour la lutte anti-blanchiment (SRO VQF). Un gage de sérieux et de sécurité institutionnelle suisse.</span>
+                            <span class="lang-en">Infrastructures strictly audited for anti-money laundering (SRO VQF). A token of Swiss institutional security.</span>
                         </p>
                     </div>
 
@@ -887,8 +854,8 @@
                         <div class="text-4xl md:text-5xl mb-3 md:mb-4">🇺🇸</div>
                         <h3 class="font-bold text-xl md:text-2xl text-brand-dark mb-2">États-Unis</h3>
                         <p class="text-slate-500 text-xs md:text-sm">
-                            <span class="lang-fr">Système enregistré comme opérateur légitime auprès du gendarme financier américain (FinCEN).</span>
-                            <span class="lang-en">System registered as a legitimate operator with the US financial watchdog (FinCEN).</span>
+                            <span class="lang-fr">Opérateur enregistré auprès du FinCEN (Réseau américain de répression des crimes financiers) comme entreprise légitime.</span>
+                            <span class="lang-en">Operator registered with FinCEN (Financial Crimes Enforcement Network) as a legitimate transfer business.</span>
                         </p>
                     </div>
                 </div>
@@ -925,8 +892,8 @@
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-blue-50 text-brand-primary rounded-full flex items-center justify-center text-xl md:text-2xl mb-4 md:mb-6"><i class="fas fa-user-shield"></i></div>
                         <h3 class="font-bold text-xl md:text-2xl text-brand-dark mb-2 md:mb-4">Confidentialité Opérationnelle</h3>
                         <p class="text-slate-600 text-sm md:text-base leading-relaxed">
-                            <span class="lang-fr"><strong>Nous séparons vos flux.</strong> Votre banque locale ne verra plus vos paiements de fournisseurs internationaux ni vos retraits, évitant ainsi les questions ou blocages abusifs.</span>
-                            <span class="lang-en"><strong>We separate your flows.</strong> Your local bank will no longer see your international supplier payments or withdrawals, avoiding abusive questions or blocks.</span>
+                            <span class="lang-fr">**Nous séparons vos flux.** Votre banque historique ne verra plus vos paiements fournisseurs ni vos retraits à l'étranger, évitant ainsi les questions ou blocages abusifs.</span>
+                            <span class="lang-en">**We separate your flows.** Your traditional bank will no longer see your supplier payments or foreign withdrawals, avoiding abusive questions or blocks.</span>
                         </p>
                     </div>
                 </div>
@@ -947,28 +914,10 @@
                         <div>
                             <h3 class="text-xl md:text-2xl font-bold text-brand-dark mb-2">Package Standard</h3>
                             <div class="text-4xl md:text-5xl font-extrabold text-slate-400 my-4 md:my-6">600 $</div>
-                            <ul class="space-y-3 md:space-y-4 text-slate-600 text-[11px] md:text-sm mb-6">
-                                <li class="flex items-start">
-                                    <span class="w-5 md:w-6 shrink-0 text-brand-accent mt-0.5"><i class="fas fa-check"></i></span> 
-                                    <span>
-                                        <span class="lang-fr">Ouverture de compte complète.</span>
-                                        <span class="lang-en">Full account opening.</span>
-                                    </span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="w-5 md:w-6 shrink-0 text-brand-accent mt-0.5"><i class="fa-brands fa-cc-mastercard"></i></span> 
-                                    <span>
-                                        <span class="lang-fr">Carte Mastercard physique Standard.</span>
-                                        <span class="lang-en">Standard physical Mastercard.</span>
-                                    </span>
-                                </li>
-                                <li class="flex items-start text-slate-400 italic mt-2 md:mt-4">
-                                    <span class="w-5 md:w-6 shrink-0 mt-0.5"><i class="fas fa-info-circle"></i></span> 
-                                    <span>
-                                        <span class="lang-fr">Frais de transactions applicables plus élevés.</span>
-                                        <span class="lang-en">Higher applicable transaction fees.</span>
-                                    </span>
-                                </li>
+                            <ul class="space-y-3 md:space-y-4 text-slate-600 text-xs md:text-sm mb-6">
+                                <li class="flex items-start"><span class="w-5 md:w-6 shrink-0 text-brand-accent mt-0.5"><i class="fas fa-check"></i></span> <span>Ouverture de compte complète.</span></li>
+                                <li class="flex items-start"><span class="w-5 md:w-6 shrink-0 text-brand-accent mt-0.5"><i class="fas fa-check"></i></span> <span>Carte Mastercard physique Standard.</span></li>
+                                <li class="flex items-start text-slate-400 italic mt-2 md:mt-4"><span class="w-5 md:w-6 shrink-0 mt-0.5"><i class="fas fa-info-circle"></i></span> <span>Frais de transactions applicables plus élevés.</span></li>
                             </ul>
                         </div>
                     </div>
@@ -979,35 +928,11 @@
                         <div>
                             <h3 class="text-xl md:text-2xl font-bold text-brand-primary mb-2">Package Premium</h3>
                             <div class="text-4xl md:text-5xl font-extrabold text-brand-dark my-4 md:my-6">1 000 $</div>
-                            <ul class="space-y-3 md:space-y-4 text-slate-700 text-[11px] md:text-sm mb-6">
-                                <li class="flex items-start">
-                                    <span class="w-5 md:w-6 shrink-0 text-brand-gold mt-0.5"><i class="fas fa-star"></i></span> 
-                                    <span>
-                                        <strong class="lang-fr">Accompagnement VIP & Frais réduits :</strong><span class="lang-fr"> Validation experte et coûts optimisés.</span>
-                                        <strong class="lang-en">VIP Onboarding & Low Fees:</strong><span class="lang-en"> Expert validation and optimized costs.</span>
-                                    </span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="w-5 md:w-6 shrink-0 text-brand-gold mt-0.5"><i class="fa-brands fa-cc-mastercard"></i></span> 
-                                    <span>
-                                        <strong class="lang-fr">Carte World Debit :</strong><span class="lang-fr"> Plafonds géants pour l'import.</span>
-                                        <strong class="lang-en">World Debit Card:</strong><span class="lang-en"> Giant limits for import.</span>
-                                    </span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="w-5 md:w-6 shrink-0 text-brand-gold mt-0.5"><i class="fas fa-graduation-cap"></i></span> 
-                                    <span>
-                                        <strong class="lang-fr">Masterclass Niveau 2 :</strong><span class="lang-fr"> Accès exclusif inclus.</span>
-                                        <strong class="lang-en">Level 2 Masterclass:</strong><span class="lang-en"> Exclusive access included.</span>
-                                    </span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="w-5 md:w-6 shrink-0 text-brand-gold mt-0.5"><i class="fas fa-globe-africa"></i></span> 
-                                    <span>
-                                        <strong class="lang-fr">Réseau Privé :</strong><span class="lang-fr"> Accès au cercle d'entrepreneurs Afrique/Diaspora.</span>
-                                        <strong class="lang-en">Private Network:</strong><span class="lang-en"> Access to the Africa/Diaspora entrepreneurs circle.</span>
-                                    </span>
-                                </li>
+                            <ul class="space-y-3 md:space-y-4 text-slate-700 text-xs md:text-sm lg:text-base mb-6">
+                                <li class="flex items-start"><span class="w-5 md:w-6 shrink-0 text-brand-gold mt-1"><i class="fas fa-star"></i></span> <span><strong>Accompagnement VIP :</strong> Validation d'Onboarding complexe.</span></li>
+                                <li class="flex items-start"><span class="w-5 md:w-6 shrink-0 text-brand-gold mt-1"><i class="fas fa-star"></i></span> <span><strong>Carte World Debit :</strong> Plafonds géants pour l'importation.</span></li>
+                                <li class="flex items-start"><span class="w-5 md:w-6 shrink-0 text-brand-gold mt-1"><i class="fas fa-graduation-cap"></i></span> <span><strong>Inclus :</strong> Accès à notre Masterclass VIP de Niveau 2.</span></li>
+                                <li class="flex items-start"><span class="w-5 md:w-6 shrink-0 text-brand-gold mt-1"><i class="fas fa-globe-africa"></i></span> <span><strong>Club Privé :</strong> Réseau d'entrepreneurs Afrique-Diaspora.</span></li>
                             </ul>
                         </div>
                     </div>
@@ -1015,7 +940,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 17 : FORCE DU RESEAU (LE BONUS) -->
+        <!-- SLIDE 17 : FORCE DU RESEAU -->
         <div class="slide" id="slide-17">
             <div class="slide-content text-center">
                 <div class="mb-6 md:mb-8">
@@ -1034,8 +959,8 @@
                         <span class="lang-en">Mutualizing our strengths</span>
                     </h3>
                     <p class="text-slate-600 text-sm md:text-xl leading-relaxed relative z-10 mb-6 md:mb-8">
-                        <span class="lang-fr">L'usure lente du système de blocage se fera par notre nombre. Pour chaque entrepreneur que vous aidez à s'affranchir en ouvrant un compte Premium...</span>
-                        <span class="lang-en">The slow wear of the blocking system will happen through our numbers. For every entrepreneur you help break free by opening a Premium account...</span>
+                        <span class="lang-fr">L'usure lente du système de blocage se fera par notre nombre. Pour chaque entrepreneur de la diaspora ou du continent que vous aidez à s'affranchir en ouvrant un compte Premium...</span>
+                        <span class="lang-en">The slow wear of the blocking system will happen through our numbers. For every diaspora or continental entrepreneur you help break free by opening a Premium account...</span>
                     </p>
                     <div class="inline-block bg-yellow-50 px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl border border-yellow-200 relative z-10 shadow-sm w-full md:w-auto">
                         <span class="text-brand-gold font-extrabold text-xl md:text-3xl">
@@ -1068,7 +993,7 @@
                     <div class="white-card p-4 md:p-6 w-full flex-1 anim-element delay-400 text-center border-b-4 border-b-brand-accent shadow-md">
                         <i class="fas fa-user-tie text-3xl md:text-4xl text-brand-accent mb-3 md:mb-4"></i>
                         <h4 class="font-bold text-brand-dark mb-1 md:mb-2 text-base md:text-lg">2. Appel Privé</h4>
-                        <p class="text-slate-500 text-xs md:text-sm">Validation du pays et des besoins.</p>
+                        <p class="text-slate-500 text-xs md:text-sm">Validation du pays et des justificatifs.</p>
                     </div>
 
                     <i class="fas fa-chevron-right text-slate-300 text-2xl hidden md:block anim-element delay-500"></i>
@@ -1077,7 +1002,7 @@
                     <div class="white-card p-4 md:p-6 w-full flex-1 anim-element delay-600 text-center shadow-sm">
                         <i class="fa-brands fa-cc-mastercard text-3xl md:text-4xl text-orange-500 mb-3 md:mb-4"></i>
                         <h4 class="font-bold text-brand-dark mb-1 md:mb-2 text-base md:text-lg">3. Activation</h4>
-                        <p class="text-slate-500 text-xs md:text-sm">Vérification, app et carte expédiée.</p>
+                        <p class="text-slate-500 text-xs md:text-sm">Configuration de l'app et expédition carte.</p>
                     </div>
                 </div>
             </div>
@@ -1094,16 +1019,16 @@
                     <span class="lang-en">Personal Questions</span>
                 </h2>
                 
-                <p class="text-sm md:text-xl text-slate-500 mb-6 md:mb-8 anim-element delay-300 w-full">
+                <p class="text-sm md:text-xl text-slate-500 mb-6 md:mb-8 w-full">
                     <span class="lang-fr">Pour garantir votre totale confidentialité, ces sujets ne seront traités qu'en tête-à-tête :</span>
                     <span class="lang-en">To guarantee your total confidentiality, these topics will only be discussed 1-on-1:</span>
                 </p>
 
                 <div class="white-card p-6 md:p-10 w-full text-left border-l-4 border-l-slate-300 anim-element delay-400 shadow-sm">
                     <ul class="space-y-3 md:space-y-4 text-slate-600 text-sm md:text-lg">
-                        <li class="flex items-center"><i class="fas fa-info-circle text-slate-400 mr-3 md:mr-4 shrink-0"></i> Éligibilité exacte de votre pays en Afrique.</li>
-                        <li class="flex items-center"><i class="fas fa-info-circle text-slate-400 mr-3 md:mr-4 shrink-0"></i> Justificatifs de l'origine de vos fonds.</li>
-                        <li class="flex items-center"><i class="fas fa-info-circle text-slate-400 mr-3 md:mr-4 shrink-0"></i> Vos montages spécifiques pour sociétés (B2B).</li>
+                        <li class="flex items-center"><i class="fas fa-info-circle text-slate-400 mr-3 md:mr-4 shrink-0"></i> Éligibilité réglementaire exacte de votre pays de résidence.</li>
+                        <li class="flex items-center"><i class="fas fa-info-circle text-slate-400 mr-3 md:mr-4 shrink-0"></i> Validation de l'origine de vos fonds (achats pros).</li>
+                        <li class="flex items-center"><i class="fas fa-info-circle text-slate-400 mr-3 md:mr-4 shrink-0"></i> Structuration de comptes d'entreprises (Sociétés B2B).</li>
                     </ul>
                 </div>
             </div>
@@ -1120,11 +1045,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full text-left">
                     <div class="white-card p-4 md:p-6 anim-element anim-left delay-200">
                         <h4 class="font-bold text-brand-primary mb-2 text-sm md:text-base"><i class="fas fa-question-circle mr-2"></i> Dois-je m'y connaître en crypto ?</h4>
-                        <p class="text-slate-500 text-xs md:text-sm">Pas du tout. Vous envoyez vos devises, nous numérisons, vous utilisez votre carte. C'est transparent pour vous.</p>
+                        <p class="text-slate-500 text-xs md:text-sm">Pas du tout. Vous envoyez vos devises, notre architecture s'occupe de tout. Pour vous, c'est une carte Mastercard standard.</p>
                     </div>
                     <div class="white-card p-4 md:p-6 anim-element anim-right delay-300">
-                        <h4 class="font-bold text-brand-primary mb-2 text-sm md:text-base"><i class="fas fa-question-circle mr-2"></i> Et si je paie dans ma monnaie locale avec la carte ?</h4>
-                        <p class="text-slate-500 text-xs md:text-sm">La carte est adossée à votre compte USD/CHF. Mastercard s'occupe de la conversion automatique avec le marchand local.</p>
+                        <h4 class="font-bold text-brand-primary mb-2 text-sm md:text-base"><i class="fas fa-question-circle mr-2"></i> Que se passe-t-il si je paie en monnaie locale ?</h4>
+                        <p class="text-slate-500 text-xs md:text-sm">La carte puise dans votre réserve USD/CHF et Mastercard gère automatiquement le change au taux officiel en direct avec le commerçant.</p>
                     </div>
                 </div>
             </div>
@@ -1139,8 +1064,8 @@
                 </h2>
                 
                 <p class="text-sm md:text-2xl text-slate-500 mb-8 md:mb-12 anim-element delay-200 w-full">
-                    <span class="lang-fr">L'économie mondiale n'attend plus. Prenez votre place.</span>
-                    <span class="lang-en">The global economy isn't waiting. Take your place.</span>
+                    <span class="lang-fr">L'économie mondiale n'attend pas. Prenez vos commandes aujourd'hui.</span>
+                    <span class="lang-en">The global economy isn't waiting. Take control today.</span>
                 </p>
                 
                 <div class="anim-element delay-300 w-full px-4">
@@ -1157,7 +1082,7 @@
 
     <script>
         let currentSlide = 1;
-        const totalSlides = 21; // Mis à jour avec 21 slides
+        const totalSlides = 21;
 
         function setLang(lang) {
             document.body.className = `lang-${lang}`;
@@ -1168,7 +1093,7 @@
         function updateSlide() {
             document.querySelectorAll('.slide').forEach(slide => {
                 slide.classList.remove('active');
-                slide.scrollTop = 0; // Reset scroll on mobile
+                slide.scrollTop = 0;
             });
 
             const activeSlide = document.getElementById(`slide-${currentSlide}`);
@@ -1189,7 +1114,6 @@
             else if (e.key === 'ArrowLeft') prevSlide();
         });
 
-        // Touch swipe support for mobile
         let touchstartX = 0;
         let touchendX = 0;
         
